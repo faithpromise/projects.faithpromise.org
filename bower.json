@@ -1,0 +1,20 @@
+{
+  "name": "projects.faithpromise.org",
+  "version": "0.0.0",
+  "authors": [
+    "Brad Roberts <bradr@faithpromise.org>",
+    "Kyle Gilbert <kyleg@faithpromise.org>"
+  ],
+  "homepage": "http://faithpromise.org",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "cardinal": "~3.6.1",
+    "angular-toastr": "~1.5.0"
+  }
+}
