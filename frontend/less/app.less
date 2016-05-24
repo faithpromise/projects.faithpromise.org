@@ -30,8 +30,193 @@
 // Components
 //
 
-html,
-body {
-  //background-color: @anchor-text-color;
-  overflow: hidden;
+//html,
+//body {
+//  //background-color: @anchor-text-color;
+//  overflow: hidden;
+//}
+
+
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
+
+@grid-border-color: #d6d6d6;
+
+.Timeline {
+  display: flex;
+}
+
+.Timeline-agent {
+  display:        flex;
+  flex-direction: column;
+  flex-grow:      1;
+  border-left:    1px solid @grid-border-color;
+
+  &:first-child {
+    border-left: none;
+  }
+}
+
+.Timeline-agentHeader {
+  display:     flex;
+  align-items: center;
+  padding:     1em;
+}
+
+.Timeline-agentPhoto {
+  flex-shrink: 1;
+  width:       44px;
+  height:      44px;
+}
+
+.Timeline-agentName {
+  font-size:   18px;
+  font-weight: 600;
+}
+
+.Timeline-agentInfo {
+  line-height: 1.2;
+  padding:     0 .7em;
+}
+
+.Timeline-agentMeta {
+  font-size: 15px;
+}
+
+.Timeline-day {
+  flex-grow: 1;
+}
+
+.Timeline-dayHeader {
+  display:          flex;
+  white-space:      nowrap;
+  padding:          .3em 1em;
+  border-top:       1px solid @grid-border-color;
+  border-bottom:    1px solid @grid-border-color;
+  background-color: #f3f3f3;
+  font-size:        13px;
+  font-weight:      600;
+}
+
+.Timeline-dayCapacity {
+  flex-grow:  1;
+  text-align: right;
+}
+
+.Timeline-task {
+  display:       flex;
+  align-items:   baseline;
+  margin:        1em 0.7em;
+  padding:       0 0 .8em;
+  border-bottom: 1px dashed #c5c5c5;
+
+  &:last-child {
+    border-bottom:  none;
+    padding-bottom: 0;
+  }
+}
+
+.Timeline-taskCheck,
+.Timeline-taskActions {
+  flex-shrink: 1;
+}
+
+.Timeline-taskIcon {
+  color: #999;
+}
+
+.Timeline-taskInfo {
+  flex-grow: 1;
+  padding:   0 .3em;
+}
+
+.Timeline-taskMeta {
+  font-size: 14px;
+}
+
+//
+//.Timeline-agents {
+//  display: flex;
+//  height:  100%;
+//}
+//
+//.Timeline-agent {
+//  display:          flex;
+//  flex-direction:   column;
+//  background-color: #ebebeb;
+//  border-left:      4px solid #fff;
+//  border-right:     4px solid #fff;
+//
+//  &.no-capacity {
+//    background-color: #4e4e4e;
+//  }
+//}
+//
+//.Timeline-agentHeader {
+//  flex-grow: 1;
+//}
+//
+//.Timeline-agentGravatar {
+//  background-color: #4e4e4e;
+//  color:            #fff;
+//  padding:          4px;
+//  font-size:        13px;
+//}
+//
+//.Timeline-task {
+//  width:            100%;
+//  background-color: #6cbcec;
+//}
+
+//
+//.Timeline {
+//  //overflow: hidden;
+//}
+//
+//.Timeline-row {
+//  display:       flex;
+//  flex-wrap:     nowrap;
+//  border-bottom: 1px solid @grid-border-color;
+//}
+//
+//.Timeline-agent {
+//  width: 30px;
+//}
+//
+//.Timeline-day {
+//  display:     flex;
+//  flex-shrink: 0;
+//  align-items: center;
+//  width:       480px;
+//  border-left: 1px solid @grid-border-color;
+//}
+//
+//.Timeline-task {
+//  position:         relative;
+//  height:           4px;
+//  background-color: #6cbcec;
+//
+//  &.is-start:before,
+//  &.is-end:after {
+//    content:          '';
+//    width:            8px;
+//    height:           8px;
+//    border-radius:    8px;
+//    position:         absolute;
+//    top:              -2px;
+//    background-color: darken(#6cbcec, 20);
+//  }
+//
+//  &.is-start:before {
+//    left: 0;
+//  }
+//
+//  &.is-end:after {
+//    right: 0;
+//  }
+//
+//}
