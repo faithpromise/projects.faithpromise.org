@@ -1,7 +1,7 @@
 (function(module) {
     'use strict';
 
-    module.factory('agentsService', service);
+    module.factory('projectsService', service);
 
     service.$inject = ['$http'];
 
@@ -10,7 +10,11 @@
         return {
 
             all: function() {
-                return $http.get('/api/agents');
+                return $http.get('/api/projects');
+            },
+
+            find: function(id) {
+                return $http.get('/api/projects/' + id);
             }
 
         };
