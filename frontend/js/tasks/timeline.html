@@ -1,0 +1,51 @@
+<!--<div class="Timeline">-->
+
+<!--<div class="Timeline-day" ng-repeat="(day_index, day) in vm.days">-->
+<!--<div class="Timeline-dayHeader">-->
+<!--<div class="Timeline-dow">{{ day | amDateFormat: 'ddd' }}</div>-->
+<!--<div class="Timeline-date">{{ day | amDateFormat: 'MMM D' }}</div>-->
+<!--</div>-->
+<!--<div class="Timeline-agents">-->
+<!--<div class="Timeline-agent" ng-repeat="agent in vm.agents" ng-class="{ 'no-capacity': agent.timeline_days[day_index].capacity == 0 }">-->
+<!--<div class="Timeline-agentHeader">-->
+<!--<div class="Timeline-agentGravatar">{{ agent.abbreviation }}</div>-->
+<!--</div>-->
+<!--<div class="Timeline-task" ng-repeat="task in agent.timeline_days[day_index].timeline_tasks" ng-class="{ 'is-start': task.is_start, 'is-end': task.is_end }" ng-style="{ 'height': (task.percentage) + '%' }" ng-attr-title="{{ task.name + ' (' + vm.get_duration(task.duration) + ')' }}"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+
+<div class="Timeline">
+
+  <div class="Timeline-agent" ng-repeat="agent in vm.agents">
+    <div class="Timeline-agentHeader">
+      <img class="Timeline-agentPhoto" ng-src="{{ agent.avatar_url }}">
+      <div class="Timeline-agentInfo">
+        <div class="Timeline-agentName">{{ agent.name }}</div>
+        <div class="Timeline-agentMeta">Current workload: {{ agent.workload | amDurationFormat : 'minute' }} (until {{ agent.available_at | amDateFormat: 'MMM D' }})</div>
+      </div>
+    </div>
+
+    <div class="Timeline-day" ng-repeat="day in agent.timeline_days">
+      <div class="Timeline-dayHeader">
+        <div class="Timeline-dayHeading">{{ day.day | amDateFormat: 'ddd MMM D' }}</div>
+        <div class="Timeline-dayCapacity">{{ day.capacity | amDurationFormat : 'minute' }}</div>
+      </div>
+      <div class="Timeline-task" ng-repeat="task in day.timeline_tasks">
+        <div class="Timeline-taskCheck">
+          <i class="icon-check-empty Timeline-taskIcon"></i>
+        </div>
+        <div class="Timeline-taskInfo">
+          <div class="Timeline-taskName">{{ task.name }} {{ task.project || task.event ? ' / ' : '' }} <a href="/projects/{{ task.project.id }}" ng-if="task.project">{{ task.project.full_name }}</a> <a href="/events/{{ task.event.id }}" ng-if="task.event && !task.project">{{ task.event.name }}</a></div>
+          <div class="Timeline-taskMeta">{{ task.duration | amDurationFormat : 'minute' }} &middot; Due in {{ task.due_at | amDifference: null : 'days' }} days</div>
+        </div>
+        <div class="Timeline-taskActions">
+          <i class="icon-comment Timeline-taskIcon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
