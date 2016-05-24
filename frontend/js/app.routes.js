@@ -9,10 +9,16 @@
         $locationProvider.html5Mode(true);
 
         $routeProvider
-            .when('/dashboard', {
-                action: 'dashboard'
+            .when('/', {
+                action: 'home'
             })
-            .otherwise('/dashboard');
+            .when('/projects/:id', {
+                action: 'project'
+            })
+            .when('/events/:id', {
+                action: 'event'
+            })
+            .otherwise('/');
 
     }
 
