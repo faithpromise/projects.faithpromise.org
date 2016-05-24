@@ -13,4 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/api/projects/{id}', 'ProjectsController@show');
+Route::get('/api/timeline', 'TimelineController@index');
+
 Route::get('{path?}', ['uses' => 'MainController@index'])->where('path', '.+');
