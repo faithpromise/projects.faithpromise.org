@@ -25,17 +25,18 @@ class TasksTableSeeder extends Seeder {
 
         $maple_farms_shirt = Project::where('event_id', '=', $maple_farms->id)->whereName('T-Shirt')->first();
 
-        $this->makeRecord($maple_farms_shirt->id, $heather->id, 'Schedule Meeting', 20, $today->copy()->addDays(2));
-        $this->makeRecord($maple_farms_shirt->id, $heather->id, 'Design', 180, $today->copy()->addDays(42));
+        $this->makeRecord($maple_farms->id, null, $brad->id, 'Schedule Meeting', 20, $today->copy()->addDays(2));
+        $this->makeRecord(null, $maple_farms_shirt->id, $heather->id, 'Design', 480, $today->copy()->addDays(42));
     }
 
-    private function makeRecord($project_id, $agent_id, $name, $estimated_minutes, $due_at) {
+    private function makeRecord($event_id, $project_id, $agent_id, $name, $duration, $due_at) {
         (new \App\Models\Task([
-            'project_id'        => $project_id,
-            'agent_id'          => $agent_id,
-            'name'              => $name,
-            'estimated_minutes' => $estimated_minutes,
-            'due_at'            => $due_at
+            'event_id'   => $event_id,
+            'project_id' => $project_id,
+            'agent_id'   => $agent_id,
+            'name'       => $name,
+            'duration'   => $duration,
+            'due_at'     => $due_at
         ]))->save();
     }
 
