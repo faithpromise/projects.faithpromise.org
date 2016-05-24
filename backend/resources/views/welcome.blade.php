@@ -17,13 +17,24 @@ use App\Helpers\Assets;
             <title>Projects</title>
 
             <link href="<?= Assets::url('build/app.css') ?>" rel="stylesheet">
+            <link href="<?= Assets::url('build/fontello/css/fontello.css') ?>" rel="stylesheet">
         </head>
 
-        <body>
+        <body ng-controller="main as vm">
 
             <app-nav></app-nav>
 
-            <app></app>
+            <timeline ng-if="vm.route_action === 'home'"></timeline>
+
+            <div class="" ng-if="vm.route_action === 'project'">
+                Project details
+                <p><a href="/">Timeline</a></p>
+            </div>
+
+            <div class="" ng-if="vm.route_action === 'event'">
+                Event Details
+                <p><a href="/">Timeline</a></p>
+            </div>
 
             <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular-animate.min.js"></script>
