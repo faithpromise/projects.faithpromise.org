@@ -23,6 +23,12 @@
       "css": "comment",
       "code": 59394,
       "src": "elusive"
+    },
+    {
+      "uid": "d4aeb916de8d3aea716442778346d244",
+      "css": "plus-circled",
+      "code": 59395,
+      "src": "elusive"
     }
   ]
 }
