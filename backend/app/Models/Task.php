@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model {
 
-    public function project() {
-        return $this->belongsTo(Project::class);
+    use TaskTrait;
+
+    protected $dates = ['start_at', 'due_at', 'created_at', 'updated_at'];
+    public $appends = ['full_name'];
+
+    public function getIsStartAttribute() {
+        return array_key_exists('is_start', $this->attributes) ? $this->attributes['is_start'] : true;
     }
 
-    public function agent() {
-        return $this->belongsTo(Agent::class, 'user_id', 'agent_id');
-    }
-
-    public function comments() {
-        return $this->hasMany(Comment::class);
+    public function getDueAtAttribute($value) {
+        return $value ? $value : ($this->project ? $this->project->due_at : null);
     }
 
 }
