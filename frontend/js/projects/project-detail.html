@@ -1,0 +1,60 @@
+<div class="Project">
+  <div class="Project-header">
+    <div class="Project-titleColumn">
+      <span class="Project-title"><a href="/people/{{ vm.project.requester.id }}">{{ vm.project.requester.name }}</a> / <span ng-if="vm.project.event"><a href="/events/{{ vm.project.event.id }}">{{ vm.project.event.name }}</a> / </span>{{ vm.project.name }}</span>
+    </div>
+    <div class="Project-statusColumn">
+      <span class="Project-status">Wating on Feedback</span>
+    </div>
+    <div class="Project-datesColumn">
+      <span class="Project-due">Due on {{ vm.project.due_at | amDateFormat: 'MMMM D' }}</span>
+      <span class="Project-estimatedCompletion" ng-class="{ 'warning': vm.project.is_overdue_likely }">
+        <i class="Project-dueWarningIcon icon-exclamation" ng-if="vm.project.is_overdue_likely"></i>
+        Estimated delivery: {{ vm.project.estimated_delivery_date | amDateFormat: 'MMMM D' }}</span>
+    </div>
+  </div>
+  <div class="Project-body">
+    <div class="Project-detailsColumn">
+      <div class="Project-eventNotes" ng-if="vm.project.event">
+        <div><span class="Label">Event Notes <span class="link">(edit)</span></span></div>
+        {{ vm.project.event.notes }}
+      </div>
+      <div class="Project-entry">
+        <div><span class="Label">Project Notes <img class="Label-loading" src="/build/images/loading-white-bg.gif" ng-show="vm.project_notes_saving"></span></div>
+        <textarea class="Project-textarea" ng-model="vm.project.notes"></textarea>
+      </div>
+    </div>
+    <div class="Project-commentsColumn">
+    </div>
+
+    <div class="Project-tasksColumn" ng-if="vm.route_action === 'task'">
+      <task-detail task="vm.selected_task" on-close="vm.on_task_closed()"></task-detail>
+    </div>
+
+    <div class="Project-tasksColumn" ng-hide="vm.route_action === 'task'">
+
+      <!-- New task form -->
+      <new-task project="vm.project" on-submit="vm.on_task_submitted()" on-success="vm.on_task_added()"></new-task>
+
+      <img class="Project-tasksLoading" src="/build/images/loading-white-bg.gif" ng-hide="vm.tasks">
+
+      <div class="Project-task" ng-repeat="task in vm.tasks" ng-hide="task.completed_at">
+
+        <div class="Task">
+          <div class="Task-check">
+            <input type="checkbox">
+          </div>
+          <span class="Task-info" ng-click="vm.open_task(task)" href="/projects/{{ vm.project.id }}/tasks/{{ task.id }}">
+            <div class="Task-name">{{ task.name }}</div>
+            <div class="Task-meta">
+              {{ task.agent.short_name }} &middot; {{ task.duration | amDurationFormat : 'minute' }} &middot; {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}<span ng-show="task.notes"> &middot; <i class="Task-icon icon-doc"></i></span>
+            </div>
+          </span>
+        </div>
+
+
+      </div>
+      <p class="CompletedTask" ng-repeat="task in vm.tasks" ng-show="task.completed_at">{{ task.name }} on {{ task.completed_at | amDateFormat: 'MMMM D, YYYY' }}</p>
+    </div>
+  </div>
+</div>
