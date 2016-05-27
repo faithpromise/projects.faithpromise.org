@@ -19,6 +19,14 @@ module.exports = function (grunt) {
             dest:    app.output_dir
         },
 
+        app_images: {
+            expand:  true,
+            flatten: false,
+            cwd:     app.src_dir,
+            src:     'images/**/*',
+            dest:    app.output_dir
+        },
+
         release_backend: {
             expand: true,
             dest:   '_release',
