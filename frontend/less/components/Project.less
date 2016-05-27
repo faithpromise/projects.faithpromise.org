@@ -1,0 +1,100 @@
+.Project-tasksLoading {
+  margin:     20px;
+  text-align: center;
+}
+
+.Project-task {
+  margin:  20px 0;
+  padding: 0 20px;
+}
+
+.Project {
+  position:       absolute;
+  bottom:         0;
+  left:           0;
+  display:        flex;
+  flex-direction: column;
+  height:         ~"calc(100vh - @{Nav-height})";
+  width:          100%;
+}
+
+.Project-body {
+  display:   flex;
+  flex-grow: 1;
+  //background-color: #eee;
+}
+
+.Project-eventNotes {
+  padding:       20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid @grid-border-color;
+}
+
+.Project-textarea {
+  width:         100%;
+  padding:       7px;
+  border-radius: 4px;
+  border-color:  #e0e0e0;
+  resize:        vertical;
+}
+
+.Project-detailsColumn,
+.Project-tasksColumn,
+.Project-commentsColumn {
+  overflow-y: auto;
+}
+
+.Project-detailsColumn,
+.Project-tasksColumn {
+  width: 25%;
+}
+
+.Project-commentsColumn {
+  flex-grow:    1;
+  border-left:  1px solid @grid-border-color;
+  border-right: 1px solid @grid-border-color;
+}
+
+.Project-entry {
+  padding:       0 20px;
+  margin-bottom: 20px;
+}
+
+.Project-header {
+  display:       flex;
+  align-items:   center;
+  height:        80px;
+  padding:       0 20px;
+  border-bottom: 1px solid @grid-border-color;
+}
+
+.Project-title {
+  font-size:     20px;
+  padding-right: 20px;
+}
+
+.Project-status {
+  display:          inline-block;
+  background-color: #616161;
+  color:            #fff;
+  padding:          2px 5px;
+  border-radius:    4px;
+  font-size:        12px;
+}
+
+.Project-datesColumn {
+  flex-grow:  1;
+  text-align: right;
+}
+
+.Project-due {
+  display:     block;
+  font-size:   20px;
+  line-height: 1;
+}
+
+.Project-estimatedCompletion {
+  display:   block;
+  font-size: 15px;
+  color:     #818181;
+}

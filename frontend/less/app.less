@@ -30,6 +30,8 @@
 // Components
 //
 @import "components/Nav";
+@import "components/Project";
+@import "components/Task";
 
 //html,
 //body {
@@ -37,15 +39,31 @@
 //  overflow: hidden;
 //}
 
-
-a {
+a,
+.link {
+  color:           @anchor-text-color;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
 }
 
-@grid-border-color: #d6d6d6;
+@anchor-text-color: #328ad6;
+@grid-border-color: #e0e0e0;
+@warning-color: tomato;
+
+.Label {
+  font-size: 14px;
+  color:     #767676;
+}
+
+.Label-loading {
+  height: 9px;
+}
+
+.warning {
+  color: @warning-color;
+}
 
 .Timeline {
   display: flex;

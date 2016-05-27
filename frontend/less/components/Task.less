@@ -1,0 +1,38 @@
+
+.Task {
+  position:    relative;
+  display:     flex;
+  align-items: baseline;
+}
+
+.Task-check {
+  flex-shrink: 1;
+}
+
+.Task-info {
+  flex-grow:    1;
+  padding-left: 10px;
+  cursor:       pointer;
+  user-select:  none;
+
+  &,
+  &:hover {
+    color:           @root-text-color;
+    text-decoration: none;
+  }
+}
+
+.Task-meta {
+  font-size: 13px;
+  color:     #767676;
+}
+
+.Task-notes {
+  margin:    10px 0 0;
+  font-size: 14px;
+  color:     #767676;
+}
+
+.Task-icon {
+  color: #adadad;
+}
