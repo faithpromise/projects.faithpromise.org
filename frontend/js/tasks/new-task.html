@@ -1,0 +1,25 @@
+<form class="NewTask" ng-submit="vm.add()">
+  <select ng-model="vm.task.agent_id">
+    <option value="{{ agent.id }}" ng-repeat="agent in vm.agents">{{ agent.name }}</option>
+  </select>
+  <input type="text" ng-model="vm.task.name" placeholder="Task name...">
+  <select ng-model="vm.task.duration">
+    <option value="15">15 min</option>
+    <option value="30">30 min</option>
+    <option value="60">1 hr</option>
+    <option value="90">1.5 hrs</option>
+    <option value="120">2 hrs</option>
+    <option value="180">3 hrs</option>
+    <option value="240">4 hrs</option>
+    <option value="300">5 hrs</option>
+    <option value="360">6 hrs</option>
+    <option value="420">7 hrs</option>
+    <option value="480">8 hrs</option>
+    <option value="600">10 hrs</option>
+    <option value="900">15 hrs</option>
+    <option value="1800">30 hrs (about a week)</option>
+    <option value="3600">60 hrs (about 2 weeks)</option>
+    <option value="5400">90 hrs (about 3 weeks)</option>
+    <option value="7200">120 hrs (about 4 weeks)</option>
+  </select>
+</form>
