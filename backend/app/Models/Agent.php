@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Agent extends User {
 
     private $dow_columns = ['sunday_hours', 'monday_hours', 'tuesday_hours', 'wednesday_hours', 'thursday_hours', 'friday_hours', 'saturday_hours'];
-    protected $appends = ['name', 'abbreviation', 'workload', 'available_at', 'avatar_url'];
+    public $appends = ['name', 'short_name', 'abbreviation', 'workload', 'available_at', 'avatar_url'];
     protected $dates = ['available_at', 'created_at', 'updated_at'];
 
     protected static function boot() {
@@ -45,21 +45,13 @@ class Agent extends User {
         return $this->$column * 60;
     }
 
-    public function getNameAttribute() {
-        return trim($this->first_name . ' ' . $this->last_name);
-    }
-
-    public function getAbbreviationAttribute() {
-        return strtoupper(substr($this->first_name, 0, 1) . substr($this->last_name, 0, 1));
-    }
-
     public function getWorkloadAttribute() {
         return (int) $this->tasks()->sum('duration');
     }
 
     public function getAvailableAtAttribute() {
         $max_day = new Carbon($this->timeline_days()->max('day'));
-        return $max_day->addDay()->toDateTimeString();
+        return $max_day->addDay()->toDateString();
     }
 
     public function getAvatarUrlAttribute() {
