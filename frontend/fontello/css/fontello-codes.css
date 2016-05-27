@@ -3,3 +3,8 @@
 .icon-check:before { content: '\e801'; } /* '' */
 .icon-comment:before { content: '\e802'; } /* '' */
 .icon-plus-circled:before { content: '\e803'; } /* '' */
+.icon-warning:before { content: '\e804'; } /* '' */
+.icon-exclamation:before { content: '\e805'; } /* '' */
+.icon-pencil:before { content: '\e806'; } /* '' */
+.icon-pin-outline:before { content: '\e807'; } /* '' */
+.icon-doc:before { content: '\e808'; } /* '' */
