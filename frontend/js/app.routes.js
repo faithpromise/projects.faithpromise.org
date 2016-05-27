@@ -15,6 +15,9 @@
             .when('/projects/:id', {
                 action: 'project'
             })
+            .when('/projects/:id/tasks/:task_id', {
+                action: 'project.task'
+            })
             .when('/events/:id', {
                 action: 'event'
             })
