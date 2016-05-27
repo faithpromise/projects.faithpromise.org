@@ -14,6 +14,15 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/api/projects/{id}', 'ProjectsController@show');
+Route::post('/api/projects', 'ProjectsController@store');
+Route::put('/api/projects/{id}', 'ProjectsController@update');
+
+Route::get('/api/tasks', 'TasksController@index');
+Route::post('/api/tasks', 'TasksController@store');
+Route::get('/api/tasks/{id}', 'TasksController@show');
+
+Route::get('/api/agents', 'AgentsController@index');
+
 Route::get('/api/timeline', 'TimelineController@index');
 
 Route::get('{path?}', ['uses' => 'MainController@index'])->where('path', '.+');
