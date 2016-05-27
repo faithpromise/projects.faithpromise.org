@@ -1,25 +1,23 @@
 <form class="NewTask" ng-submit="vm.add()">
-  <select ng-model="vm.task.agent_id">
-    <option value="{{ agent.id }}" ng-repeat="agent in vm.agents">{{ agent.name }}</option>
-  </select>
-  <input type="text" ng-model="vm.task.name" placeholder="Task name...">
-  <select ng-model="vm.task.duration">
-    <option value="15">15 min</option>
-    <option value="30">30 min</option>
-    <option value="60">1 hr</option>
-    <option value="90">1.5 hrs</option>
-    <option value="120">2 hrs</option>
-    <option value="180">3 hrs</option>
-    <option value="240">4 hrs</option>
-    <option value="300">5 hrs</option>
-    <option value="360">6 hrs</option>
-    <option value="420">7 hrs</option>
-    <option value="480">8 hrs</option>
-    <option value="600">10 hrs</option>
-    <option value="900">15 hrs</option>
-    <option value="1800">30 hrs (about a week)</option>
-    <option value="3600">60 hrs (about 2 weeks)</option>
-    <option value="5400">90 hrs (about 3 weeks)</option>
-    <option value="7200">120 hrs (about 4 weeks)</option>
-  </select>
+
+  <div class="UserSelect">
+    <img class="UserSelect-selectedImage" ng-src="{{ vm.selected_agent.avatar_url }}" ng-click="vm.show_agents = !vm.show_agents; vm.show_duration = false">
+    <ul class="UserSelect-dropdown" ng-show="vm.show_agents">
+      <li class="UserSelect-agent" ng-repeat="agent in vm.agents" ng-click="vm.selected_agent = agent; vm.show_agents = false">
+        <img class="UserSelect-agentImage" ng-src="{{ agent.avatar_url }}">
+        {{ agent.name }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="NewTask-name">
+    <input type="text" ng-model="vm.task.name" placeholder="Task name...">
+  </div>
+
+  <div class="DurationSelect">
+    <span class="DurationSelect-label" ng-click="vm.show_duration = !vm.show_duration; vm.show_agents = false">{{ vm.task.duration < 60 ? (vm.task.duration + ' min') : (vm.task.duration / 60) + ' hrs' }}</span>
+    <ul class="DurationSelect-dropdown" ng-model="vm.task.duration" ng-show="vm.show_duration">
+      <li class="DurationSelect-item" ng-repeat="duration in vm.durations" ng-click="vm.task.duration = duration.value; vm.show_duration = false">{{ duration.label }}</li>
+    </ul>
+  </div>
 </form>
