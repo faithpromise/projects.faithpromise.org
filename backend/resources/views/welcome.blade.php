@@ -23,18 +23,9 @@ use App\Helpers\Assets;
         <body ng-controller="main as vm">
 
             <app-nav></app-nav>
-
             <timeline ng-if="vm.route_action === 'home'"></timeline>
-
-            <div class="" ng-if="vm.route_action === 'project'">
-                Project details
-                <p><a href="/">Timeline</a></p>
-            </div>
-
-            <div class="" ng-if="vm.route_action === 'event'">
-                Event Details
-                <p><a href="/">Timeline</a></p>
-            </div>
+            <project-detail ng-if="vm.route_action === 'project'"></project-detail>
+            <event-detail ng-if="vm.route_action === 'event'"></event-detail>
 
             <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.2/angular-animate.min.js"></script>
