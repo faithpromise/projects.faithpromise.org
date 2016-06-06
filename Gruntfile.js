@@ -9,6 +9,7 @@ module.exports = function (grunt) {
         output_dir: 'public/build',
         js:         {
             src:  [
+                'bower_components/angular-elastic/elastic.js',
                 'bower_components/angular-ui-bootstrap/src/dropdown/dropdown.js',
                 'bower_components/angular-ui-bootstrap/src/position/position.js',
                 'frontend/js/app.module.js',

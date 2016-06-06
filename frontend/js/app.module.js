@@ -5,7 +5,8 @@
         'ngRoute',
         'ngResource',
         'angularMoment',
-        'ui.bootstrap.dropdown'
+        'ui.bootstrap.dropdown',
+        'monospaced.elastic'
     ]);
 
 })(angular);

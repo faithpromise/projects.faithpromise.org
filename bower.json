@@ -17,6 +17,7 @@
     "cardinal": "~3.6.1",
     "angular-toastr": "~1.5.0",
     "angular-ui-bootstrap": "https://github.com/angular-ui/bootstrap.git#master",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "angular-elastic": "^2.5.1"
   }
 }
