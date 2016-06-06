@@ -2,7 +2,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('copy_files', ['copy:app_templates', 'copy:app_fontello']);
 
-    grunt.registerTask('css', ['less:app', 'autoprefixer:app']);
+    grunt.registerTask('css', ['less:app', 'less:bootstrap', 'autoprefixer:app']);
 
     grunt.registerTask('build_app', ['uglify:app', 'copy_files', 'css']);
 

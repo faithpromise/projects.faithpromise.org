@@ -16,8 +16,9 @@ use App\Helpers\Assets;
 
             <title>Projects</title>
 
-            <link href="<?= Assets::url('build/app.css') ?>" rel="stylesheet">
+            <link href="<?= Assets::url('build/bootstrap.css') ?>" rel="stylesheet">
             <link href="<?= Assets::url('build/fontello/css/fontello.css') ?>" rel="stylesheet">
+            <link href="<?= Assets::url('build/app.css') ?>" rel="stylesheet">
         </head>
 
         <body ng-controller="main as vm">

@@ -4,7 +4,8 @@
         'ngAnimate',
         'ngRoute',
         'ngResource',
-        'angularMoment'
+        'angularMoment',
+        'ui.bootstrap.dropdown'
     ]);
 
 })(angular);
