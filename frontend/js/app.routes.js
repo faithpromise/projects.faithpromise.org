@@ -12,6 +12,12 @@
             .when('/', {
                 action: 'home'
             })
+            .when('/login', {
+                action: 'login'
+            })
+            .when('/logout', {
+                action: 'logout'
+            })
             .when('/projects/:id', {
                 action: 'project'
             })

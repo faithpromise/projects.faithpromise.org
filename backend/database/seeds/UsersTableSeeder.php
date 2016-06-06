@@ -32,7 +32,8 @@ class UsersTableSeeder extends Seeder {
             'wednesday_hours' => 6,
             'thursday_hours'  => 6,
             'friday_hours'    => $friday_hours,
-            'is_agent'        => $is_agent
+            'is_agent'        => $is_agent,
+            'password'        => bcrypt('secret')
         ]))->save();
     }
 }

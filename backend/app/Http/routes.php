@@ -13,16 +13,27 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/api/projects/{id}', 'ProjectsController@show');
-Route::post('/api/projects', 'ProjectsController@store');
-Route::put('/api/projects/{id}', 'ProjectsController@update');
+Route::get('api/authenticate', 'AuthenticateController@index');
+Route::post('api/authenticate', 'AuthenticateController@authenticate');
 
-Route::get('/api/tasks', 'TasksController@index');
-Route::post('/api/tasks', 'TasksController@store');
-Route::get('/api/tasks/{id}', 'TasksController@show');
+Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
 
-Route::get('/api/agents', 'AgentsController@index');
+    // Projects
+    Route::get('projects/{id}', 'ProjectsController@show');
+    Route::post('projects', 'ProjectsController@store');
+    Route::put('projects/{id}', 'ProjectsController@update');
 
-Route::get('/api/timeline', 'TimelineController@index');
+    // Tasks
+    Route::get('tasks', 'TasksController@index');
+    Route::post('tasks', 'TasksController@store');
+    Route::get('tasks/{id}', 'TasksController@show');
+
+    // Agents
+    Route::get('agents', 'AgentsController@index');
+
+    // Timeline
+    Route::get('timeline', 'TimelineController@index');
+
+});
 
 Route::get('{path?}', ['uses' => 'MainController@index'])->where('path', '.+');

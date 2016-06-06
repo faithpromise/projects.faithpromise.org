@@ -4,6 +4,7 @@
         'ngAnimate',
         'ngRoute',
         'ngResource',
+        'satellizer',
         'angularMoment',
         'ui.bootstrap.dropdown',
         'monospaced.elastic'
