@@ -34,7 +34,7 @@
     <div class="Project-tasksColumn" ng-hide="vm.route_action === 'task'">
 
       <!-- New task form -->
-      <new-task project="vm.project" on-submit="vm.on_task_submitted()" on-success="vm.on_task_added()"></new-task>
+      <new-task ng-if="vm.project" project="vm.project" on-submit="vm.on_task_submitted()" on-success="vm.on_task_added()"></new-task>
 
       <img class="Project-tasksLoading" src="/build/images/loading-white-bg.gif" ng-hide="vm.tasks">
 
