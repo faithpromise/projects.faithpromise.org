@@ -14,16 +14,22 @@
         };
     }
 
-    Controller.$inject = [];
+    Controller.$inject = ['$auth', '$location'];
 
-    function Controller() {
+    function Controller($auth, $location) {
 
         var vm = this;
+        vm.logout = logout;
 
         init();
 
         function init() {
 
+        }
+
+        function logout() {
+            $auth.logout();
+            $location.path('/login');
         }
 
     }

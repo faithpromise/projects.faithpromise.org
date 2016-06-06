@@ -27,11 +27,12 @@
 
         $rootScope.$on('$locationChangeStart', function (/* event, next, current */) {
 
-            var logged_in     = $auth.isAuthenticated(),
-                is_logging_in = $location.path() === '/login';
+            var logged_in      = $auth.isAuthenticated(),
+                is_logging_in  = $location.path() === '/login',
+                is_public_path = /(\/login|\/logout)/.test($location.path());
 
             // Redirect to login if not authenticated
-            if (!logged_in && !is_logging_in) {
+            if (!logged_in && !is_public_path) {
                 $location.path('/login');
             }
 
