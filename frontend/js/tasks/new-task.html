@@ -1,8 +1,8 @@
 <form class="NewTask" ng-submit="vm.add()">
 
-  <div class="UserSelect">
-    <img class="UserSelect-selectedImage" ng-src="{{ vm.selected_agent.avatar_url }}" ng-click="vm.show_agents = !vm.show_agents; vm.show_duration = false">
-    <ul class="UserSelect-dropdown" ng-show="vm.show_agents">
+  <div class="UserSelect" uib-dropdown>
+    <img class="UserSelect-selectedImage" ng-src="{{ vm.selected_agent.avatar_url }}" uib-dropdown-toggle>
+    <ul class="dropdown-menu" uib-dropdown-menu>
       <li class="UserSelect-agent" ng-repeat="agent in vm.agents" ng-click="vm.selected_agent = agent; vm.show_agents = false">
         <img class="UserSelect-agentImage" ng-src="{{ agent.avatar_url }}">
         {{ agent.name }}
@@ -14,10 +14,11 @@
     <input type="text" ng-model="vm.task.name" placeholder="Task name...">
   </div>
 
-  <div class="DurationSelect">
-    <span class="DurationSelect-label" ng-click="vm.show_duration = !vm.show_duration; vm.show_agents = false">{{ vm.task.duration < 60 ? (vm.task.duration + ' min') : (vm.task.duration / 60) + ' hrs' }}</span>
-    <ul class="DurationSelect-dropdown" ng-model="vm.task.duration" ng-show="vm.show_duration">
+  <div class="DurationSelect" uib-dropdown>
+    <span class="DurationSelect-label" uib-dropdown-toggle>{{ vm.task.duration < 60 ? (vm.task.duration + ' min') : (vm.task.duration / 60) + ' hrs' }}</span>
+    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
       <li class="DurationSelect-item" ng-repeat="duration in vm.durations" ng-click="vm.task.duration = duration.value; vm.show_duration = false">{{ duration.label }}</li>
     </ul>
   </div>
+
 </form>
