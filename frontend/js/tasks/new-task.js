@@ -18,9 +18,9 @@
         };
     }
 
-    Controller.$inject = ['tasksService', 'agentsService'];
+    Controller.$inject = ['$auth', 'tasksService', 'agentsService'];
 
-    function Controller(tasksService, agentsService) {
+    function Controller($auth, tasksService, agentsService) {
 
         var vm = this;
         vm.add = add;
@@ -28,6 +28,7 @@
         init();
 
         function init() {
+            console.log('vm.project.id', vm.project);
             reset_task();
             fetch_agents();
             build_durations();
@@ -35,8 +36,8 @@
 
         function fetch_agents() {
             agentsService.all().then(function (result) {
-                vm.agents         = result.data.data;
-                vm.selected_agent = vm.agents[0];
+                vm.agents = result.data.data;
+                reset_default_agent();
             });
         }
 
@@ -47,10 +48,13 @@
                 vm.onSuccess();
             });
             reset_task();
+            reset_default_agent();
         }
 
         function reset_task() {
-            vm.task = { duration: 60 };
+            vm.task = {
+                duration: 60
+            };
         }
 
         function build_durations() {
@@ -73,6 +77,22 @@
                 { value: 5400, label: '90 hrs (about 3 weeks)' },
                 { value: 7200, label: '120 hrs (about 4 weeks)' }
             ];
+        }
+
+        function reset_default_agent() {
+
+            var selected_index  = 0,
+                current_user_id = $auth.getPayload().sub;
+
+            for (var i = 0; i <= vm.agents.length; i++) {
+                if (vm.agents[i].id === current_user_id) {
+                    selected_index = i;
+                    break;
+                }
+            }
+
+            vm.selected_agent = vm.agents[selected_index];
+
         }
 
     }
