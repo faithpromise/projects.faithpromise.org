@@ -11,6 +11,10 @@
 
             all: function() {
                 return $http.get('/api/agents');
+            },
+
+            find: function(id) {
+                return $http.get('/api/agents/' + id);
             }
 
         };
