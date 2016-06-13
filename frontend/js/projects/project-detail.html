@@ -1,10 +1,11 @@
 <div class="Project">
+
   <div class="Project-header">
     <div class="Project-titleColumn">
       <span class="Project-title"><a href="/people/{{ vm.project.requester.id }}">{{ vm.project.requester.name }}</a> / <span ng-if="vm.project.event"><a href="/events/{{ vm.project.event.id }}">{{ vm.project.event.name }}</a> / </span>{{ vm.project.name }}</span>
     </div>
     <div class="Project-statusColumn">
-      <span class="Project-status">Wating on Feedback</span>
+      <span class="Project-status">Waiting on Feedback</span>
     </div>
     <div class="Project-datesColumn">
       <span class="Project-due">Due on {{ vm.project.due_at | amDateFormat: 'MMMM D' }}</span>
@@ -13,6 +14,7 @@
         Estimated delivery: {{ vm.project.estimated_delivery_date | amDateFormat: 'MMMM D' }}</span>
     </div>
   </div>
+
   <div class="Project-body">
     <div class="Project-detailsColumn">
       <div class="Project-eventNotes" ng-if="vm.project.event">
@@ -25,10 +27,11 @@
       </div>
     </div>
     <div class="Project-commentsColumn">
+
     </div>
 
     <div class="Project-tasksColumn" ng-if="vm.route_action === 'task'">
-      <task-detail task="vm.selected_task" on-close="vm.on_task_closed()"></task-detail>
+      <task-detail task="vm.selected_task" on-close="vm.on_task_closed()" on-update="vm.on_task_updated()"></task-detail>
     </div>
 
     <div class="Project-tasksColumn" ng-hide="vm.route_action === 'task'">
@@ -42,19 +45,18 @@
 
         <div class="Task">
           <div class="Task-check">
-            <input type="checkbox">
+            <input type="checkbox" ng-model="task.foobar_required_for_ng_change" ng-change="vm.mark_task_completed(task)">
           </div>
           <span class="Task-info" ng-click="vm.open_task(task)" href="/projects/{{ vm.project.id }}/tasks/{{ task.id }}">
-            <div class="Task-name">{{ task.name }}</div>
+            <div class="Task-name">{{ task.name }} <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="task.saving"></div>
             <div class="Task-meta">
-              {{ task.agent.short_name }} &middot; {{ task.duration | amDurationFormat : 'minute' }} &middot; {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}<span ng-show="task.notes"> &middot; <i class="Task-icon icon-doc"></i></span>
+              {{ task.completed_at }} - {{ task.agent.short_name }} &middot; {{ task.duration | amDurationFormat : 'minute' }} &middot; {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}<span ng-show="task.notes"> &middot; <i class="Task-icon icon-doc"></i></span>
             </div>
           </span>
         </div>
 
-
       </div>
-      <p class="CompletedTask" ng-repeat="task in vm.tasks" ng-show="task.completed_at">{{ task.name }} on {{ task.completed_at | amDateFormat: 'MMMM D, YYYY' }}</p>
+      <p class="CompletedTask" ng-repeat="task in vm.tasks" ng-show="task.completed_at" ng-click="vm.open_task(task)">{{ task.name }} on {{ task.completed_at | amDateFormat: 'MMMM D, YYYY' }}</p>
     </div>
   </div>
 </div>

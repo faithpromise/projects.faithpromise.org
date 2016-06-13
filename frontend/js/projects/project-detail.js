@@ -21,16 +21,22 @@
         var vm                    = this,
             project_notes_timeout = null;
 
-        vm.route_action      = pike.bind($scope, 'project', on_route_change);
-        vm.new_task          = {};
-        vm.open_task         = open_task;
-        vm.on_task_closed    = on_task_closed;
-        vm.on_task_submitted = on_task_submitted;
-        vm.on_task_added     = on_task_added;
+        vm.route_action        = pike.bind($scope, 'project', on_route_change);
+        vm.new_task            = {};
+        vm.open_task           = open_task;
+        vm.on_task_closed      = on_task_closed;
+        vm.on_task_updated     = on_task_updated;
+        vm.on_task_submitted   = on_task_submitted;
+        vm.on_task_added       = on_task_added;
+        vm.mark_task_completed = mark_task_completed;
 
         init();
 
         function init() {
+            refresh();
+        }
+
+        function refresh() {
             fetchProject();
             fetchTasks();
         }
@@ -70,7 +76,7 @@
         }
 
         function on_task_added() {
-            fetchTasks();
+            refresh();
         }
 
         function open_task(task) {
@@ -78,17 +84,34 @@
             $location.url('/projects/' + vm.project.id + '/tasks/' + task.id);
         }
 
+        function on_task_updated() {
+            refresh();
+        }
+
         function on_task_closed() {
             $location.url('/projects/' + vm.project.id);
-            fetchTasks();
         }
 
         function on_route_change(event, next_action) {
             vm.route_action = next_action;
         }
 
+        function mark_task_completed(task) {
+            update_task(task, { completed_at: moment().format() });
+        }
+
+        function update_task(task, data) {
+            task.saving = true;
+            data.id     = task.id;
+            tasksService.update(data).then(function () {
+                delete task.saving;
+                angular.extend(task, data);
+                fetchProject();
+            });
+        }
+
         $scope.$watch('vm.project.notes', auto_save_project_notes);
 
     }
 
-})(angular.module('app'), angular);
+})(angular.module('app'), angular, moment);
