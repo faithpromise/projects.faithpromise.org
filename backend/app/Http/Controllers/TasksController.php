@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TaskCreated;
+use App\Events\TaskChanged;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -36,7 +36,7 @@ class TasksController extends Controller {
      */
     public function store(Request $request) {
         $task = Task::create($request->input('data'));
-        Event::fire(new TaskCreated($task));
+        Event::fire(new TaskChanged($task));
     }
 
     /**
@@ -61,7 +61,7 @@ class TasksController extends Controller {
     public function update(Request $request, $id) {
         $task = Task::find($id);
         $task->update($request->input('data'));
-        Event::fire(new TaskUpdated($task));
+        Event::fire(new TaskChanged($task));
     }
 
     /**
@@ -73,6 +73,6 @@ class TasksController extends Controller {
     public function destroy($id) {
         $task = Task::find($id);
         $task->delete();
-        Event::fire(new TaskDeleted($task));
+        Event::fire(new TaskChanged($task));
     }
 }

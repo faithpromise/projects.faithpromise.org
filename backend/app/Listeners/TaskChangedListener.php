@@ -2,10 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskCreated;
+use App\Events\TaskChanged;
 use App\Services\TimelineBuilder;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class TaskChangedListener {
     /**
@@ -20,10 +18,10 @@ class TaskChangedListener {
     /**
      * Handle the event.
      *
-     * @param  TaskCreated $event
+     * @param  TaskChanged $event
      * @return void
      */
-    public function handle(TaskCreated $event) {
+    public function handle(TaskChanged $event) {
         TimelineBuilder::createTimeline($event->task->agent);
     }
 }
