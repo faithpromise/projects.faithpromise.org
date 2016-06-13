@@ -6,7 +6,7 @@ module.exports = function (grunt) {
 
         app_css: {
             files: ['frontend/less/**/*.less'],
-            tasks: ['less:app', 'autoprefixer:app']
+            tasks: ['less:app', 'postcss:app']
         },
 
         app_js: {
