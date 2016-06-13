@@ -38,6 +38,7 @@
           <i class="icon-check-empty Timeline-taskIcon"></i>
         </div>
         <div class="Timeline-taskInfo">
+          <!-- TODO: Jump to task - link the task. Need to link to either event or project task -->
           <div class="Timeline-taskName">{{ task.name }} {{ task.project || task.event ? ' / ' : '' }} <a href="/projects/{{ task.project.id }}" ng-if="task.project">{{ task.project.full_name }}</a> <a href="/events/{{ task.event.id }}" ng-if="task.event && !task.project">{{ task.event.name }}</a></div>
           <div class="Timeline-taskMeta">{{ task.duration | amDurationFormat : 'minute' }} &middot; Due in {{ task.due_at | amDifference: null : 'days' }} days</div>
         </div>
