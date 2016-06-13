@@ -1,0 +1,102 @@
+.TaskDetail {
+  display:          flex;
+  flex-direction:   column;
+  height:           ~"calc(100vh - 64px - 80px)"; // - nav and project header
+  background-color: #fafafa;
+}
+
+.TaskDetail-header {
+  display:          flex;
+  height:           55px;
+  border-bottom:    1px solid #ebebeb;
+  background-color: #fff;
+  align-items:      center;
+}
+
+.TaskDetail-name {
+  flex-grow:     1;
+  padding-right: 30px;
+  border:        none;
+  font-size:     18px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.TaskDetail-check {
+  width:      42px;
+  font-size:  22px;
+  text-align: center;
+  cursor:     pointer;
+}
+
+.TaskDetail-section {
+  display: flex;
+  //min-height:  48px;
+  //align-items: center;
+}
+
+.TaskDetail-icon {
+  width:       42px;
+  padding-top: 17px;
+  text-align:  center;
+  color:       #a3a3a2;
+}
+
+.TaskDetail-content {
+  flex-grow:     1;
+  padding:       12px 0;
+  border-bottom: 1px solid #ebebeb;
+  color:         #9fa2a6;
+
+  &.has-value {
+    color: @root-text-color;
+  }
+
+}
+
+.TaskDetail-textarea {
+  width:            100%;
+  padding:          0;
+  border:           none;
+  background-color: transparent;
+  resize:           none !important;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.TaskDetail-body {
+  flex-grow: 1;
+}
+
+.TaskDetail-footer {
+  display:          flex;
+  align-items:      center;
+  padding:          10px;
+  font-size:        11px;
+  background-color: #fff;
+  border-top:       1px solid #ebebeb;
+  color:            #a3a3a2;
+}
+
+.TaskDetail-created {
+  width:      60%;
+  text-align: center;
+}
+
+.TaskDetail-close,
+.TaskDetail-trash {
+  width: 40%;
+}
+
+.TaskDetail-trash {
+  text-align: right;
+}
+
+.TaskDetail-footerIcon {
+  vertical-align: middle;
+  font-size:      16px;
+}
