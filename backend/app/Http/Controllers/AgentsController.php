@@ -45,7 +45,9 @@ class AgentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+        return [
+            'data' => Agent::find($id)
+        ];
     }
 
     /**
