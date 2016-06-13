@@ -26,10 +26,12 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     // Tasks
     Route::get('tasks', 'TasksController@index');
     Route::post('tasks', 'TasksController@store');
+    Route::put('tasks/{id}', 'TasksController@update');
     Route::get('tasks/{id}', 'TasksController@show');
 
     // Agents
     Route::get('agents', 'AgentsController@index');
+    Route::get('agents/{id}', 'AgentsController@show');
 
     // Timeline
     Route::get('timeline', 'TimelineController@index');
