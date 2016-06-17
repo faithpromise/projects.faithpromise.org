@@ -1,4 +1,4 @@
-<form class="Comment" ng-submit="vm.save_comment()">
+<form class="Comment">
 
   <div class="NewComment-header">
     <div class="NewComment-avatarWrap">
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <button class="Button Button--sm Button--block Button--primary" type="submit">Send</button>
+  <button class="Button Button--sm Button--block Button--primary" type="button" ng-click="vm.save_comment($event)">Send</button>
 
   <!--<user-picker placeholder="Add recipients" selected="vm.recipients"></user-picker>-->
 
