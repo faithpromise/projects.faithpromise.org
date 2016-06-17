@@ -22,6 +22,10 @@ class TaskChangedListener {
      * @return void
      */
     public function handle(TaskChanged $event) {
-        TimelineBuilder::createTimeline($event->task->agent);
+        TimelineBuilder::createTimeline($event->new_task->agent);
+
+        if ($event->old_task && $event->old_task->agent_id !== $event->new_task->agent_id) {
+            TimelineBuilder::createTimeline($event->old_task->agent);
+        }
     }
 }

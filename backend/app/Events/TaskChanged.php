@@ -9,15 +9,18 @@ class TaskChanged extends Event {
 
     use SerializesModels;
 
-    public $task;
+    public $new_task;
+    public $old_task;
 
     /**
      * Create a new event instance.
      *
-     * @param Task $task
+     * @param Task $new_task
+     * @param Task $old_task
      */
-    public function __construct(Task $task) {
-        $this->task = $task;
+    public function __construct(Task $new_task, Task $old_task = null) {
+        $this->new_task = $new_task;
+        $this->old_task = $old_task;
     }
 
     /**

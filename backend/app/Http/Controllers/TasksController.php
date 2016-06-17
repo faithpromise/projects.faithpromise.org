@@ -59,9 +59,10 @@ class TasksController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $task = Task::find($id);
-        $task->update($request->input('data'));
-        Event::fire(new TaskChanged($task));
+        $old_task = Task::find($id);
+        $new_task = Task::find($id);
+        $new_task->update($request->input('data'));
+        Event::fire(new TaskChanged($new_task, $old_task));
     }
 
     /**
