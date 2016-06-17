@@ -1,22 +1,3 @@
-<!--<div class="Timeline">-->
-
-<!--<div class="Timeline-day" ng-repeat="(day_index, day) in vm.days">-->
-<!--<div class="Timeline-dayHeader">-->
-<!--<div class="Timeline-dow">{{ day | amDateFormat: 'ddd' }}</div>-->
-<!--<div class="Timeline-date">{{ day | amDateFormat: 'MMM D' }}</div>-->
-<!--</div>-->
-<!--<div class="Timeline-agents">-->
-<!--<div class="Timeline-agent" ng-repeat="agent in vm.agents" ng-class="{ 'no-capacity': agent.timeline_days[day_index].capacity == 0 }">-->
-<!--<div class="Timeline-agentHeader">-->
-<!--<div class="Timeline-agentGravatar">{{ agent.abbreviation }}</div>-->
-<!--</div>-->
-<!--<div class="Timeline-task" ng-repeat="task in agent.timeline_days[day_index].timeline_tasks" ng-class="{ 'is-start': task.is_start, 'is-end': task.is_end }" ng-style="{ 'height': (task.percentage) + '%' }" ng-attr-title="{{ task.name + ' (' + vm.get_duration(task.duration) + ')' }}"></div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-
 <div class="Timeline">
 
   <div class="Timeline-agent" ng-repeat="agent in vm.agents">
