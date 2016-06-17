@@ -35,11 +35,11 @@ class User extends Authenticatable {
         return trim($this->first_name . ' ' . $this->last_name);
     }
 
-    public function getShortNameAttribute() {
-        return trim($this->first_name . ' ' . substr($this->last_name, 0, 1));
+    public function getAbbreviationAttribute() {
+        return trim($this->first_name . ' ' . substr($this->last_name, 0, 1) . '.');
     }
 
-    public function getAbbreviationAttribute() {
+    public function getInitialsAttribute() {
         return strtoupper(substr($this->first_name, 0, 1) . substr($this->last_name, 0, 1));
     }
 
