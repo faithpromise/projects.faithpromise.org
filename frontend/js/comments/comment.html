@@ -1,0 +1,19 @@
+<div class="Comment">
+
+  <div class="Comment-header">
+    <div class="Comment-avatarWrap">
+      <img class="Comment-avatar" ng-src="{{ vm.comment.sender.avatar_url }}">
+    </div>
+    <div class="Comment-meta">
+      <h4 class="Comment-sender">{{ vm.comment.sender.name }}</h4>
+      <span class="Comment-subject">re: {{ vm.comment.subject }}</span><span class="Comment-date">{{ vm.comment.created_at | amUtc | amTimeAgo }}</span><span class="Comment-reply">reply</span>
+    </div>
+  </div>
+
+  <div class="Comment-body">{{ vm.comment.body }}</div>
+
+  <ul class="Comment-recipients">
+    <li class="Comment-recipient" ng-repeat="recipient in vm.comment.recipients"><img class="Comment-recipientAvatar" ng-src="{{ recipient.avatar_url }}"> {{ recipient.abbreviation }}</li>
+  </ul>
+
+</div>
