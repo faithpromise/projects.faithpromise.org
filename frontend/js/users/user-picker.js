@@ -12,7 +12,8 @@
             controllerAs:     'vm',
             bindToController: {
                 placeholder: '@?',
-                selected:    '=?'
+                selected:    '=?',
+                onChange:    '&?'
             },
             scope:            {}
         };
@@ -42,6 +43,9 @@
         function add_user(item) {
             if (user_index(item.obj) === -1) {
                 vm.selected.push(item.obj);
+                if (vm.onChange) {
+                    vm.onChange();
+                }
             }
             vm.dirty = '';
         }
