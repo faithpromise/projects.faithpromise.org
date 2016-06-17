@@ -25,9 +25,17 @@
         <div><span class="Label">Project Notes <img class="Label-loading" src="/build/images/loading-white-bg.gif" ng-show="vm.project_notes_saving"></span></div>
         <textarea class="Project-textarea" ng-model="vm.project.notes" msd-elastic></textarea>
       </div>
-    </div>
-    <div class="Project-commentsColumn">
 
+      <div class="Project-entry">
+        <div class="Label">Default Recipients</div>
+        <user-picker></user-picker>
+      </div>
+    </div>
+
+    <!--Comments-->
+    <div class="Project-commentsColumn">
+      <new-comment ng-if="vm.project" project="vm.project"></new-comment>
+      <comments ng-if="vm.project" project="vm.project"></comments>
     </div>
 
     <div class="Project-tasksColumn" ng-if="vm.route_action === 'task'">
@@ -50,7 +58,7 @@
           <span class="Task-info" ng-click="vm.open_task(task)" href="/projects/{{ vm.project.id }}/tasks/{{ task.id }}">
             <div class="Task-name">{{ task.name }} <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="task.saving"></div>
             <div class="Task-meta">
-              {{ task.completed_at }} - {{ task.agent.short_name }} &middot; {{ task.duration | amDurationFormat : 'minute' }} &middot; {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}<span ng-show="task.notes"> &middot; <i class="Task-icon icon-doc"></i></span>
+              {{ task.completed_at }} - {{ task.agent.short_name }} &middot; {{ task.duration | amDurationFormat : 'minute' }} &middot; Start {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}<span ng-show="task.notes"> &middot; <i class="Task-icon icon-doc"></i></span>
             </div>
           </span>
         </div>
