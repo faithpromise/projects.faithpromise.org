@@ -16,12 +16,9 @@ class CommentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
+
         $event_id = $request->input('event_id');
         $project_id = $request->input('project_id');
-
-//        $comments = Message::with('sender')->with(['replies' => function($query) {
-//            $query->with('sender')->orderBy('created_at', 'asc');
-//        }])->orderBy('created_at', 'desc');
 
         $comments = Comment::with('sender')->with('recipients')->with('parent')->orderBy('created_at', 'desc');
 
