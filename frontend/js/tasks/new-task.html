@@ -2,7 +2,7 @@
 
   <div class="NewTask-agent" ng-style="{ 'background-image': 'url(' + vm.avatar_url + ')' }">
     <!--<select class="CustomSelect-control" ng-model="vm.selected_agent" ng-options="agent.name for agent in vm.agents"></select>-->
-    <task-agent-picker task="vm.task" task="vm.task" on-change="vm.on_agent_changed(agent)"></task-agent-picker>
+    <agent-picker agent_id="vm.task.agent_id" on-change="vm.on_agent_changed(agent)"></agent-picker>
   </div>
 
   <div class="NewTask-name">

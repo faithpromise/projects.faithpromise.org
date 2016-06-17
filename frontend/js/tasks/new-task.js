@@ -64,7 +64,8 @@
 
         function on_agent_changed(agent) {
             console.log('agent', agent);
-            vm.avatar_url = agent.avatar_url;
+            vm.task.agent_id = agent.id;
+            vm.avatar_url    = agent.avatar_url;
         }
 
     }
