@@ -29,6 +29,7 @@
         vm.on_task_submitted   = on_task_submitted;
         vm.on_task_added       = on_task_added;
         vm.mark_task_completed = mark_task_completed;
+        vm.save_recipients     = save_recipients;
 
         init();
 
@@ -57,6 +58,19 @@
             return tasksService.byProject($routeParams.id).then(function (result) {
                 vm.tasks = result.data.data;
             });
+        }
+
+        function save_recipients() {
+            var data = gather_recipient_ids();
+            projectsService.save_recipients($routeParams.id, data);
+        }
+
+        function gather_recipient_ids() {
+            var results = [];
+            for (var i = 0; i < vm.project.recipients.length; i++) {
+                results.push(vm.project.recipients[i].id);
+            }
+            return results;
         }
 
         function save_project_notes() {
