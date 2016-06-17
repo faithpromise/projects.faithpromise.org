@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable {
 
     protected $table = 'users';
-    public $appends = ['name', 'short_name', 'abbreviation'];
+    public $appends = ['name', 'initials', 'abbreviation', 'avatar_url'];
 
     /**
      * The attributes that are mass assignable.
