@@ -38,10 +38,12 @@
       <comments ng-if="vm.project" project="vm.project"></comments>
     </div>
 
+    <!-- Task Detail -->
     <div class="Project-tasksColumn" ng-if="vm.route_action === 'task'">
       <task-detail task="vm.selected_task" on-close="vm.on_task_closed()" on-update="vm.on_task_updated()"></task-detail>
     </div>
 
+    <!-- Tasks -->
     <div class="Project-tasksColumn" ng-hide="vm.route_action === 'task'">
 
       <!-- New task form -->
