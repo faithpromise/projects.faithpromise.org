@@ -12,7 +12,7 @@ class ProjectsController extends Controller {
     public function show($id) {
 
         return [
-            'data' => Project::with('event','agent','requester')->whereId($id)->first()
+            'data' => Project::with('event','agent','requester', 'recipients')->whereId($id)->first()
         ];
 
     }
@@ -23,6 +23,10 @@ class ProjectsController extends Controller {
 
     public function update($id, Request $request) {
         Project::findOrFail($id)->update($request->all());
+    }
+
+    public function updateRecipients($id, Request $request) {
+        Project::findOrFail($id)->recipients()->sync($request->input('data'));
     }
 
 }
