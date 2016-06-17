@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Agent extends User {
 
     private $dow_columns = ['sunday_hours', 'monday_hours', 'tuesday_hours', 'wednesday_hours', 'thursday_hours', 'friday_hours', 'saturday_hours'];
-    public $appends = ['name', 'short_name', 'abbreviation', 'workload', 'available_at', 'avatar_url'];
+    public $appends = ['name', 'initials', 'abbreviation', 'workload', 'available_at', 'avatar_url'];
     protected $dates = ['available_at', 'created_at', 'updated_at'];
 
     protected static function boot() {
@@ -52,10 +52,6 @@ class Agent extends User {
     public function getAvailableAtAttribute() {
         $max_day = new Carbon($this->timeline_days()->max('day'));
         return $max_day->addDay()->toDateString();
-    }
-
-    public function getAvatarUrlAttribute() {
-        return "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) ) . "?d=monsterid&s=200";
     }
 
 }

@@ -39,4 +39,8 @@ class User extends Authenticatable {
         return strtoupper(substr($this->first_name, 0, 1) . substr($this->last_name, 0, 1));
     }
 
+    public function getAvatarUrlAttribute() {
+        return "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->email))) . "?d=monsterid&s=200";
+    }
+
 }
