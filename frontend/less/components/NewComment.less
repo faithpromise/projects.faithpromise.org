@@ -1,0 +1,147 @@
+
+.NewComment-header {
+  &:extend(.Comment-header);
+}
+
+.NewComment-avatarWrap {
+  &:extend(.Comment-avatarWrap);
+}
+
+.NewComment-meta {
+  &:extend(.Comment-meta);
+}
+
+.NewComment-subject,
+.NewComment-subjectInput {
+  &:extend(.Comment-sender);
+}
+
+.NewComment-subjectInput {
+  width:   100%;
+  padding: 5px 0;
+  border:  none;
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.NewComment-editSubjectIcon {
+  font-size: 12px;
+  color:     @anchor-text-color;
+  cursor:    pointer;
+}
+
+.NewComment-avatar {
+  &:extend(.Comment-avatar);
+}
+
+.NewComment-body {
+  &:extend(.Comment-body all);
+  width:            100%;
+  margin-bottom:    7px;
+  padding:          15px;
+  white-space:      normal;
+  border-color:     #e0e0e0;
+  background-color: #fff;
+
+  &:before {
+    border-bottom-color: #e0e0e0;
+  }
+
+  &:after {
+    border-bottom-color: #fff;
+  }
+
+  & > textarea {
+    width:      100%;
+    padding:    0;
+    border:     none;
+    background: transparent;
+    resize:     vertical !important;
+    &:focus {
+      outline: none !important;
+    }
+  }
+}
+
+.NewComment-recipientsWrap {
+  display:       flex;
+  margin-bottom: 7px;
+  padding:       0 4px;
+  border:        1px solid #e0e0e0;
+  border-radius: 4px;
+
+  .UserPicker-input {
+    border:    none;
+    padding:   7px;
+    font-size: 13px;
+
+    &:focus {
+      outline: none !important;
+    }
+  }
+}
+
+.NewComment-addRecipients {
+  flex-grow: 1;
+  min-width: 200px;
+}
+
+.NewComment-existingRecipients {
+  padding-left: 10px;
+}
+
+.NewComment-recipients {
+  &:extend(.Comment-recipients);
+}
+
+.NewComment-recipient {
+  &:extend(.Comment-recipient);
+  cursor: pointer;
+  &:hover {
+    text-decoration: line-through;
+  }
+}
+
+.NewComment-recipientAvatar {
+  &:extend(.Comment-recipientAvatar);
+}
+
+//.NewComment {
+//  display:       flex;
+//  padding:       20px 15px;
+//  border-bottom: 1px solid #efefef;
+//  background:    #f7f7f7;
+//}
+//
+//.NewComment-avatar {
+//  width:         44px;
+//  height:        44px;
+//  border-radius: 22px;
+//}
+//
+//.NewComment-content {
+//  padding-left: 10px;
+//  flex-grow:    1;
+//}
+//
+//.NewComment-body {
+//  width:  100%;
+//  resize: vertical;
+//}
+//
+//.NewComment-body,
+//.NewComment-subject {
+//  margin-bottom: 7px;
+//  padding:       7px;
+//  border:        1px solid #e0e0e0;
+//  border-radius: 4px;
+//}
+//
+//.NewComment-subject {
+//  width: 100%;
+//}
+//
+//.NewComment-footer {
+//  margin-top: 7px;
+//}

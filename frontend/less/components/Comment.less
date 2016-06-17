@@ -1,0 +1,121 @@
+.Comments-loading {
+  margin: 15px;
+}
+
+.Comment {
+  //display: flex;
+  padding: 20px;
+}
+
+//.Comment-avatarColumn {
+//  flex-shrink: 1;
+//}
+
+.Comment-header {
+  display:     flex;
+  align-items: center;
+}
+
+.Comment-avatarWrap {
+  flex-shrink: 1;
+}
+
+.Comment-meta {
+  flex-grow:    1;
+  padding-left: 10px;
+  font-size:    13px;
+  line-height:  1.2;
+}
+
+.Comment-sender {
+  margin:      0 0 1px;
+  font-size:   14px;
+  font-weight: bold;
+}
+
+.Comment-avatar {
+  width:         32px;
+  height:        32px;
+  border-radius: 16px;
+}
+
+.Comment-date,
+.Comment-subject {
+  &:after {
+    content: '\b7'; // &middot;
+    display: inline-block;
+    padding: 0 0.5em;
+  }
+}
+
+.Comment-reply,
+.Comment-subject,
+.Comment-date {
+  color: #929292;
+}
+
+.Comment-reply {
+  text-decoration: underline;
+  cursor:          pointer;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.Comment-body {
+  position:      relative;
+  margin-top:    18px;
+  padding:       10px;
+  border:        1px solid #efefef;
+  border-radius: 8px;
+  background:    #f7f7f7;
+  white-space:   pre-wrap;
+  font-size:     14px;
+
+  &:before {
+    content:       '';
+    position:      absolute;
+    top:           -9px;
+    left:          8px;
+    width:         0;
+    height:        0;
+    border-left:   8px solid transparent;
+    border-right:  8px solid transparent;
+    border-bottom: 8px solid #efefef;
+  }
+
+  &:after {
+    content:       '';
+    position:      absolute;
+    top:           -8px;
+    left:          8px;
+    width:         0;
+    height:        0;
+    border-left:   8px solid transparent;
+    border-right:  8px solid transparent;
+    border-bottom: 8px solid #f7f7f7;
+  }
+}
+
+.Comment-recipients {
+  margin-bottom: 0;
+  list-style:    none;
+  text-align:    right;
+  color:         #929292;
+  user-select:   none;
+  cursor:        default;
+}
+
+.Comment-recipient {
+  display:     inline-block;
+  margin:      7px 14px 0 3px;
+  font-size:   12px;
+  white-space: nowrap;
+}
+
+.Comment-recipientAvatar {
+  width:          22px;
+  height:         22px;
+  border-radius:  11px;
+  vertical-align: middle;
+}

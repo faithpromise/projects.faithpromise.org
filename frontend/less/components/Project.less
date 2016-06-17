@@ -9,18 +9,18 @@
 }
 
 .Project {
-  position:       absolute;
-  bottom:         0;
-  left:           0;
-  display:        flex;
-  flex-direction: column;
-  height:         ~"calc(100vh - @{Nav-height})";
-  width:          100%;
+  //position: absolute;
+  //bottom:   0;
+  //left:     0;
+  //display:        flex;
+  //flex-direction: column;
+  //height:         ~"calc(100vh - @{Nav-height})";
+  width: 100%;
 }
 
 .Project-body {
-  display:   flex;
-  flex-grow: 1;
+  display: flex;
+  //flex-grow: 1;
   //background-color: #eee;
 }
 
@@ -41,7 +41,7 @@
 .Project-detailsColumn,
 .Project-tasksColumn,
 .Project-commentsColumn {
-  overflow-y: auto;
+  //overflow-y: auto;
 }
 
 .Project-detailsColumn,
@@ -50,14 +50,16 @@
 }
 
 .Project-commentsColumn {
-  flex-grow:    1;
+  //flex-grow:    1;
+  width:        50%;
   border-left:  1px solid @grid-border-color;
   border-right: 1px solid @grid-border-color;
 }
 
 .Project-entry {
-  padding:       0 20px;
+  padding:       0 20px 20px;
   margin-bottom: 20px;
+  border-bottom: 1px solid @grid-border-color;
 }
 
 .Project-header {
