@@ -43,7 +43,12 @@
 
         function fetchProject() {
             return projectsService.find($routeParams.id).then(function (result) {
-                vm.project = result.data.data;
+                // If project is reset, some directives will be re-initialized (<comments ng-if="vm.project">)
+                if (vm.project) {
+                    angular.extend(vm.project, result.data.data);
+                } else {
+                    vm.project = result.data.data;
+                }
             });
         }
 
