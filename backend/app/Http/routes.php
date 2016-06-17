@@ -30,11 +30,19 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     Route::get('tasks/{id}', 'TasksController@show');
 
     // Agents
+    Route::get('users', 'UsersController@index');
+    Route::get('users/{id}', 'UsersController@show');
+
+    // Agents
     Route::get('agents', 'AgentsController@index');
     Route::get('agents/{id}', 'AgentsController@show');
 
     // Timeline
     Route::get('timeline', 'TimelineController@index');
+
+    // Messages
+    Route::get('comments', 'CommentsController@index');
+    Route::post('comments', 'CommentsController@store');
 
 });
 
