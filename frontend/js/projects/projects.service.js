@@ -18,7 +18,7 @@
             },
 
             create: function (project) {
-                return $http.post('/api/projects', project);
+                return $http.post('/api/projects', { 'data': project });
             },
 
             update: function (id, project) {
