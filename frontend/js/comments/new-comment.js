@@ -46,7 +46,7 @@
         function reset() {
             vm.comment.body    = '';
             vm.comment.subject = 'New Comment';
-            vm.recipients      = vm.default_recipients ? angular.copy(vm.default_recipients) : [];
+            vm.recipients      = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
             vm.sender          = default_sender;
         }
 
