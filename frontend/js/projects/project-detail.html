@@ -28,7 +28,10 @@
 
       <div class="Project-entry">
         <div class="Label">Default Recipients</div>
-        <user-picker></user-picker>
+        <user-picker selected="vm.project.recipients" on-change="vm.save_recipients()"></user-picker>
+        <ul>
+          <li ng-repeat="recipient in vm.project.recipients">{{ recipient.name }}</li>
+        </ul>
       </div>
     </div>
 
