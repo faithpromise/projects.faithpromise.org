@@ -46,6 +46,10 @@ class Project extends Model {
         return $this->hasManyThrough(File::class, Comment::class);
     }
 
+    public function recipients() {
+        return $this->belongsToMany(User::class, 'project_recipients', 'project_id', 'user_id');
+    }
+
     public function getFullNameAttribute() {
         $event = $this->event;
 
