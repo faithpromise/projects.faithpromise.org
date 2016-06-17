@@ -1,4 +1,4 @@
-(function(module) {
+(function (module) {
     'use strict';
 
     module.factory('projectsService', service);
@@ -9,11 +9,11 @@
 
         return {
 
-            all: function() {
+            all: function () {
                 return $http.get('/api/projects');
             },
 
-            find: function(id) {
+            find: function (id) {
                 return $http.get('/api/projects/' + id);
             },
 
@@ -23,6 +23,10 @@
 
             update: function (id, project) {
                 return $http.put('/api/projects/' + id, project);
+            },
+
+            save_recipients: function (id, data) {
+                return $http.put('/api/projects/' + id + '/recipients', { data: data });
             }
 
         };
