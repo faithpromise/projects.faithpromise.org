@@ -10,8 +10,8 @@ module.exports = function (grunt) {
         js:         {
             src:  [
                 'bower_components/angular-elastic/elastic.js',
-                'bower_components/angular-ui-bootstrap/src/dropdown/dropdown.js',
-                'bower_components/angular-ui-bootstrap/src/position/position.js',
+                'bower_components/angular-mass-autocomplete/massautocomplete.js',
+                'bower_components/angular-PubSub/src/angular-pubsub.js',
                 'frontend/js/app.module.js',
                 'frontend/js/**/*.js'
             ],

@@ -18,6 +18,8 @@
     "angular-toastr": "~1.5.0",
     "angular-ui-bootstrap": "https://github.com/angular-ui/bootstrap.git#master",
     "bootstrap": "^3.3.6",
-    "angular-elastic": "^2.5.1"
+    "angular-elastic": "^2.5.1",
+    "angular-PubSub": "angular.pubsub#*",
+    "angular-mass-autocomplete": "^0.2.3"
   }
 }

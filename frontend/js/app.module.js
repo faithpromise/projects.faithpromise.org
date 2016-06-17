@@ -6,8 +6,9 @@
         'ngResource',
         'satellizer',
         'angularMoment',
-        'ui.bootstrap.dropdown',
-        'monospaced.elastic'
+        'monospaced.elastic',
+        'PubSub',
+        'MassAutoComplete'
     ]);
 
 })(angular);
