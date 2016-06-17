@@ -18,8 +18,12 @@ class Comment extends Model {
         return $this->belongsTo(Task::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function sender() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function parent() {
+        return $this->belongsTo(Comment::class, 'parent_id');
     }
 
 }
