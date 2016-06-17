@@ -19,7 +19,6 @@ class CreateProjectsTable extends Migration {
             $table->string('name', 200);
             $table->text('notes');
             $table->string('status', 50);
-            $table->string('default_recipients', 255)->nullable();
 
             // Purchase
             $table->boolean('is_purchase');
