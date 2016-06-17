@@ -113,6 +113,12 @@
       "css": "cancel",
       "code": 59409,
       "src": "entypo"
+    },
+    {
+      "uid": "2c576f7c6c3233c31abad0899fc9f4af",
+      "css": "user",
+      "code": 59410,
+      "src": "elusive"
     }
   ]
 }
