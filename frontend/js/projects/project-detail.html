@@ -37,8 +37,8 @@
 
     <!--Comments-->
     <div class="Project-commentsColumn">
-      <new-comment ng-if="vm.project" project="vm.project"></new-comment>
-      <comments ng-if="vm.project" project="vm.project"></comments>
+      <new-comment ng-if="vm.project.id" project="vm.project"></new-comment>
+      <comments ng-if="vm.project.id" project="vm.project"></comments>
     </div>
 
     <!-- Task Detail -->
