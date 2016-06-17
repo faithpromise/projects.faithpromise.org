@@ -9,10 +9,10 @@
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',
-            bindToController: true,
-            scope:            {
+            bindToController: {
                 project: '='
-            }
+            },
+            scope:            true
         };
     }
 
