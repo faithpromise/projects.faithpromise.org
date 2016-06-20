@@ -11,6 +11,10 @@ class TimelineBuilder {
 
     public static function createTimeline(Agent $agent) {
 
+        if (is_numeric($agent)) {
+            $agent = Agent::find($agent);
+        }
+
         TimelineTask::where('agent_id', '=', $agent->id)->delete();
         TimelineDay::where('agent_id', '=', $agent->id)->delete();
 
