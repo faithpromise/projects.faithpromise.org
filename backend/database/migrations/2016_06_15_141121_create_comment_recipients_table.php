@@ -14,7 +14,6 @@ class CreateCommentRecipientsTable extends Migration {
         Schema::create('comment_recipients', function (Blueprint $table) {
             $table->integer('comment_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->timestamps();
         });
     }
 
