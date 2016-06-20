@@ -29,6 +29,7 @@
         vm.on_task_submitted   = on_task_submitted;
         vm.on_task_added       = on_task_added;
         vm.mark_task_completed = mark_task_completed;
+        vm.remove_recipient    = remove_recipient;
         vm.save_recipients     = save_recipients;
 
         init();
@@ -63,6 +64,15 @@
         function save_recipients() {
             var data = gather_recipient_ids();
             projectsService.save_recipients($routeParams.id, data);
+        }
+
+        function remove_recipient(user) {
+            for (var i = vm.project.recipients.length - 1; i >= 0; i--) {
+                if (vm.project.recipients[i].id == user.id) {
+                    vm.project.recipients.splice(i, 1);
+                }
+            }
+            save_recipients();
         }
 
         function gather_recipient_ids() {
