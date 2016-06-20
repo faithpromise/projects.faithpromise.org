@@ -13,6 +13,7 @@ class CommentsController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
@@ -20,7 +21,7 @@ class CommentsController extends Controller {
         $event_id = $request->input('event_id');
         $project_id = $request->input('project_id');
 
-        $comments = Comment::with('sender')->with('recipients')->with('parent')->orderBy('created_at', 'desc');
+        $comments = Comment::with('sender')->with('recipients')->orderBy('created_at', 'desc');
 
         if ($project_id) {
             $project = Project::find($project_id);
@@ -48,8 +49,8 @@ class CommentsController extends Controller {
      */
     public function store(Request $request) {
         $data = $request->input('data');
-        $message = Message::create($data);
-        $message->recipients()->attach($data['recipients']);
+        $comment = Comment::create($data);
+        $comment->recipients()->attach($data['recipients']);
     }
 
     /**
