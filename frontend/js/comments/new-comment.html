@@ -24,7 +24,9 @@
     </div>
   </div>
 
-  <button class="Button Button--sm Button--block Button--primary" type="button" ng-click="vm.save_comment($event)">Send</button>
+  <div class="Button Button--sm" ngf-select="vm.upload($files)" ng-model="vm.files" ngf-multiple="true">Upload Files</div>
+
+  <button class="Button Button--sm Button--primary" type="button" ng-click="vm.save_comment()">Send</button>
 
   <!--<user-picker placeholder="Add recipients" selected="vm.recipients"></user-picker>-->
 

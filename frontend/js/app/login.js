@@ -34,8 +34,6 @@
                 password: vm.password
             };
 
-            console.log('credentials', credentials);
-
             $auth.login(credentials).then(function (data) {
                 // If login is successful, redirect to the users state
                 $location.path('/');

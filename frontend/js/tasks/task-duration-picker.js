@@ -42,7 +42,6 @@
         ];
 
         function on_change_handler() {
-            console.log('calling onChange');
             if (this.onChange) {
                 this.onChange();
             }

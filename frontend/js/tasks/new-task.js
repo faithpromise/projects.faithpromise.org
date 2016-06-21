@@ -37,7 +37,6 @@
 
         function get_default_agent() {
             agentsService.find($auth.getPayload().sub).then(function (result) {
-                console.log('result.data', result.data);
                 default_agent = result.data.data;
                 reset_agent();
             });
@@ -63,7 +62,6 @@
         }
 
         function on_agent_changed(agent) {
-            console.log('agent', agent);
             vm.task.agent_id = agent.id;
             vm.avatar_url    = agent.avatar_url;
         }

@@ -22,7 +22,7 @@ class CommentsController extends Controller {
         $event_id = $request->input('event_id');
         $project_id = $request->input('project_id');
 
-        $comments = Comment::with('sender')->with('recipients')->orderBy('created_at', 'desc');
+        $comments = Comment::with('sender')->with('recipients')->with('attachments')->where('type', '!=', 'draft')->orderBy('created_at', 'desc');
 
         if ($project_id) {
             $project = Project::find($project_id);
@@ -49,10 +49,19 @@ class CommentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+
         $data = $request->input('data');
         $comment = Comment::create($data);
-        $comment->recipients()->attach($data['recipients']);
+
+        if (array_key_exists('recipients', $data) && !empty($data['recipients'])) {
+            $comment->recipients()->attach($data['recipients']);
+        }
+
         Event::fire(new CommentCreated($comment));
+
+        return [
+            'data' => $comment
+        ];
     }
 
     /**
@@ -73,7 +82,17 @@ class CommentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+
+        $data = $request->input('data');
+        $comment = Comment::find($id);
+        $comment->update($data);
+
+        if (array_key_exists('recipients', $data) && !empty($data['recipients'])) {
+            $comment->recipients()->sync($data['recipients']);
+        }
+
+        Event::fire(new CommentCreated($comment));
+
     }
 
     /**

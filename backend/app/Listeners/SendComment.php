@@ -26,6 +26,10 @@ class SendComment {
 
         $comment = $event->comment;
 
+        if ($comment->type === 'draft') {
+            return;
+        }
+
         Mail::send('emails.comment', ['comment' => $comment], function ($m) use ($comment) {
 
             $m->subject($comment->project ? $comment->project->full_name : $comment->event->name);

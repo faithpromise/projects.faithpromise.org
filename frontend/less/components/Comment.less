@@ -55,7 +55,6 @@
   border:        1px solid #efefef;
   border-radius: 8px;
   background:    #f7f7f7;
-  white-space:   pre-wrap;
   font-size:     14px;
 
   &:before {
@@ -83,6 +82,10 @@
   }
 }
 
+.Comment-pre {
+  white-space: pre-wrap;
+}
+
 .Comment-recipient {
   white-space: nowrap;
 
@@ -94,6 +97,31 @@
     content: '';
   }
 
+}
+
+.Comment-attachments {
+  display:     flex;
+  margin-top:  10px;
+  padding-top: 10px;
+  border-top:  1px dotted #d2d2d2;
+}
+
+.Comment-attachment {
+  width:        100px;
+  padding:      5px;
+  text-align:   center;
+}
+
+.Comment-attachmentThumb {
+  width: 70%;
+}
+
+.Comment-attachmentName {
+  display:       block;
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  font-size:     11px;
 }
 
 //.Comment-recipientAvatar {

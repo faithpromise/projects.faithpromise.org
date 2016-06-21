@@ -30,7 +30,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     Route::put('tasks/{id}', 'TasksController@update');
     Route::get('tasks/{id}', 'TasksController@show');
 
-    // Agents
+    // Users
     Route::get('users', 'UsersController@index');
     Route::get('users/{id}', 'UsersController@show');
 
@@ -41,10 +41,18 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     // Timeline
     Route::get('timeline', 'TimelineController@index');
 
-    // Messages
+    // Comments
     Route::get('comments', 'CommentsController@index');
     Route::post('comments', 'CommentsController@store');
+    Route::put('comments/{id}', 'CommentsController@update');
+
+    // Attachments
+    Route::get('attachments', 'AttachmentsController@index');
+    Route::post('attachments', 'AttachmentsController@store');
 
 });
+
+Route::get('api/attachments/{id}/file.{ext}', 'AttachmentsController@download');
+Route::get('api/attachments/{id}/thumb.{ext}', 'AttachmentsController@thumb');
 
 Route::get('{path?}', ['uses' => 'MainController@index'])->where('path', '.+');

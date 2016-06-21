@@ -11,6 +11,14 @@
     </div>
   </div>
 
-  <div class="Comment-body">{{ vm.comment.body }}</div>
+  <div class="Comment-body">
+    <div class="Comment-pre">{{ vm.comment.body }}</div>
+    <div class="Comment-attachments" ng-if="vm.comment.attachments.length">
+      <a class="Comment-attachment" href="{{ attachment.download_url }}" target="_blank" ng-repeat="attachment in vm.comment.attachments">
+        <img class="Comment-attachmentThumb" ng-src="{{ attachment.thumb_url }}">
+        <span class="Comment-attachmentName">{{ attachment.name }}</span>
+      </a>
+    </div>
+  </div>
 
 </div>

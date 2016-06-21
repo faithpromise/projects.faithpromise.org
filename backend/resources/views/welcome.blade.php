@@ -7,7 +7,7 @@ use App\Helpers\Assets;
 
     <head>
         <base href="/">
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -44,6 +44,7 @@ use App\Helpers\Assets;
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.5/angular-moment.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/satellizer/0.14.1/satellizer.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.4/ng-file-upload.min.js"></script>
         <!--<script src="//cdnjs.cloudflare.com/ajax/libs/oclazyload/1.0.9/ocLazyLoad.min.js"></script>-->
 
         <!-- App -->

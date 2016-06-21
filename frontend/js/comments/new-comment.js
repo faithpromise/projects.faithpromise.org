@@ -18,15 +18,17 @@
         };
     }
 
-    Controller.$inject = ['$auth', 'PubSub', 'commentsService', 'agentsService'];
+    Controller.$inject = ['$q', '$auth', 'PubSub', 'Upload', 'commentsService', 'agentsService'];
 
-    function Controller($auth, PubSub, commentsService, agentsService) {
+    function Controller($q, $auth, PubSub, Upload, commentsService, agentsService) {
 
-        var vm                 = this,
-            default_sender;
-        vm.comment             = { user_id: $auth.getPayload().sub };
-        vm.remove_recipient    = remove_recipient;
-        vm.save_comment        = save_comment;
+        var vm              = this,
+            default_sender,
+            deferred_new_comment;
+        vm.comment          = { user_id: $auth.getPayload().sub };
+        vm.remove_recipient = remove_recipient;
+        vm.save_comment     = save_comment;
+        vm.upload           = upload;
 
         init();
 
@@ -42,9 +44,12 @@
         }
 
         function reset() {
-            vm.comment.body    = '';
-            vm.recipients      = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
-            vm.sender          = default_sender;
+            delete(vm.comment.id);
+            deferred_new_comment      = null;
+            vm.comment.body           = '';
+            vm.comment.attachment_ids = [];
+            vm.recipients             = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
+            vm.sender                 = default_sender;
         }
 
         function remove_recipient(user) {
@@ -65,24 +70,83 @@
             return results;
         }
 
-        function save_comment() {
+        function fetch_attachments() {
+            
+        }
 
-            var comment = angular.extend({
+        function save_draft() {
+
+            if (!deferred_new_comment) {
+
+                deferred_new_comment = $q.defer();
+
+                save_comment(true).then(
+                    function (result) {
+                        vm.comment.id = result.data.data.id;
+                        deferred_new_comment.resolve(result);
+                    },
+                    function (err) {
+                        deferred_new_comment.reject(err);
+                    }
+                );
+
+            }
+
+            return deferred_new_comment.promise;
+
+        }
+
+        function save_comment(draft) {
+
+            var comment = angular.extend(
+                {},
+                vm.comment,
+                {
+                    type:       draft === true ? 'draft' : 'comment',
                     user_id:    vm.sender.id,
                     event_id:   vm.event ? vm.event.id : null,
                     project_id: vm.project ? vm.project.id : null,
                     recipients: gather_recipients()
-                }, vm.comment
+                }
             );
 
-            PubSub.publish('comment.creating', comment);
+            if (draft !== true) {
+                reset();
+                PubSub.publish('comment.creating', comment);
+            }
 
-            commentsService.create(comment).then(function () {
+            return commentsService.save(comment).then(function (result) {
                 // vm.onSuccess();
-                PubSub.publish('comment.created', comment);
+                if (draft !== true) {
+                    PubSub.publish('comment.created', comment);
+                }
+                return result;
             });
 
-            reset();
+        }
+
+        function upload(files) {
+
+            if (files.length === 0) {
+                return;
+            }
+
+            save_draft().then(function () {
+                Upload.upload({
+                    url:  '/api/attachments',
+                    data: {
+                        file:       files,
+                        comment_id: vm.comment.id
+                    }
+                }).then(
+                    function (resp) {},
+                    function (err) {},
+                    function (evt) {
+                        console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.data.file.name)
+                    }
+                );
+            });
+
         }
 
     }

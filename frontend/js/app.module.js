@@ -8,7 +8,8 @@
         'angularMoment',
         'monospaced.elastic',
         'PubSub',
-        'MassAutoComplete'
+        'MassAutoComplete',
+        'ngFileUpload'
     ]);
 
 })(angular);

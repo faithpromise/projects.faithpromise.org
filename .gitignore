@@ -4,6 +4,7 @@
 /backend/bootstrap/cache/*
 !/backend/bootstrap/cache/.gitkeep
 /backend/vendor
+/backend/storage
 /backend/temp
 /bower_components
 /node_modules

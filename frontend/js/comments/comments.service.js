@@ -21,12 +21,12 @@
                 return $http.get('/api/comments/' + id);
             },
 
-            create: function (comment) {
-                return $http.post('/api/comments', { 'data': comment });
-            },
-
-            update: function (id, comment) {
-                return $http.put('/api/comments/' + id, { 'data': comment });
+            save: function (comment) {
+                if (comment.id) {
+                    return $http.put('/api/comments/' + comment.id, { 'data': comment });
+                } else {
+                    return $http.post('/api/comments', { 'data': comment });
+                }
             }
 
         };
