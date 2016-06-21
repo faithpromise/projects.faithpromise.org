@@ -141,6 +141,8 @@
 
         $scope.$watch('vm.project.notes', auto_save_project_notes);
 
+        
+
     }
 
 })(angular.module('app'), angular, moment);

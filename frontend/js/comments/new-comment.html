@@ -5,14 +5,12 @@
       <img class="NewComment-avatar" ng-src="{{ vm.sender.avatar_url }}">
     </div>
     <div class="NewComment-meta">
-      <input class="NewComment-subjectInput" type="text" ng-model="vm.comment.subject" ng-keyup="vm.subject_overridden = true">
-      <!--<span class="NewComment-subject" ng-click="vm.subject_overridden = true" ng-hide="vm.subject_overridden">{{ vm.comment.subject || 'New Comment' }}</span>-->
-      <!--<input class="NewNewCommentsubject" type="text" placeholder="Subject..." ng-model="vm.comment.subject">-->
+      <!-- TODO: Switch between comment and proof? -->
     </div>
   </div>
 
   <div class="NewComment-body">
-    <textarea class="NewComment-textarea" ng-model="vm.comment.body" ng-change="vm.auto_subject()" msd-elastic></textarea>
+    <textarea class="NewComment-textarea" ng-model="vm.comment.body" msd-elastic></textarea>
   </div>
 
   <div class="NewComment-recipientsWrap">

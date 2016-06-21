@@ -25,6 +25,7 @@
   padding-left: 10px;
   font-size:    13px;
   line-height:  1.2;
+  color:        #929292;
 }
 
 .Comment-sender {
@@ -39,26 +40,11 @@
   border-radius: 16px;
 }
 
-.Comment-date,
-.Comment-subject {
+.Comment-date {
   &:after {
     content: '\b7'; // &middot;
     display: inline-block;
     padding: 0 0.5em;
-  }
-}
-
-.Comment-reply,
-.Comment-subject,
-.Comment-date {
-  color: #929292;
-}
-
-.Comment-reply {
-  text-decoration: underline;
-  cursor:          pointer;
-  &:hover {
-    text-decoration: none;
   }
 }
 
@@ -97,25 +83,22 @@
   }
 }
 
-.Comment-recipients {
-  margin-bottom: 0;
-  list-style:    none;
-  text-align:    right;
-  color:         #929292;
-  user-select:   none;
-  cursor:        default;
-}
-
 .Comment-recipient {
-  display:     inline-block;
-  margin:      7px 14px 0 3px;
-  font-size:   12px;
   white-space: nowrap;
+
+  &:after {
+    content: ', '
+  }
+
+  &:last-child:after {
+    content: '';
+  }
+
 }
 
-.Comment-recipientAvatar {
-  width:          22px;
-  height:         22px;
-  border-radius:  11px;
-  vertical-align: middle;
-}
+//.Comment-recipientAvatar {
+//  width:          22px;
+//  height:         22px;
+//  border-radius:  11px;
+//  vertical-align: middle;
+//}

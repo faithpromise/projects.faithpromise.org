@@ -23,10 +23,8 @@
     function Controller($auth, PubSub, commentsService, agentsService) {
 
         var vm                 = this,
-            subject_overridden = false,
             default_sender;
         vm.comment             = { user_id: $auth.getPayload().sub };
-        vm.auto_subject        = auto_subject;
         vm.remove_recipient    = remove_recipient;
         vm.save_comment        = save_comment;
 
@@ -45,21 +43,8 @@
 
         function reset() {
             vm.comment.body    = '';
-            vm.comment.subject = 'New Comment';
             vm.recipients      = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
             vm.sender          = default_sender;
-        }
-
-        function auto_subject() {
-            var max = 25,
-                ellipses = vm.comment.body.length > max ? '...' : '',
-                default_subject = vm.comment.body.substring(0, max) + ellipses;
-
-            if (vm.subject_overridden && vm.comment.subject.length) {
-                return;
-            }
-
-            vm.comment.subject = vm.comment.body.length === 0 ? 'New Comment' : default_subject;
         }
 
         function remove_recipient(user) {
