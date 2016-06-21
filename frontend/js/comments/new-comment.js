@@ -18,17 +18,18 @@
         };
     }
 
-    Controller.$inject = ['$q', '$auth', 'PubSub', 'Upload', 'commentsService', 'agentsService'];
+    Controller.$inject = ['$q', '$auth', 'PubSub', 'Upload', 'commentsService', 'attachmentsService', 'agentsService'];
 
-    function Controller($q, $auth, PubSub, Upload, commentsService, agentsService) {
+    function Controller($q, $auth, PubSub, Upload, commentsService, attachmentsService, agentsService) {
 
-        var vm              = this,
+        var vm               = this,
             default_sender,
             deferred_new_comment;
-        vm.comment          = { user_id: $auth.getPayload().sub };
-        vm.remove_recipient = remove_recipient;
-        vm.save_comment     = save_comment;
-        vm.upload           = upload;
+        vm.comment           = { user_id: $auth.getPayload().sub };
+        vm.remove_recipient  = remove_recipient;
+        vm.save_comment      = save_comment;
+        vm.upload            = upload;
+        vm.remove_attachment = remove_attachment;
 
         init();
 
@@ -45,11 +46,11 @@
 
         function reset() {
             delete(vm.comment.id);
-            deferred_new_comment      = null;
-            vm.comment.body           = '';
-            vm.comment.attachment_ids = [];
-            vm.recipients             = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
-            vm.sender                 = default_sender;
+            deferred_new_comment = null;
+            vm.comment.body      = '';
+            vm.recipients        = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
+            vm.sender            = default_sender;
+            vm.attachments       = null;
         }
 
         function remove_recipient(user) {
@@ -71,7 +72,12 @@
         }
 
         function fetch_attachments() {
-            
+
+            attachmentsService.byComment(vm.comment.id).then(function (result) {
+                vm.attachments = result.data.data;
+            });
+
+            vm.uploading = false;
         }
 
         function save_draft() {
@@ -131,6 +137,8 @@
                 return;
             }
 
+            vm.uploading = true;
+
             save_draft().then(function () {
                 Upload.upload({
                     url:  '/api/attachments',
@@ -139,13 +147,28 @@
                         comment_id: vm.comment.id
                     }
                 }).then(
-                    function (resp) {},
+                    function (resp) {
+                        console.log('fetch em');
+                        fetch_attachments();
+                    },
                     function (err) {},
                     function (evt) {
                         console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.data.file.name)
                     }
                 );
             });
+
+        }
+
+        function remove_attachment(attachment) {
+
+            attachmentsService.delete(attachment.id);
+
+            for(var i = 0; i < vm.attachments.length; i++) {
+                if (vm.attachments[i].id === attachment.id) {
+                    vm.attachments.splice(i, 1);
+                }
+            }
 
         }
 

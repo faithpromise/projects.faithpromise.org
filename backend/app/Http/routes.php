@@ -49,6 +49,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     // Attachments
     Route::get('attachments', 'AttachmentsController@index');
     Route::post('attachments', 'AttachmentsController@store');
+    Route::delete('attachments/{id}', 'AttachmentsController@destroy');
 
 });
 

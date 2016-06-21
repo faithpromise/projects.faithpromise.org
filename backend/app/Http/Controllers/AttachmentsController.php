@@ -8,16 +8,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 class AttachmentsController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
 
+        $attachments = Attachment::where('comment_id', '=', $request->input('comment_id'))->get();
+
+        return [
+            'data' => $attachments
+        ];
     }
 
     /**
@@ -71,7 +78,10 @@ class AttachmentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+
+        $attachment = Attachment::find($id);
+        unlink($attachment->path);
+        $attachment->delete();
     }
 
     public function thumb($id) {

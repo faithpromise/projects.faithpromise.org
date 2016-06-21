@@ -24,11 +24,16 @@
     </div>
   </div>
 
-  <div class="Button Button--sm" ngf-select="vm.upload($files)" ng-model="vm.files" ngf-multiple="true">Upload Files</div>
+  <div class="Button Button--sm" ngf-select="vm.upload($files)" ng-model="vm.files" ngf-multiple="true" ng-disabled="vm.uploading">{{ vm.uploading ? 'Uploading...' : 'Upload Files' }}</div>
 
-  <button class="Button Button--sm Button--primary" type="button" ng-click="vm.save_comment()">Send</button>
+  <button class="Button Button--sm Button--primary" type="button" ng-click="vm.save_comment()" ng-disabled="vm.uploading">Send</button>
 
-  <!--<user-picker placeholder="Add recipients" selected="vm.recipients"></user-picker>-->
+  <div class="Comment-attachments Comment-attachments--new" ng-if="vm.attachments.length">
+    <span class="Comment-attachment" ng-repeat="attachment in vm.attachments" ng-click="vm.remove_attachment(attachment)">
+      <img class="Comment-attachmentThumb" ng-src="{{ attachment.thumb_url }}">
+      <span class="Comment-attachmentName">{{ attachment.name }}</span>
+    </span>
+  </div>
 
 
 

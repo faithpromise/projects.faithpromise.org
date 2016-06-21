@@ -40,8 +40,8 @@
   border-radius: 16px;
 }
 
-.Comment-date {
-  &:after {
+.Comment-recipients {
+  &:before {
     content: '\b7'; // &middot;
     display: inline-block;
     padding: 0 0.5em;
@@ -107,9 +107,9 @@
 }
 
 .Comment-attachment {
-  width:        100px;
-  padding:      5px;
-  text-align:   center;
+  width:      100px;
+  padding:    5px;
+  text-align: center;
 }
 
 .Comment-attachmentThumb {
@@ -122,6 +122,33 @@
   overflow:      hidden;
   text-overflow: ellipsis;
   font-size:     11px;
+}
+
+.Comment-attachments--new {
+
+  flex-wrap: wrap;
+
+  .Comment-attachment {
+    width:        auto;
+    margin-right: 10px;
+
+    &:hover {
+      cursor: pointer;
+      .Comment-attachmentName {
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  .Comment-attachmentThumb {
+    width:          24px;
+    vertical-align: middle;
+  }
+
+  .Comment-attachmentName {
+    display: inline;
+  }
+
 }
 
 //.Comment-recipientAvatar {
