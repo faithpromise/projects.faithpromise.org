@@ -15,6 +15,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\TaskChanged' => [
             'App\Listeners\TaskChangedListener',
+        ],
+        'App\Events\CommentCreated' => [
+            'App\Listeners\SendComment',
         ]
     ];
 

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentCreated;
 use App\Models\Comment;
-use App\Models\Message;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 
 use App\Http\Requests;
 
@@ -51,6 +52,7 @@ class CommentsController extends Controller {
         $data = $request->input('data');
         $comment = Comment::create($data);
         $comment->recipients()->attach($data['recipients']);
+        Event::fire(new CommentCreated($comment));
     }
 
     /**
@@ -60,7 +62,7 @@ class CommentsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        Message::with('replies')->find($id);
+
     }
 
     /**
