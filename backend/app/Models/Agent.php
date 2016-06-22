@@ -46,11 +46,12 @@ class Agent extends User {
     }
 
     public function getWorkloadAttribute() {
-        return (int) $this->tasks()->sum('duration');
+        return (int)$this->tasks()->sum('duration');
     }
 
     public function getAvailableAtAttribute() {
         $max_day = new Carbon($this->timeline_days()->max('day'));
+
         return $max_day->addDay()->toDateString();
     }
 
