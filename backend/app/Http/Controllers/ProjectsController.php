@@ -12,7 +12,7 @@ class ProjectsController extends Controller {
     public function show($id) {
 
         return [
-            'data' => Project::with('event','agent','requester', 'recipients')->whereId($id)->first()
+            'data' => Project::with('event', 'agent', 'requester', 'recipients')->whereId($id)->first()
         ];
 
     }
