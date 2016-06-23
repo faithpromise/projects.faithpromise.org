@@ -5,7 +5,7 @@
       <img class="Timeline-agentPhoto" ng-src="{{ agent.avatar_url }}">
       <div class="Timeline-agentInfo">
         <div class="Timeline-agentName">{{ agent.name }}</div>
-        <div class="Timeline-agentMeta">Current workload: {{ agent.workload | amDurationFormat : 'minute' }} (until {{ agent.available_at | amDateFormat: 'MMM D' }})</div>
+        <div class="Timeline-agentMeta">Current workload: {{ agent.workload }} hours (until {{ agent.available_at | amDateFormat: 'MMM D' }})</div>
       </div>
     </div>
 
