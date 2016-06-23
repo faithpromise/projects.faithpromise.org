@@ -1,0 +1,59 @@
+
+.Content-container,
+.Sidebar-container {
+  padding: 0 30px;
+}
+
+.Sidebar-section {
+  margin: 15px 0;
+}
+
+.Sidebar-heading {
+  margin:         15px 0;
+  font-size:      12px;
+  font-weight:    600;
+  text-transform: uppercase;
+}
+
+.TaskTable {
+  width:       100%;
+  border-top:  1px solid #dedede;
+  font-size:   12px;
+  color:       #666;
+  user-select: none;
+}
+
+.TaskTable-row {
+  cursor: pointer;
+
+  &--completed {
+    color:           #999;
+    text-decoration: line-through;
+  }
+}
+
+.TaskTable-cell {
+  padding:       12px 10px;
+  border-bottom: 1px solid #dedede;
+  white-space:   nowrap;
+
+  &:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+
+  &:last-child {
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.TaskTable-name {
+  width:         100%;
+  padding-left:  0;
+  font-size:     13px;
+  font-weight:   600;
+  // Text overflow
+  max-width:     100px;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}

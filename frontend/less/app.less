@@ -40,6 +40,7 @@
 @import "components/Task";
 @import "components/TaskDetail";
 @import "components/UserPicker";
+@import "components/Sidebar";
 
 // Reset margin on bootstrap dropdown items
 .dropdown-menu > li {
@@ -49,6 +50,14 @@
 .clickable,
 [ng-click] {
   cursor: pointer;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+p:empty {
+  display: none;
 }
 
 //html,

@@ -16,60 +16,72 @@
   </div>
 
   <div class="Project-body">
-    <div class="Project-detailsColumn">
-      <div class="Project-eventNotes" ng-if="vm.project.event">
-        <div><span class="Label">Event Notes <span class="link">(edit)</span></span></div>
-        {{ vm.project.event.notes }}
-      </div>
-      <div class="Project-entry">
-        <div><span class="Label">Project Notes <img class="Label-loading" src="/build/images/loading-white-bg.gif" ng-show="vm.project_notes_saving"></span></div>
-        <textarea class="Project-textarea" ng-model="vm.project.notes" msd-elastic></textarea>
-      </div>
 
-      <div class="Project-entry">
-        <div class="Label">Default Recipients</div>
-        <user-picker selected="vm.project.recipients" on-change="vm.save_recipients()"></user-picker>
-        <ul>
-          <li ng-repeat="recipient in vm.project.recipients">{{ recipient.name }} <i class="icon-cancel" ng-click="vm.remove_recipient(recipient)"></i></li>
-        </ul>
-      </div>
-    </div>
-
-    <!--Comments-->
-    <div class="Project-commentsColumn">
-      <new-comment ng-if="vm.project.id" project="vm.project"></new-comment>
-      <comments ng-if="vm.project.id" project="vm.project"></comments>
-    </div>
-
-    <!-- Task Detail -->
-    <div class="Project-tasksColumn" ng-if="vm.route_action === 'task'">
+    <div class="Project-sidebar" ng-if="vm.route_action === 'task'">
       <task-detail task="vm.selected_task" on-close="vm.on_task_closed()" on-update="vm.on_task_updated()"></task-detail>
     </div>
 
-    <!-- Tasks -->
-    <div class="Project-tasksColumn" ng-hide="vm.route_action === 'task'">
+    <div class="Project-sidebar" ng-hide="vm.route_action === 'task'">
 
-      <!-- New task form -->
-      <new-task ng-if="vm.project.id" project="vm.project" on-submit="vm.on_task_submitted()" on-success="vm.on_task_added()"></new-task>
+      <div class="Sidebar-section Sidebar-container Project-notes">
+        <p>{{ vm.project.event.notes }}</p>
+        <p ng-hide="vm.is_editing_notes" ng-click="vm.is_editing_notes = true" title="Click to add notes">{{ vm.project.notes }}
+          <span class="link nowrap" ng-click="vm.is_editing_notes = true" ng-hide="vm.project.notes">add notes</span>
+        </p>
+        <textarea class="Project-textarea" ng-model="vm.project.notes" ng-show="vm.is_editing_notes" focus-on="vm.is_editing_notes" ng-blur="vm.is_editing_notes = false" msd-elastic></textarea>
+      </div>
 
-      <img class="Project-tasksLoading" src="/build/images/loading-white-bg.gif" ng-hide="vm.tasks">
+      <div class="Sidebar-section Sidebar-container">
 
-      <div class="Project-task" ng-repeat="task in vm.tasks" ng-hide="task.completed_at">
+        <h2 class="Sidebar-heading">Tasks
+          <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.tasks_loading || vm.task_saving">
+        </h2>
 
-        <div class="Task">
-          <div class="Task-check">
-            <input type="checkbox" ng-model="task.foobar_required_for_ng_change" ng-change="vm.mark_task_completed(task)">
-          </div>
-          <span class="Task-info" ng-click="vm.open_task(task)" href="/projects/{{ vm.project.id }}/tasks/{{ task.id }}">
-            <div class="Task-name">{{ task.name }} <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="task.saving"></div>
-            <div class="Task-meta">
-              {{ task.agent.abbreviation }} &middot; {{ task.duration | amDurationFormat : 'minute' }} &middot; Start {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}<span ng-show="task.notes"> &middot; <i class="Task-icon icon-doc"></i></span>
-            </div>
-          </span>
-        </div>
+        <table class="TaskTable">
+          <tbody>
+            <tr class="TaskTable-row" ng-repeat="task in vm.tasks" ng-click="vm.open_task(task)" ng-hide="task.completed_at">
+              <td class="TaskTable-cell" ng-click="vm.mark_task_completed(task, $event)">
+                <input type="checkbox" ng-model="task.foobar_required_for_ng_change">
+              </td>
+              <td class="TaskTable-cell TaskTable-name">{{ task.name }}</td>
+              <td class="TaskTable-cell">{{ task.agent.abbreviation }}</td>
+              <td class="TaskTable-cell">Start {{ task.estimated_start_date | amDateFormat: 'MMMM D' }}</td>
+              <td class="TaskTable-cell">{{ task.duration | amDurationFormat : 'minute' }}</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr class="TaskTable-row TaskTable-row--completed" ng-repeat="task in vm.tasks" ng-click="vm.open_task(task)" ng-show="task.completed_at">
+              <td class="TaskTable-cell" ng-click="vm.mark_task_completed(task)">
+                <input type="checkbox" checked="checked" disabled>
+              </td>
+              <td class="TaskTable-cell TaskTable-name">{{ task.name }}</td>
+              <td class="TaskTable-cell">{{ task.agent.abbreviation }}</td>
+              <td class="TaskTable-cell">Completed {{ task.completed_at | amDateFormat: 'MMMM D' }}</td>
+              <td class="TaskTable-cell">{{ task.duration | amDurationFormat : 'minute' }}</td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
-      <p class="CompletedTask" ng-repeat="task in vm.tasks" ng-show="task.completed_at" ng-click="vm.open_task(task)">{{ task.name }} on {{ task.completed_at | amDateFormat: 'MMMM D, YYYY' }}</p>
+
+      <!--TODO: Put default recipients in a project settings modal-->
+      <!--<div class="Project-entry">-->
+      <!--<div class="Label">Default Recipients</div>-->
+      <!--<user-picker selected="vm.project.recipients" on-change="vm.save_recipients()"></user-picker>-->
+      <!--<ul>-->
+      <!--<li ng-repeat="recipient in vm.project.recipients">{{ recipient.name }} <i class="icon-cancel" ng-click="vm.remove_recipient(recipient)"></i></li>-->
+      <!--</ul>-->
+      <!--</div>-->
+
     </div>
+
+    <!--Comments-->
+    <div class="Project-commentsColumn Content-container">
+      <div class="Project-comments">
+        <new-comment ng-if="vm.project.id" project="vm.project"></new-comment>
+        <comments ng-if="vm.project.id" project="vm.project"></comments>
+      </div>
+    </div>
+
   </div>
 </div>

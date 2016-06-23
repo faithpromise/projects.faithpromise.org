@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
 
-    grunt.registerTask('copy_files', ['copy:app_templates', 'copy:app_fontello']);
+    grunt.registerTask('copy_files', ['copy:app_templates', 'copy:app_fontello', 'copy:app_images']);
 
     grunt.registerTask('css', ['less:app', 'less:bootstrap', 'postcss:app']);
 
