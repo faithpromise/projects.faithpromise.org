@@ -46,7 +46,8 @@ class Agent extends User {
     }
 
     public function getWorkloadAttribute() {
-        return (int)$this->tasks()->sum('duration');
+        $minutes = (int)$this->tasks()->sum('duration');
+        return round($minutes / 60, 1);
     }
 
     public function getAvailableAtAttribute() {
