@@ -109,14 +109,7 @@ class CommentsController extends Controller {
 
     public function inbound(Request $request) {
 
-//        $email = $request->input();
-        $email = [
-            'recipient'     => 'comment_8@mailgun.faithpromise.org',
-            'sender'        => 'BradR@faithpromise.org',
-            'from'          => 'Brad Roberts <BradR@faithpromise.org>',
-            'stripped-text' => 'Do we want to order additional signs? I think it’s best to get the wire stakes as well. If we need to, we can always get a few extras in case on breaks. Thanks for checkin’ into all this. I “think” it will be a good solution. Thanks again!',
-            'Date'          => 'Wed, 22 Jun 2016 19:26:04 +0000'
-        ];
+        $email = $request->all();
 
         $parent_comment_id = (int)str_replace(['comment_', '@mailgun.faithpromise.org'], '', $email['recipient']);
         $sender_email = strtolower($email['sender']);
