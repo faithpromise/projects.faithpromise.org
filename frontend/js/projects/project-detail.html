@@ -23,12 +23,17 @@
 
     <div class="Project-sidebar" ng-hide="vm.route_action === 'task'">
 
-      <div class="Sidebar-section Sidebar-container Project-notes">
-        <p>{{ vm.project.event.notes }}</p>
-        <p ng-hide="vm.is_editing_notes" ng-click="vm.is_editing_notes = true" title="Click to add notes">{{ vm.project.notes }}
-          <span class="link nowrap" ng-click="vm.is_editing_notes = true" ng-hide="vm.project.notes">add notes</span>
-        </p>
+      <div class="Sidebar-section Sidebar-container Project-notesSection">
+        <p class="Project-eventNotes">{{ vm.project.event.notes }}</p>
+        <span class="link nowrap" ng-click="vm.is_editing_notes = true" ng-hide="vm.project.notes || vm.is_editing_notes">add notes</span>
+        <p class="Project-notes" ng-hide="vm.is_editing_notes" ng-click="vm.is_editing_notes = true" title="Click to add notes">{{ vm.project.notes }}</p>
         <textarea class="Project-textarea" ng-model="vm.project.notes" ng-show="vm.is_editing_notes" focus-on="vm.is_editing_notes" ng-blur="vm.is_editing_notes = false" msd-elastic></textarea>
+      </div>
+
+      <!--Tasks-->
+
+      <div class="Sidebar-section Sidebar-container">
+        <new-task ng-if="vm.project.id" project="vm.project" on-submit="vm.on_task_submitted()" on-success="vm.on_task_added()"></new-task>
       </div>
 
       <div class="Sidebar-section Sidebar-container">
@@ -38,6 +43,14 @@
         </h2>
 
         <table class="TaskTable">
+          <tfoot>
+            <tr>
+              <td colspan="5" class="TaskTable-completedToggle">
+                <span class="link" ng-click="vm.show_completed_tasks = true" ng-hide="vm.show_completed_tasks">show completed tasks</span>
+                <span class="link" ng-click="vm.show_completed_tasks = false" ng-show="vm.show_completed_tasks">hide completed tasks</span>
+              </td>
+            </tr>
+          </tfoot>
           <tbody>
             <tr class="TaskTable-row" ng-repeat="task in vm.tasks" ng-click="vm.open_task(task)" ng-hide="task.completed_at">
               <td class="TaskTable-cell" ng-click="vm.mark_task_completed(task, $event)">
@@ -49,7 +62,7 @@
               <td class="TaskTable-cell">{{ task.duration | amDurationFormat : 'minute' }}</td>
             </tr>
           </tbody>
-          <tbody>
+          <tbody ng-if="vm.show_completed_tasks">
             <tr class="TaskTable-row TaskTable-row--completed" ng-repeat="task in vm.tasks" ng-click="vm.open_task(task)" ng-show="task.completed_at">
               <td class="TaskTable-cell" ng-click="vm.mark_task_completed(task)">
                 <input type="checkbox" checked="checked" disabled>

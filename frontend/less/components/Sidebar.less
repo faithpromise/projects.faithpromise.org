@@ -5,7 +5,7 @@
 }
 
 .Sidebar-section {
-  margin: 15px 0;
+  margin: 40px 0;
 }
 
 .Sidebar-heading {
@@ -17,6 +17,7 @@
 
 .TaskTable {
   width:       100%;
+  margin:      0;
   border-top:  1px solid #dedede;
   font-size:   12px;
   color:       #666;
@@ -36,14 +37,6 @@
   padding:       12px 10px;
   border-bottom: 1px solid #dedede;
   white-space:   nowrap;
-
-  &:first-child {
-    border-radius: 4px 0 0 4px;
-  }
-
-  &:last-child {
-    border-radius: 0 4px 4px 0;
-  }
 }
 
 .TaskTable-name {
@@ -56,4 +49,8 @@
   overflow:      hidden;
   text-overflow: ellipsis;
   white-space:   nowrap;
+}
+
+.TaskTable-completedToggle {
+  padding: 12px 10px;
 }
