@@ -27,7 +27,7 @@ class SendComment {
 
         $comment = $event->comment;
 
-        if ($comment->type === 'draft') {
+        if ($comment->type === 'draft' OR $comment->recipients->count() === 0) {
             return;
         }
 
