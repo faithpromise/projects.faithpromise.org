@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\CommentCreated;
 use App\Models\Comment;
 use App\Models\Project;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 
@@ -103,5 +105,50 @@ class CommentsController extends Controller {
      */
     public function destroy($id) {
         //
+    }
+
+    public function inbound(Request $request) {
+
+//        $email = $request->input();
+        $email = [
+            'recipient'     => 'comment_8@mailgun.faithpromise.org',
+            'sender'        => 'BradR@faithpromise.org',
+            'from'          => 'Brad Roberts <BradR@faithpromise.org>',
+            'stripped-text' => 'Do we want to order additional signs? I think it’s best to get the wire stakes as well. If we need to, we can always get a few extras in case on breaks. Thanks for checkin’ into all this. I “think” it will be a good solution. Thanks again!',
+            'Date'          => 'Wed, 22 Jun 2016 19:26:04 +0000'
+        ];
+
+        $parent_comment_id = (int)str_replace(['comment_', '@mailgun.faithpromise.org'], '', $email['recipient']);
+        $sender_email = strtolower($email['sender']);
+        $sender_name = trim(str_ireplace('<' . $sender_email . '>', '', $email['from']), ' ');
+        $body = $email['stripped-text'];
+        $date_sent = Carbon::parse($email['Date']);
+
+        /** @var Comment $parent_comment */
+        $parent_comment = Comment::find($parent_comment_id);
+
+        $user = User::where('email', '=', $sender_email)->first();
+
+        if (!$user) {
+            $user = new User();
+            $user->setFirstName($sender_name[0]);
+            $user->setLastName(count($sender_name) > 1 ? implode(' ', array_slice($sender_name, 1)) : null);
+            $user->setEmail($sender_email);
+            $user->save();
+        }
+
+        $comment = new Comment();
+        $comment->setType('comment');
+        $comment->setEventId($parent_comment->getEventId());
+        $comment->setProjectId($parent_comment->getProjectId());
+        $comment->setUserId($user->getId());
+        $comment->setBody($body);
+        $comment->setSentAt($date_sent);
+        $comment->save();
+
+        $comment->recipients()->attach($parent_comment->recipients);
+
+        Event::fire(new CommentCreated($comment));
+
     }
 }

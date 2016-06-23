@@ -31,14 +31,15 @@ class SendComment {
             return;
         }
 
-        Mail::send('emails.comment', ['comment' => $comment], function ($m) use ($comment) {
+        Mail::send(['text' => 'emails.comment'], ['comment' => $comment], function ($m) use ($comment) {
 
             $m->subject($comment->project ? $comment->project->full_name : $comment->event->name);
             $m->from($comment->sender->email, $comment->sender->name);
+            $m->replyTo('comment_' . $comment->id . '@mailgun.faithpromise.org', $comment->sender->name);
 
             foreach ($comment->recipients as $recipient) {
                 if ($recipient->id !== $comment->sender->id) {
-                    $m->to($recipient->email, $recipient->name);
+                    $m->to('dev@faithpromise.org', $recipient->name); // TODO: Set back to recipient's email
                 }
             }
 

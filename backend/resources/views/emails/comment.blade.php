@@ -1,1 +1,1 @@
-{{ $comment->body }}
+{!! $comment->body !!}

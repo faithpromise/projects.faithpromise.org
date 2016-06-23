@@ -47,4 +47,39 @@ class User extends Authenticatable {
         return "http://www.gravatar.com/avatar/" . md5(strtolower(trim($this->email))) . "?d=monsterid&s=200";
     }
 
+    /**
+     * Getters and setters
+     */
+
+    public function getId() {
+        return $this->{'id'};
+    }
+
+    public function setFirstName($param) {
+        $this->{'first_name'} = $param;
+        return $this;
+    }
+
+    public function getFirstName() {
+        return $this->{'first_name'};
+    }
+
+    public function setLastName($param) {
+        $this->{'last_name'} = $param;
+        return $this;
+    }
+
+    public function getLastName() {
+        return $this->{'last_name'};
+    }
+
+    public function setEmail($param) {
+        $this->{'email'} = $param;
+        return $this;
+    }
+
+    public function getEmail() {
+        return $this->{'email'};
+    }
+
 }
