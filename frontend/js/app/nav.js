@@ -10,7 +10,9 @@
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: true,
-            scope:            {}
+            scope:            {
+                onShowNewProject: '&'
+            }
         };
     }
 
@@ -18,8 +20,9 @@
 
     function Controller($auth, $location) {
 
-        var vm = this;
-        vm.logout = logout;
+        var vm              = this;
+        vm.logout           = logout;
+        vm.show_new_project = show_new_project;
 
         init();
 
@@ -30,6 +33,11 @@
         function logout() {
             $auth.logout();
             $location.path('/login');
+        }
+
+        function show_new_project() {
+            console.log('calling callback');
+            vm.onShowNewProject();
         }
 
     }

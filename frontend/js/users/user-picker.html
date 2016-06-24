@@ -1,5 +1,5 @@
 <div class="UserPicker" mass-autocomplete>
-  <input class="UserPicker-input" ng-attr-placeholder="{{ vm.placeholder }}" ng-model="vm.dirty" mass-autocomplete-item="vm.autocomplete_options">
+  <input ng-class="vm.cssClass" ng-attr-placeholder="{{ vm.placeholder }}" ng-model="vm.dirty" mass-autocomplete-item="vm.autocomplete_options" focus-on="vm.focus">
   <!--<div class="UserPicker-tags">-->
     <!--<span class="UserPicker-tag" ng-repeat="user in vm.selected" ng-style="{ 'background-image': 'url(' + user.avatar_url + ')' }">-->
       <!--{{ user.abbreviation }}-->

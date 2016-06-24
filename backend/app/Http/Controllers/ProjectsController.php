@@ -18,11 +18,11 @@ class ProjectsController extends Controller {
     }
 
     public function store(Request $request) {
-        dd($request->all());
+        Project::create($request->input('data'));
     }
 
     public function update($id, Request $request) {
-        Project::findOrFail($id)->update($request->all());
+        Project::findOrFail($id)->update($request->input('data'));
     }
 
     public function updateRecipients($id, Request $request) {

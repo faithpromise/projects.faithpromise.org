@@ -11,9 +11,12 @@
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: {
+                cssClass:    '@',
                 placeholder: '@?',
                 selected:    '=?',
-                onChange:    '&?'
+                onChange:    '&?',
+                multiple:    '@',
+                focus:       '@'
             },
             scope:            {}
         };
@@ -26,7 +29,6 @@
         var vm                  = this,
             cache               = {};
         vm.dirty                = ''; // Input ng-model
-        vm.remove_user          = remove_user;
         vm.autocomplete_options = {
             on_error:         console.log,
             debounce_suggest: 300,
@@ -37,25 +39,28 @@
         init();
 
         function init() {
-            vm.selected = vm.selected || [];
+            vm.selected = vm.selected || (vm.multiple ? [] : null);
         }
 
         function add_user(item) {
-            if (user_index(item.obj) === -1) {
+
+            if (vm.multiple && user_index(item.obj) === -1) {
                 vm.selected.push(item.obj);
-                if (vm.onChange) {
-                    vm.onChange();
-                }
+                vm.onChange ? vm.onChange() : null;
             }
-            vm.dirty = '';
+
+            if (!vm.multiple) {
+                console.log('item.obj', item.obj);
+                vm.selected = item.obj;
+                vm.onChange ? vm.onChange() : null;
+            }
+
+            // Clear the input
+            if (vm.multiple) {
+                vm.dirty = '';
+            }
         }
 
-        function remove_user(user) {
-            var i = user_index(user);
-            if (i >= 0) {
-                vm.selected.splice(i, 1);
-            }
-        }
 
         function user_index(user) {
             for (var i = vm.selected.length - 1; i >= 0; i--) {

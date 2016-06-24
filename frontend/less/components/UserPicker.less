@@ -1,9 +1,15 @@
 .UserPicker {
 
+  position: relative;
+
   .ac-container {
     border:           1px solid #aaa;
     background-color: #fff;
     width:            auto !important;
+
+    // Fixes positioning issue when inside a container that's positioned relative
+    top:              100% !important;
+    left:             0 !important;
   }
 
   .ac-menu {

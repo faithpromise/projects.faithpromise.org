@@ -27,6 +27,17 @@ module.exports = function (grunt) {
             dest:    app.output_dir
         },
 
+        app_angular_ui: {
+            expand:  true,
+            flatten: false,
+            cwd:     'bower_components/angular-ui-bootstrap',
+            src:     [
+                'template/modal/backdrop.html',
+                'template/modal/window.html'
+            ],
+            dest:    'public/uib'
+        },
+
         release_backend: {
             expand: true,
             dest:   '_release',

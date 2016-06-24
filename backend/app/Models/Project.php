@@ -16,7 +16,7 @@ class Project extends Model {
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
     public $appends = ['full_name', 'order_by', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely'];
-    public $fillable = ['notes'];
+    public $guarded = ['id'];
 
     public function event() {
         return $this->belongsTo(Event::class);
@@ -81,6 +81,7 @@ class Project extends Model {
 
     public function getOrderByAttribute() {
         $sub_days = (int)$this->production_days;
+
 // TODO: Return null if no production
         return $this->due_at->subDays($sub_days)->toDateString();
     }

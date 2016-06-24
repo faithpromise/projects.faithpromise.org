@@ -9,7 +9,8 @@
         'monospaced.elastic',
         'PubSub',
         'MassAutoComplete',
-        'ngFileUpload'
+        'ngFileUpload',
+        'ui.bootstrap.modal'
     ]);
 
 })(angular);

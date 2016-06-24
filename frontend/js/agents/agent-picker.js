@@ -5,12 +5,12 @@
 
     function directive() {
         return {
-            template:         '<select class="CustomSelect-control" ng-model="vm.agent" ng-options="agent.name for agent in vm.agents" ng-change="vm.on_change_handler()" tabindex="2"></select>',
+            template:         '<select ng-class="vm.cssClass" ng-model="vm.agent" ng-options="agent.name for agent in vm.agents" ng-change="vm.on_change_handler()" tabindex="2"></select>',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: {
-                agent_id: '@',
+                cssClass: '@',
                 onChange: '&?'
             },
             scope:            true

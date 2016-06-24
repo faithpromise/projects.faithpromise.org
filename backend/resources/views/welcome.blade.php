@@ -27,11 +27,16 @@ use App\Helpers\Assets;
 
     <body ng-controller="main as vm">
 
-        <app-nav ng-if="vm.route_action !== 'login'"></app-nav>
+        <app-nav ng-if="vm.route_action !== 'login'" on-show-new-project="vm.open_new_project()"></app-nav>
         <app-login ng-if="vm.route_action === 'login'"></app-login>
+
         <timeline ng-if="vm.route_action === 'home'"></timeline>
         <project-detail ng-if="vm.route_action === 'project'"></project-detail>
         <event-detail ng-if="vm.route_action === 'event'"></event-detail>
+
+        <!-- New Project -->
+        <project-settings on-close="vm.close_new_project()"></project-settings><!--  ng-if="vm.is_new_project_open" -->
+
 
         <!-- Libs -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
