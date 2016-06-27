@@ -35,7 +35,7 @@ use App\Helpers\Assets;
         <event-detail ng-if="vm.route_action === 'event'"></event-detail>
 
         <!-- New Project -->
-        <project-settings on-close="vm.close_new_project()"></project-settings><!--  ng-if="vm.is_new_project_open" -->
+        <project-settings ng-if="vm.is_new_project_open" on-close="vm.close_new_project()"></project-settings>
 
 
         <!-- Libs -->
