@@ -12,6 +12,7 @@
             controllerAs:     'vm',
             bindToController: {
                 cssClass:    '@',
+                tabIndex:    '@',
                 placeholder: '@?',
                 selected:    '=?',
                 onChange:    '&?',
