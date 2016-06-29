@@ -31,7 +31,7 @@ use App\Helpers\Assets;
         <app-login ng-if="vm.route_action === 'login'"></app-login>
 
         <timeline ng-if="vm.route_action === 'home'"></timeline>
-        <project-detail ng-if="vm.route_action === 'project'"></project-detail>
+        <project-editor ng-if="vm.route_action === 'project'"></project-editor>
         <event-detail ng-if="vm.route_action === 'event'"></event-detail>
 
         <!-- New Project -->

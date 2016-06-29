@@ -1,7 +1,7 @@
 (function (module, angular) {
     'use strict';
 
-    module.directive('projectSettings', directive);
+    module.directive('projectEditor', directive);
     module.controller('ProjectModalController', ProjectModalController);
 
     function directive() {
@@ -32,7 +32,7 @@
             vm.project = vm.project || {};
 
             modal_instance = $uibModal.open({
-                templateUrl:      '/build/js/projects/project-settings.html',
+                templateUrl:      '/build/js/projects/project-editor.html',
                 controller:       ProjectModalController,
                 controllerAs:     'vm',
                 bindToController: true,
