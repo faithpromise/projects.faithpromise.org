@@ -10,6 +10,7 @@
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: {
+                agent:    '=',
                 cssClass: '@',
                 tabIndex: '@',
                 onChange: '&?'
