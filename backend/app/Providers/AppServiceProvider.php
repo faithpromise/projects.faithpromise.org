@@ -2,18 +2,23 @@
 
 namespace App\Providers;
 
+use App\Models\Project;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
-{
+class AppServiceProvider extends ServiceProvider {
     /**
      * Bootstrap any application services.
      *
      * @return void
      */
-    public function boot()
-    {
-        //
+    public function boot() {
+
+        Project::saving(function(Project $project) {
+            if (!$project->getIsPurchase()) {
+                $project->setProductionDays(0);
+            }
+        });
+
     }
 
     /**
@@ -21,8 +26,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         //
     }
 }
