@@ -86,6 +86,41 @@ class Project extends Model {
         return $this->due_at->subDays($sub_days)->toDateString();
     }
 
+    public function setEventId($param) {
+        $this->{'event_id'} = $param;
+        return $this;
+    }
+
+    public function setRequesterId($param) {
+        $this->{'requester_id'} = $param;
+        return $this;
+    }
+
+    public function setAgentId($param) {
+        $this->{'agent_id'} = $param;
+        return $this;
+    }
+
+    public function fillWithRelations($data) {
+
+        $this->fill($data);
+
+        if (array_key_exists('event', $data) && array_key_exists('id', $data['event'])) {
+            $this->setEventId($data['event']['id']);
+        }
+
+        if (array_key_exists('requester', $data) && array_key_exists('id', $data['requester'])) {
+            $this->setRequesterId($data['requester']['id']);
+        }
+
+        if (array_key_exists('agent', $data) && array_key_exists('id', $data['agent'])) {
+            $this->setAgentId($data['agent']['id']);
+        }
+
+        return $this;
+
+    }
+
     private function getEstimatedDeliveryDate() {
         $est = $this->timeline_tasks()->max('timeline_date');
 
