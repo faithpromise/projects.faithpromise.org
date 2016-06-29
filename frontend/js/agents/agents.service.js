@@ -13,6 +13,10 @@
                 return $http.get('/api/agents');
             },
 
+            search: function(name) {
+                return $http.get('/api/agents?name=' + name);
+            },
+
             find: function(id) {
                 return $http.get('/api/agents/' + id);
             }
