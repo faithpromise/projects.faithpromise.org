@@ -17,12 +17,12 @@
                 return $http.get('/api/projects/' + id);
             },
 
-            create: function (project) {
-                return $http.post('/api/projects', { 'data': project });
-            },
-
-            update: function (id, project) {
-                return $http.put('/api/projects/' + id, project);
+            save: function (project) {
+                if (project.id) {
+                    return $http.put('/api/projects/' + project.id, { 'data': project });
+                } else {
+                    return $http.post('/api/projects', { 'data': project });
+                }
             },
 
             save_recipients: function (id, data) {
