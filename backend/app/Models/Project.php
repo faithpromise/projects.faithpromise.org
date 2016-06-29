@@ -16,7 +16,7 @@ class Project extends Model {
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
     public $appends = ['full_name', 'order_by', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely'];
-    public $fillable = ['event_id','requester_id','agent_id','name','notes','status','is_purchase','purchase_order','estimate_sent_at','delivered_at','production_days','is_template','is_notable','approved_at','due_at'];
+    public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'status', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at'];
 
     public function event() {
         return $this->belongsTo(Event::class);
