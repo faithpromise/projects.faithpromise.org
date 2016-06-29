@@ -1,4 +1,4 @@
-(function (module) {
+(function (module, angular) {
     'use strict';
 
     module.directive('projectSettings', directive);
@@ -10,8 +10,9 @@
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: {
-                project: '=?',
-                onClose: '&'
+                project:  '=?',
+                onUpdate: '&',
+                onClose:  '&'
             },
             scope:            {}
         };
@@ -21,7 +22,8 @@
 
     function Controller($uibModal) {
 
-        var vm = this;
+        var vm = this,
+            modal_instance;
 
         init();
 
@@ -29,17 +31,16 @@
 
             vm.project = vm.project || {};
 
-            var modal_instance = $uibModal.open({
+            modal_instance = $uibModal.open({
                 templateUrl:      '/build/js/projects/project-settings.html',
                 controller:       ProjectModalController,
                 controllerAs:     'vm',
                 bindToController: true,
-                animation:        false,
                 backdrop:         'static',
                 backdropClass:    'FullModal-backdrop',
                 windowClass:      'FullModal',
                 resolve:          {
-                    project: function () {
+                    orig_project: function () {
                         return vm.project;
                     }
                 }
@@ -51,20 +52,24 @@
                 }
             );
 
-
         }
 
     }
 
-    ProjectModalController.$inject = ['$scope', '$uibModalInstance', 'project', 'projectsService'];
+    ProjectModalController.$inject = ['$scope', '$uibModalInstance', 'orig_project', 'projectsService'];
 
-    function ProjectModalController($scope, $uibModalInstance, project, projectsService) {
+    function ProjectModalController($scope, $uibModalInstance, orig_project, projectsService) {
 
         var vm        = this;
-        vm.set_due_at = set_due_at;
-        vm.project    = project;
+        vm.project    = angular.copy(orig_project);
+        vm.today      = new Date();
         vm.requester  = vm.project.requester ? vm.project.requester : { name: 'Bradley' };
+        vm.set_due_at = set_due_at;
         vm.save       = save;
+
+        vm.pikaday_due_at = function (pikaday) {
+            pikaday.setMaxDate(new Date());
+        };
 
         function set_due_at(value) {
             console.log('setting due date');
@@ -72,9 +77,18 @@
         }
 
         function save() {
-            projectsService.create(vm.project);
+            projectsService.save(vm.project).then(function () {
+                if (vm.project.id) {
+                    projectsService.find(vm.project.id).then(function (result) {
+                        angular.extend(orig_project, result.data.data);
+                        $uibModalInstance.close();
+                    });
+                } else {
+                    $uibModalInstance.close();
+                }
+            });
         }
 
     }
 
-})(angular.module('app'));
+})(angular.module('app'), angular);

@@ -2,20 +2,20 @@
 
   <div class="Form-group">
     <label>
-      <input class="Form-control Form-control--title" type="text" placeholder="Project name..." ng-model="vm.project.name">
+      <input class="Form-control Form-control--title" type="text" tabindex="1" placeholder="Project name..." ng-model="vm.project.name" focus-on="true">
     </label>
   </div>
 
   <div class="Form-group">
     <label ng-click="vm.requester = null">
       <span class="Form-label">Requester</span>
-      <user-picker css-class="Form-control" placeholder="Search..." selected="vm.requester" focus="true"></user-picker>
+      <user-picker selected="vm.project.requester" tab-index="1" placeholder="Search..."></user-picker>
     </label>
   </div>
 
   <div class="Form-group">
     <span class="Form-label">Due date</span>
-      <span class="Form-control" pikaday="vm.foobar" on-select="vm.set_due_at(date)">
+      <span class="Form-control" pikaday="vm.pikaday_due_at" default-date="{{ vm.project.due_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_due_at(date)" tabindex="1">
         {{ vm.project.due_at ? 'Due on ' : '' }}
         {{ vm.project.due_at ? (vm.project.due_at | amDateFormat: 'ddd, MMM D') : 'Set a due date' }}
       </span>
@@ -23,24 +23,28 @@
 
   <div class="Form-group">
     <label>
-      <span class="Form-label">Assign to</span>
-      <agent-picker css-class="Form-control" agent="vm.project.agent"></agent-picker>
+      <span class="Form-label">Assign to {{ vm.project.agent.name }}</span>
+      <agent-picker css-class="Form-control" tab-index="1" agent="vm.project.agent"></agent-picker>
     </label>
   </div>
 
   <div class="Form-group">
     <label class="Form-checkbox">
-      <input type="checkbox" ng-model="vm.project.is_purchase"> Requires a purchase
+      <input type="checkbox" tabindex="1" ng-model="vm.project.is_purchase"> Requires a purchase
     </label>
   </div>
 
-  <div class="Form-group" ng-show="vm.project.is_purchase">
-    <label>
-      <span class="Form-label">Production time (in days)</span>
-      <input class="Form-control" type="text" ng-model="vm.project.production_days">
-    </label>
+  <div class="Form-grid">
+
+    <div class="Form-group" ng-show="vm.project.is_purchase">
+      <label>
+        <span class="Form-label">Production time (in days)</span>
+        <input class="Form-control" tabindex="1" type="text" ng-model="vm.project.production_days">
+      </label>
+    </div>
+
   </div>
 
-  <button type="submit">Save</button>
+  <button type="submit" tabindex="1">Save</button>
 
 </form>
