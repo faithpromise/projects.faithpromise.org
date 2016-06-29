@@ -11,11 +11,20 @@ class AgentsController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
+
+        $agents = Agent::query();
+        $name = $request->input('name');
+
+        if ($name) {
+            $agents->where('first_name', 'like', $name . '%')->orWhere('last_name', 'like', $name . '%');
+        }
+
         return [
-            'data' => Agent::all()
+            'data' => $agents->get()
         ];
     }
 
