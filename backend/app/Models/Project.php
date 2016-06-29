@@ -88,16 +88,19 @@ class Project extends Model {
 
     public function setEventId($param) {
         $this->{'event_id'} = $param;
+
         return $this;
     }
 
     public function setRequesterId($param) {
         $this->{'requester_id'} = $param;
+
         return $this;
     }
 
     public function setAgentId($param) {
         $this->{'agent_id'} = $param;
+
         return $this;
     }
 
@@ -113,15 +116,15 @@ class Project extends Model {
 
         $this->fill($data);
 
-        if (array_key_exists('event', $data) && array_key_exists('id', $data['event'])) {
+        if (isset($data['event']['id'])) {
             $this->setEventId($data['event']['id']);
         }
 
-        if (array_key_exists('requester', $data) && array_key_exists('id', $data['requester'])) {
+        if (isset($data['requester']['id'])) {
             $this->setRequesterId($data['requester']['id']);
         }
 
-        if (array_key_exists('agent', $data) && array_key_exists('id', $data['agent'])) {
+        if (isset($data['agent']['id'])) {
             $this->setAgentId($data['agent']['id']);
         }
 
