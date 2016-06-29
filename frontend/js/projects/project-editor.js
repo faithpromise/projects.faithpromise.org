@@ -36,9 +36,11 @@
                 controller:       ProjectModalController,
                 controllerAs:     'vm',
                 bindToController: true,
+                animation:        false,
+                keyboard:         false,
                 backdrop:         'static',
-                backdropClass:    'FullModal-backdrop',
-                windowClass:      'FullModal',
+                backdropClass:    'Modal-backdrop',
+                windowClass:      'Modal',
                 resolve:          {
                     orig_project: function () {
                         return vm.project;
@@ -64,8 +66,10 @@
         vm.project    = angular.copy(orig_project);
         vm.today      = new Date();
         vm.requester  = vm.project.requester ? vm.project.requester : { name: 'Bradley' };
+        vm.is_saving  = false;
         vm.set_due_at = set_due_at;
         vm.save       = save;
+        vm.close      = close;
 
         vm.pikaday_due_at = function (pikaday) {
             pikaday.setMaxDate(new Date());
@@ -77,6 +81,7 @@
         }
 
         function save() {
+            vm.is_saving = true;
             projectsService.save(vm.project).then(function () {
                 if (vm.project.id) {
                     projectsService.find(vm.project.id).then(function (result) {
@@ -87,6 +92,10 @@
                     $uibModalInstance.close();
                 }
             });
+        }
+
+        function close() {
+            $uibModalInstance.dismiss();
         }
 
     }
