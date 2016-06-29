@@ -21,6 +21,7 @@
         var vm                    = this,
             project_notes_timeout = null;
 
+        vm.is_editing          = false;
         vm.tasks_loading       = false;
         vm.task_saving         = false;
         vm.route_action        = pike.bind($scope, 'project', on_route_change);
@@ -33,6 +34,8 @@
         vm.mark_task_completed = mark_task_completed;
         vm.remove_recipient    = remove_recipient;
         vm.save_recipients     = save_recipients;
+        vm.on_editor_closed        = on_editor_closed;
+        vm.open_editor       = open_editor;
 
         init();
 
@@ -59,7 +62,7 @@
         function fetchTasks() {
             vm.tasks_loading = true;
             return tasksService.byProject($routeParams.id).then(function (result) {
-                vm.tasks = result.data.data;
+                vm.tasks         = result.data.data;
                 vm.tasks_loading = false;
             });
         }
@@ -137,12 +140,20 @@
 
         function update_task(task, data) {
             vm.task_saving = true;
-            data.id     = task.id;
+            data.id        = task.id;
             tasksService.update(data).then(function () {
                 vm.task_saving = false;
                 angular.extend(task, data);
                 fetchProject();
             });
+        }
+
+        function open_editor() {
+            vm.is_editing = true;
+        }
+
+        function on_editor_closed() {
+            vm.is_editing = false;
         }
 
         $scope.$watch('vm.project.notes', auto_save_project_notes);

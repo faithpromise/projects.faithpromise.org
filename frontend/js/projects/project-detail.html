@@ -1,3 +1,6 @@
+
+<project-settings ng-if="vm.is_editing" project="vm.project" on-close="vm.on_editor_closed()"></project-settings>
+
 <div class="Project">
 
   <div class="Project-header">
@@ -12,6 +15,9 @@
       <span class="Project-estimatedCompletion" ng-class="{ 'warning': vm.project.is_overdue_likely }">
         <i class="Project-dueWarningIcon icon-exclamation" ng-if="vm.project.is_overdue_likely"></i>
         Estimated delivery: {{ vm.project.estimated_delivery_date | amDateFormat: 'MMMM D' }}</span>
+    </div>
+    <div class="Project-actionsColumn">
+      <i class="Project-action icon-cog" ng-click="vm.open_editor()"></i>
     </div>
   </div>
 
