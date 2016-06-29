@@ -101,7 +101,15 @@ class Project extends Model {
         return $this;
     }
 
-    public function fillWithRelations($data) {
+    public function getIsPurchase() {
+        return $this->is_purchase;
+    }
+
+    public function setProductionDays($param) {
+        return $this->production_days = $param;
+    }
+
+    public function fillMore($data) {
 
         $this->fill($data);
 
