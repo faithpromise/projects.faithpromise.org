@@ -11,21 +11,23 @@
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: {
-                inputClass: '@',
-                tabIndex:   '@',
-                selected:   '=?',
-                onChange:   '&?'
+                inputClass:    '@',
+                tabIndex:      '@',
+                selected:      '=?',
+                limitToAgents: '@?',
+                onChange:      '&?'
             },
             scope:            {}
         };
     }
 
-    Controller.$inject = ['$scope', '$q', '$sce', 'usersService'];
+    Controller.$inject = ['$scope', '$q', '$sce', 'usersService', 'agentsService'];
 
-    function Controller($scope, $q, $sce, usersService) {
+    function Controller($scope, $q, $sce, usersService, agentsService) {
 
         var vm    = this,
-            cache = {};
+            cache = {},
+            searcher = vm.limitToAgents ? agentsService : usersService;
 
         vm.autocomplete_options = {
             on_error:         console.log,
@@ -64,7 +66,7 @@
 
                 deferred = $q.defer();
 
-                usersService.search(first_letter).then(function (result) {
+                searcher.search(first_letter).then(function (result) {
                     cache[first_letter] = result;
                     deferred.resolve(result);
                 }, function (err) {
