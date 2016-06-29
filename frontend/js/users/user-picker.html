@@ -1,9 +1,9 @@
 <div class="UserPicker" mass-autocomplete>
-  <input ng-class="vm.cssClass" ng-attr-tabindex="{{ vm.tabIndex }}" ng-attr-placeholder="{{ vm.placeholder }}" ng-model="vm.dirty" mass-autocomplete-item="vm.autocomplete_options" focus-on="vm.focus">
-  <!--<div class="UserPicker-tags">-->
-    <!--<span class="UserPicker-tag" ng-repeat="user in vm.selected" ng-style="{ 'background-image': 'url(' + user.avatar_url + ')' }">-->
-      <!--{{ user.abbreviation }}-->
-      <!--<span class="UserPicker-remove" ng-click="vm.remove_user(user)"><i class="icon-cancel"></i></span>-->
-    <!--</span>-->
-  <!--</div>-->
+  <input
+          placeholder="search for a user..."
+          tabindex="1"
+          ng-model="vm.input_value"
+          ng-class="vm.inputClass"
+          ng-attr-tabindex="{{ vm.tabIndex }}"
+          mass-autocomplete-item="vm.autocomplete_options">
 </div>

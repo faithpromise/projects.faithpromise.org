@@ -1,5 +1,5 @@
 // http://plnkr.co/edit/AC4HjHx9yj2SGqwgkbUD?p=preview
-(function (module) {
+(function (module, angular) {
     'use strict';
 
     module.directive('userPicker', directive);
@@ -11,65 +11,44 @@
             controller:       Controller,
             controllerAs:     'vm',
             bindToController: {
-                cssClass:    '@',
-                tabIndex:    '@',
-                placeholder: '@?',
-                selected:    '=?',
-                onChange:    '&?',
-                multiple:    '@',
-                focus:       '@'
+                inputClass: '@',
+                tabIndex:   '@',
+                selected:   '=?',
+                onChange:   '&?'
             },
             scope:            {}
         };
     }
 
-    Controller.$inject = ['$q', '$sce', 'usersService'];
+    Controller.$inject = ['$scope', '$q', '$sce', 'usersService'];
 
-    function Controller($q, $sce, usersService) {
+    function Controller($scope, $q, $sce, usersService) {
 
-        var vm                  = this,
-            cache               = {};
-        vm.dirty                = ''; // Input ng-model
+        var vm    = this,
+            cache = {};
+
         vm.autocomplete_options = {
             on_error:         console.log,
             debounce_suggest: 300,
+            on_detach:        fix_value,
             suggest:          suggest_users,
-            on_select:        add_user
+            on_select:        select_user
         };
 
         init();
 
         function init() {
-            vm.selected = vm.selected || (vm.multiple ? [] : null);
+            vm.tabIndex   = vm.tabIndex || 1;
+            vm.inputClass = vm.inputClass || 'Form-control';
         }
 
-        function add_user(item) {
-
-            if (vm.multiple && user_index(item.obj) === -1) {
-                vm.selected.push(item.obj);
-                vm.onChange ? vm.onChange() : null;
-            }
-
-            if (!vm.multiple) {
-                console.log('item.obj', item.obj);
-                vm.selected = item.obj;
-                vm.onChange ? vm.onChange() : null;
-            }
-
-            // Clear the input
-            if (vm.multiple) {
-                vm.dirty = '';
-            }
+        function fix_value() {
+            vm.input_value = vm.selected ? vm.selected.name : '';
         }
 
-
-        function user_index(user) {
-            for (var i = vm.selected.length - 1; i >= 0; i--) {
-                if (vm.selected[i].id == user.id) {
-                    return i;
-                }
-            }
-            return -1;
+        function select_user(item) {
+            vm.selected = item.obj;
+            vm.onChange ? vm.onChange() : null;
         }
 
         function suggest_users(term) {
@@ -142,6 +121,11 @@
             );
         }
 
+        $scope.$watch('vm.selected', function (old_value, new_value) {
+            if (new_value) {
+                fix_value();
+            }
+        });
     }
 
-})(angular.module('app'));
+})(angular.module('app'), angular);
