@@ -27,6 +27,7 @@
             task_save_timeout = null;
 
         vm.loading             = false;
+        vm.today               = new Date();
         vm.close               = close;
         vm.toggle_completed    = toggle_completed;
         vm.set_due_at          = set_due_at;

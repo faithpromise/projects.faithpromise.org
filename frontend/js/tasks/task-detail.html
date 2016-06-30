@@ -7,62 +7,43 @@
 
   <div class="TaskDetail-body">
 
-    <!-- Agent -->
-    <div class="TaskDetail-section">
-      <div class="TaskDetail-icon">
-        <i class="icon-user"></i>
-      </div>
-      <div class="TaskDetail-content has-value">
-        <user-picker selected="vm.task.agent" on-change="vm.on_agent_changed()"></user-picker>
-      </div>
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Assign to</span>
+        <user-picker css-class="Form-control" tab-index="1" selected="vm.task.agent" limit-to-agents="true"></user-picker>
+      </label>
     </div>
 
-    <!-- Duration -->
-    <div class="TaskDetail-section">
-      <div class="TaskDetail-icon">
-        <i class="icon-clock"></i>
-      </div>
-      <div class="TaskDetail-content has-value">
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Duration</span>
         <task-duration-picker task="vm.task" on-change="vm.on_duration_changed()"></task-duration-picker>
-      </div>
+      </label>
     </div>
 
-    <!-- Notes -->
-    <div class="TaskDetail-section">
-      <div class="TaskDetail-icon">
-        <i class="icon-pencil"></i>
-      </div>
-      <div class="TaskDetail-content" ng-class="{ 'has-value': vm.task.notes }">
-        <textarea class="TaskDetail-textarea" ng-model="vm.task.notes" placeholder="Add notes" msd-elastic></textarea>
-      </div>
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Notes</span>
+        <textarea class="Form-control" ng-model="vm.task.notes" placeholder="Add notes" msd-elastic></textarea>
+      </label>
     </div>
 
-    <!-- Due date -->
-    <div class="TaskDetail-section">
-      <div class="TaskDetail-icon">
-        <i class="icon-calendar"></i>
-      </div>
-      <div class="TaskDetail-content" ng-class="{ 'has-value': vm.task.due_at }">
-      <span class="clickable" pikaday="vm.foobar" on-select="vm.set_due_at(date)">
-        <span ng-if="vm.task.due_at">Due on {{ vm.task.due_at | amDateFormat: 'ddd, MMM D' }}</span>
-        <span ng-hide="vm.task.due_at">Set a due date</span>
+    <div class="Form-group">
+      <span class="Form-label">Due date <span class="link" ng-click="vm.set_due_at(null)" ng-show="vm.task.due_at">clear</span></span>
+      <span class="Form-control" pikaday="vm.pikaday_due_at" default-date="{{ vm.task.due_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_due_at(date)" tabindex="1">
+        {{ vm.task.due_at ? 'Due on ' : '' }}
+        {{ vm.task.due_at ? (vm.task.due_at | amDateFormat: 'ddd, MMM D') : 'Set a due date' }}
       </span>
-        <span class="link" ng-click="vm.set_due_at(null)" ng-show="vm.task.due_at">clear</span>
-      </div>
     </div>
 
-    <!-- Start date -->
-    <div class="TaskDetail-section">
-      <div class="TaskDetail-icon">
-        <i class="icon-calendar"></i>
-      </div>
-      <div class="TaskDetail-content" ng-class="{ 'has-value': vm.task.start_at }">
-      <span class="clickable" pikaday="vm.foobar" on-select="vm.set_start_at(date)">
-        <span ng-if="vm.task.start_at">Start on {{ vm.task.start_at | amDateFormat: 'ddd, MMM D' }}</span>
-        <span ng-hide="vm.task.start_at">Override start date</span>
-      </span>
-        <span class="link" ng-click="vm.set_start_at(null)" ng-show="vm.task.start_at">clear</span>
-      </div>
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Start at <span class="link" ng-click="vm.set_start_at(null)" ng-show="vm.task.start_at">clear</span></span>
+        <span class="Form-control" pikaday="vm.pikaday_start_at" default-date="{{ vm.task.start_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_start_at(date)" tabindex="1">
+          {{ vm.task.start_at ? 'Start on ' : '' }}
+          {{ vm.task.start_at ? (vm.task.start_at | amDateFormat: 'ddd, MMM D') : 'Override start date' }}
+        </span>
+      </label>
     </div>
 
   </div>

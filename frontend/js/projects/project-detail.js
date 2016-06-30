@@ -99,8 +99,6 @@
         }
 
         function auto_save_project_notes(newVal, oldVal) {
-            console.log('oldVal', oldVal);
-            console.log('newVal', newVal);
             if (typeof newVal !== 'undefined' && typeof oldVal !== 'undefined' && newVal != oldVal) {
                 if (project_notes_timeout) {
                     $timeout.cancel(project_notes_timeout)
@@ -153,6 +151,8 @@
         function on_editor_closed() {
             vm.is_editing = false;
         }
+
+        $scope.$watch('vm.project.notes', auto_save_project_notes);
 
     }
 

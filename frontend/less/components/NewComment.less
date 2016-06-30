@@ -16,6 +16,12 @@
   &:extend(.Comment-sender);
 }
 
+.NewComment-actionIcon {
+  padding: 0 5px;
+  color:   #969799;
+  cursor:  pointer;
+}
+
 .NewComment-subjectInput {
   width:   100%;
   padding: 5px 0;
@@ -38,7 +44,6 @@
 .NewComment-body {
   &:extend(.Comment-body all);
   width:            100%;
-  margin-bottom:    7px;
   padding:          15px;
   white-space:      normal;
   border-color:     #e0e0e0;
@@ -62,14 +67,18 @@
       outline: none !important;
     }
   }
+
+  &.has-focus {
+    border-color: #66afe9;
+    &:before {
+      border-bottom-color: #66afe9;
+    }
+  }
 }
 
 .NewComment-recipientsWrap {
-  display:       flex;
-  margin-bottom: 7px;
-  padding:       0 4px;
-  border:        1px solid #e0e0e0;
-  border-radius: 4px;
+  display:     flex;
+  align-items: center;
 
   .UserPicker-input {
     border:    none;
@@ -83,12 +92,9 @@
 }
 
 .NewComment-addRecipients {
-  flex-grow: 1;
-  min-width: 200px;
-}
-
-.NewComment-existingRecipients {
-  padding-left: 10px;
+  flex-grow:    1;
+  min-width:    200px;
+  padding-left: 3px;
 }
 
 .NewComment-recipients {
@@ -101,12 +107,33 @@
 }
 
 .NewComment-recipient {
-  display:     inline-block;
-  margin:      7px 14px 0 3px;
-  font-size:   12px;
-  white-space: nowrap;
-  cursor:      pointer;
+  display:       inline-block;
+  margin:        0 0 0 7px;
+  padding:       1px 7px;
+  border-radius: 4px;
+  font-size:     12px;
+  white-space:   nowrap;
+  background:    #cde1f4;
+  color:         #222;
+  cursor:        pointer;
   &:hover {
     text-decoration: line-through;
   }
+}
+
+.NewComment-recipientInput {
+  border: 0;
+}
+
+.NewComment-submit {
+  border-color:     @btn-primary-bg-color;
+  color:            @btn-primary-bg-color;
+  background-color: #fff;
+
+  &:focus,
+  &:hover {
+    background-color: darken(#fff, 4%);
+    outline: none !important;
+  }
+
 }

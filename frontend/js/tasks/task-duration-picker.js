@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            template:         '<div class="CustomSelect"><select class="CustomSelect-control" ng-model="vm.task.duration" ng-options="duration.value as duration.label for duration in vm.durations" ng-change="vm.on_change_handler()" tabindex="2"></select></div>',
+            template:         '<select class="Form-control" ng-model="vm.task.duration" ng-options="duration.value as duration.label for duration in vm.durations" ng-change="vm.on_change_handler()" tabindex="2"></select>',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',

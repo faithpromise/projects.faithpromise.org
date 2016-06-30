@@ -12,6 +12,7 @@
             controllerAs:     'vm',
             bindToController: {
                 inputClass:    '@',
+                placeholder:   '@',
                 tabIndex:      '@',
                 selected:      '=?',
                 limitToAgents: '@?',
@@ -41,8 +42,9 @@
         init();
 
         function init() {
-            vm.tabIndex   = vm.tabIndex || 1;
-            vm.inputClass = vm.inputClass || 'Form-control';
+            vm.placeholder = vm.placeholder || 'search for a user...';
+            vm.tabIndex    = vm.tabIndex || 1;
+            vm.inputClass  = vm.inputClass || 'Form-control';
         }
 
         function fix_value() {
