@@ -35,7 +35,10 @@ class TasksController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $task = Task::create($request->input('data'));
+
+        $task = new Task();
+        $task->fillMore($request->input('data'))->save();
+
         Event::fire(new TaskChanged($task));
     }
 

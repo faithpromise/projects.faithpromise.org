@@ -36,4 +36,42 @@ class Task extends Model {
         return $this->timeline_tasks()->max('timeline_date');
     }
 
+    public function setEventId($param) {
+        $this->{'event_id'} = $param;
+
+        return $this;
+    }
+
+    public function setProjectId($param) {
+        $this->{'project_id'} = $param;
+
+        return $this;
+    }
+
+    public function setAgentId($param) {
+        $this->{'agent_id'} = $param;
+
+        return $this;
+    }
+
+    public function fillMore($data) {
+
+        $this->fill($data);
+
+        if (isset($data['event']['id'])) {
+            $this->setEventId($data['event']['id']);
+        }
+
+        if (isset($data['project']['id'])) {
+            $this->setProjectId($data['project']['id']);
+        }
+
+        if (isset($data['agent']['id'])) {
+            $this->setAgentId($data['agent']['id']);
+        }
+
+        return $this;
+
+    }
+
 }
