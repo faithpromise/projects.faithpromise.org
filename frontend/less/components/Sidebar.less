@@ -8,11 +8,23 @@
   margin: 40px 0;
 }
 
+.Sidebar-header {
+  display:     flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
 .Sidebar-heading {
+  flex-grow:      1;
   margin:         15px 0;
   font-size:      12px;
   font-weight:    600;
   text-transform: uppercase;
+}
+
+.Sidebar-headerAction {
+  &:extend(.link);
+  font-size: 12px;
 }
 
 .TaskTable {
