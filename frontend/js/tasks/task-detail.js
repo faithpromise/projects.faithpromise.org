@@ -26,14 +26,13 @@
         var vm                = this,
             task_save_timeout = null;
 
-        vm.loading             = false;
-        vm.today               = new Date();
-        vm.close               = close;
-        vm.toggle_completed    = toggle_completed;
-        vm.set_due_at          = set_due_at;
-        vm.set_start_at        = set_start_at;
-        vm.on_agent_changed    = on_agent_changed;
-        vm.on_duration_changed = on_duration_changed;
+        vm.loading          = false;
+        vm.today            = new Date();
+        vm.close            = close;
+        vm.toggle_completed = toggle_completed;
+        vm.set_due_at       = set_due_at;
+        vm.set_start_at     = set_start_at;
+        vm.save_task        = save_task;
 
         init();
 
@@ -54,14 +53,6 @@
             });
         }
 
-        function on_agent_changed() {
-            save_task();
-        }
-
-        function on_duration_changed() {
-            save_task();
-        }
-
         function toggle_completed() {
             var value = vm.task.completed_at ? null : moment();
             set_completed_at(value);
@@ -69,36 +60,21 @@
 
         function set_completed_at(value) {
             vm.task.completed_at = value ? moment(value).format('YYYY-MM-DD HH:mm:ss') : null;
-            save_task();
         }
 
         function set_due_at(value) {
             vm.task.due_at = value ? moment(value).format('YYYY-MM-DD') : null;
-            save_task();
         }
 
         function set_start_at(value) {
             vm.task.start_at = value ? moment(value).format('YYYY-MM-DD') : null;
-            save_task();
         }
 
         function save_task() {
-            tasksService.update(vm.task).then(function () {
+            tasksService.save(vm.task).then(function () {
                 vm.onUpdate();
             });
         }
-
-        function auto_save_task(newVal, oldVal) {
-            if (typeof newVal !== 'undefined' && typeof oldVal !== 'undefined' && newVal != oldVal) {
-                if (task_save_timeout) {
-                    $timeout.cancel(task_save_timeout)
-                }
-                task_save_timeout = $timeout(save_task, 1000);  // 1000 = 1 second
-            }
-        }
-
-        $scope.$watch('vm.task.name', auto_save_task);
-        $scope.$watch('vm.task.notes', auto_save_task);
 
     }
 
