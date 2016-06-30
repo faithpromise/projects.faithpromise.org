@@ -15,7 +15,8 @@
                 tabIndex:      '@',
                 selected:      '=?',
                 limitToAgents: '@?',
-                onChange:      '&?'
+                onChange:      '&?',
+                detached:      '@?'
             },
             scope:            {}
         };
@@ -25,8 +26,8 @@
 
     function Controller($scope, $q, $sce, usersService, agentsService) {
 
-        var vm    = this,
-            cache = {},
+        var vm       = this,
+            cache    = {},
             searcher = vm.limitToAgents ? agentsService : usersService;
 
         vm.autocomplete_options = {
@@ -45,12 +46,13 @@
         }
 
         function fix_value() {
-            vm.input_value = vm.selected ? vm.selected.name : '';
+            vm.input_value = (vm.selected && !vm.detached) ? vm.selected.name : '';
         }
 
         function select_user(item) {
             vm.selected = item.obj;
-            vm.onChange ? vm.onChange() : null;
+            vm.onChange ? vm.onChange({ user: item.obj }) : null;
+            fix_value();
         }
 
         function suggest_users(term) {
@@ -123,7 +125,8 @@
             );
         }
 
-        $scope.$watch('vm.selected', function (old_value, new_value) {
+        // When we have a user, update the input value
+        $scope.$watch('vm.selected', function (new_value) {
             if (new_value) {
                 fix_value();
             }
