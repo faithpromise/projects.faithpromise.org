@@ -64,7 +64,7 @@ class TasksController extends Controller {
     public function update(Request $request, $id) {
         $old_task = Task::find($id);
         $new_task = Task::find($id);
-        $new_task->update($request->input('data'));
+        $new_task->fillMore($request->input('data'))->save();
         Event::fire(new TaskChanged($new_task, $old_task));
     }
 
