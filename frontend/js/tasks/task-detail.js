@@ -19,16 +19,14 @@
         };
     }
 
-    Controller.$inject = ['$scope', '$timeout', 'tasksService', 'pike'];
+    Controller.$inject = ['$scope', '$timeout', 'tasksService'];
 
-    function Controller($scope, $timeout, tasksService, pike) {
+    function Controller($scope, $timeout, tasksService) {
 
         var vm                = this,
-            id                = pike.param('task_id'),
             task_save_timeout = null;
 
         vm.loading             = false;
-        vm.route_action        = pike.bind($scope, 'contacts.detail', on_route_change);
         vm.close               = close;
         vm.toggle_completed    = toggle_completed;
         vm.set_due_at          = set_due_at;
@@ -49,14 +47,10 @@
 
         function load_remote_data() {
             vm.loading = true;
-            tasksService.find(id).then(function (result) {
-                vm.task    = result.data.data;
+            tasksService.find(vm.task.id).then(function (result) {
+                vm.task    = angular.extend(vm.task, result.data.data);
                 vm.loading = false;
             });
-        }
-
-        function on_route_change(event, nextAction) {
-            vm.route_action = nextAction;
         }
 
         function on_agent_changed() {
@@ -88,7 +82,7 @@
         }
 
         function save_task() {
-            tasksService.update(vm.task).then(function() {
+            tasksService.update(vm.task).then(function () {
                 vm.onUpdate();
             });
         }

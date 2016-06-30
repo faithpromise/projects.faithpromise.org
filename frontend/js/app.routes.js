@@ -10,16 +10,17 @@
 
         $routeProvider
             .when('/', {
-                action: 'home'
+                template: '<timeline></timeline>'
             })
             .when('/login', {
+                template: '<app-login></app-login>',
                 action: 'login'
             })
             .when('/logout', {
                 action: 'logout'
             })
             .when('/projects/:id', {
-                action: 'project'
+                template: '<project-detail></project-detail>'
             })
             .when('/projects/:id/tasks/:task_id', {
                 action: 'project.task'

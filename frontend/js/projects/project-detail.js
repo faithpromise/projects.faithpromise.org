@@ -19,12 +19,13 @@
     function Controller($scope, $timeout, $routeParams, $location, projectsService, tasksService, pike) {
 
         var vm                    = this,
-            project_notes_timeout = null;
+            project_notes_timeout = null,
+            project_notes_watcher;
 
         vm.is_editing          = false;
         vm.tasks_loading       = false;
         vm.task_saving         = false;
-        vm.route_action        = pike.bind($scope, 'project', on_route_change);
+        // vm.route_action        = pike.bind($scope, 'project', on_route_change);
         vm.new_task            = {};
         vm.open_task           = open_task;
         vm.on_task_closed      = on_task_closed;
@@ -34,16 +35,16 @@
         vm.mark_task_completed = mark_task_completed;
         vm.remove_recipient    = remove_recipient;
         vm.save_recipients     = save_recipients;
-        vm.on_editor_closed        = on_editor_closed;
-        vm.open_editor       = open_editor;
+        vm.on_editor_closed    = on_editor_closed;
+        vm.open_editor         = open_editor;
 
         init();
 
         function init() {
-            refresh();
+            load_remote_data();
         }
 
-        function refresh() {
+        function load_remote_data() {
             fetchProject();
             fetchTasks();
         }
@@ -90,14 +91,16 @@
         }
 
         function save_project_notes() {
-            var data                = { notes: vm.project.notes };
+            var data                = { id: vm.project.id, notes: vm.project.notes };
             vm.project_notes_saving = true;
-            projectsService.update($routeParams.id, data).then(function () {
+            projectsService.save(data).then(function () {
                 vm.project_notes_saving = false;
             });
         }
 
         function auto_save_project_notes(newVal, oldVal) {
+            console.log('oldVal', oldVal);
+            console.log('newVal', newVal);
             if (typeof newVal !== 'undefined' && typeof oldVal !== 'undefined' && newVal != oldVal) {
                 if (project_notes_timeout) {
                     $timeout.cancel(project_notes_timeout)
@@ -111,24 +114,19 @@
         }
 
         function on_task_added() {
-            refresh();
+            load_remote_data();
         }
 
         function open_task(task) {
             vm.selected_task = task;
-            $location.url('/projects/' + vm.project.id + '/tasks/' + task.id);
         }
 
         function on_task_updated() {
-            refresh();
+            load_remote_data();
         }
 
         function on_task_closed() {
-            $location.url('/projects/' + vm.project.id);
-        }
-
-        function on_route_change(event, next_action) {
-            vm.route_action = next_action;
+            vm.selected_task = null;
         }
 
         function mark_task_completed(task, event) {
@@ -155,9 +153,6 @@
         function on_editor_closed() {
             vm.is_editing = false;
         }
-
-        $scope.$watch('vm.project.notes', auto_save_project_notes);
-
 
     }
 

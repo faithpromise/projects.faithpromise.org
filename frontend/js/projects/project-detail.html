@@ -23,11 +23,11 @@
 
   <div class="Project-body">
 
-    <div class="Project-sidebar" ng-if="vm.route_action === 'task'">
+    <div class="Project-sidebar" ng-if="vm.selected_task">
       <task-detail task="vm.selected_task" on-close="vm.on_task_closed()" on-update="vm.on_task_updated()"></task-detail>
     </div>
 
-    <div class="Project-sidebar" ng-hide="vm.route_action === 'task'">
+    <div class="Project-sidebar" ng-hide="vm.selected_task">
 
       <div class="Sidebar-section Sidebar-container Project-notesSection">
         <p class="Project-eventNotes">{{ vm.project.event.notes }}</p>

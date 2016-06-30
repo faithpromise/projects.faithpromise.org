@@ -28,11 +28,10 @@ use App\Helpers\Assets;
     <body ng-controller="main as vm">
 
         <app-nav ng-if="vm.route_action !== 'login'" on-show-new-project="vm.open_new_project()"></app-nav>
-        <app-login ng-if="vm.route_action === 'login'"></app-login>
 
-        <timeline ng-if="vm.route_action === 'home'"></timeline>
-        <project-detail ng-if="vm.route_action === 'project'"></project-detail>
-        <event-detail ng-if="vm.route_action === 'event'"></event-detail>
+        <ng-view></ng-view>
+
+        <!-- <event-detail ng-if="vm.route_action === 'event'"></event-detail> -->
 
         <!-- New Project -->
         <project-editor ng-if="vm.is_new_project_open" on-close="vm.close_new_project()"></project-editor>
