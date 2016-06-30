@@ -58,9 +58,9 @@
 
     }
 
-    ProjectModalController.$inject = ['$scope', '$uibModalInstance', 'orig_project', 'projectsService'];
+    ProjectModalController.$inject = ['$scope', '$location', '$uibModalInstance', 'orig_project', 'projectsService'];
 
-    function ProjectModalController($scope, $uibModalInstance, orig_project, projectsService) {
+    function ProjectModalController($scope, $location, $uibModalInstance, orig_project, projectsService) {
 
         var vm        = this;
         vm.project    = angular.copy(orig_project);
@@ -82,13 +82,14 @@
 
         function save() {
             vm.is_saving = true;
-            projectsService.save(vm.project).then(function () {
+            projectsService.save(vm.project).then(function (result) {
                 if (vm.project.id) {
                     projectsService.find(vm.project.id).then(function (result) {
                         angular.extend(orig_project, result.data.data);
                         $uibModalInstance.close();
                     });
                 } else {
+                    $location.url('/projects/' + result.data.data.id);
                     $uibModalInstance.close();
                 }
             });
