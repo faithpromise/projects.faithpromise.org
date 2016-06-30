@@ -1,4 +1,4 @@
-(function(module) {
+(function (module) {
     'use strict';
 
     module.factory('tasksService', service);
@@ -9,16 +9,15 @@
 
         return {
 
-            create: function(task) {
-                return $http.post('/api/tasks', { 'data': task });
-            },
-
-            find: function(id) {
+            find: function (id) {
                 return $http.get('/api/tasks/' + id);
             },
 
-            update: function(task) {
-                return $http.put('/api/tasks/' + task.id, { 'data': task });
+            save: function (task) {
+                if (task.id) {
+                    return $http.put('/api/tasks/' + task.id, { 'data': task });
+                }
+                return $http.post('/api/tasks', { 'data': task });
             },
 
             byProject: function (project_id) {
