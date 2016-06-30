@@ -23,6 +23,8 @@ class ProjectsController extends Controller {
         $project->fillMore($request->input('data'))->save();
 
         $this->update_recipients($project, $request->input('data'));
+
+        return ['data' => $project];
     }
 
     public function update($id, Request $request) {
