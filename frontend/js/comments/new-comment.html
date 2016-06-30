@@ -10,12 +10,12 @@
   </div>
 
   <div class="NewComment-body">
-    <textarea class="NewComment-textarea" ng-model="vm.comment.body" msd-elastic></textarea>
+    <textarea class="NewComment-textarea" tabindex="1" ng-model="vm.comment.body" msd-elastic></textarea>
   </div>
 
   <div class="NewComment-recipientsWrap">
     <div class="NewComment-addRecipients">
-      <user-picker placeholder="Add recipients" selected="vm.recipients" multiple="true"></user-picker>
+      <user-picker placeholder="Add recipients" selected="vm.dummy_recipient" on-change="vm.add_recipient(user)" detached="true"></user-picker>
     </div>
     <div class="NewComment-existingRecipients">
       <ul class="NewComment-recipients">

@@ -29,6 +29,7 @@
         vm.remove_recipient  = remove_recipient;
         vm.save_comment      = save_comment;
         vm.upload            = upload;
+        vm.add_recipient     = add_recipient;
         vm.remove_attachment = remove_attachment;
 
         init();
@@ -51,6 +52,21 @@
             vm.recipients        = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
             vm.sender            = default_sender;
             vm.attachments       = null;
+        }
+
+        function add_recipient(user) {
+            if (!has_recipient(user)) {
+                vm.recipients.push(user);
+            }
+        }
+
+        function has_recipient(user) {
+            for (var i = 0; i < vm.recipients.length; i++) {
+                if (vm.recipients[i].id == user.id) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         function remove_recipient(user) {
@@ -164,7 +180,7 @@
 
             attachmentsService.delete(attachment.id);
 
-            for(var i = 0; i < vm.attachments.length; i++) {
+            for (var i = 0; i < vm.attachments.length; i++) {
                 if (vm.attachments[i].id === attachment.id) {
                     vm.attachments.splice(i, 1);
                 }
