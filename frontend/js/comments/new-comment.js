@@ -11,9 +11,8 @@
             controllerAs:     'vm',
             bindToController: true,
             scope:            {
-                event:              '=?',
-                project:            '=?',
-                default_recipients: '='
+                event:   '=?',
+                project: '=?'
             }
         };
     }
@@ -26,7 +25,7 @@
             default_sender,
             deferred_new_comment;
         vm.comment           = { user_id: $auth.getPayload().sub };
-        vm.save_comment      = save_comment;
+        vm.save              = save;
         vm.upload            = upload;
         vm.remove_attachment = remove_attachment;
 
@@ -45,21 +44,11 @@
 
         function reset() {
             delete(vm.comment.id);
-            deferred_new_comment = null;
-            vm.comment.body      = '';
-            vm.recipients        = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
-            vm.sender            = default_sender;
-            vm.attachments       = null;
-        }
-
-        function gather_recipients() {
-            var results = [];
-
-            for (var i = 0; i < vm.recipients.length; i++) {
-                results.push(vm.recipients[i].id);
-            }
-
-            return results;
+            deferred_new_comment  = null;
+            vm.comment.body       = '';
+            vm.comment.recipients = angular.copy(vm.project.recipients);
+            vm.sender             = default_sender;
+            vm.attachments        = null;
         }
 
         function fetch_attachments() {
@@ -77,7 +66,7 @@
 
                 deferred_new_comment = $q.defer();
 
-                save_comment(true).then(
+                save(true).then(
                     function (result) {
                         vm.comment.id = result.data.data.id;
                         deferred_new_comment.resolve(result);
@@ -93,19 +82,30 @@
 
         }
 
-        function save_comment(draft) {
+        function save(draft) {
 
-            var comment = angular.extend(
+            var error = [],
+                comment = angular.extend(
                 {},
                 vm.comment,
                 {
                     type:       draft === true ? 'draft' : 'comment',
                     user_id:    vm.sender.id,
                     event_id:   vm.event ? vm.event.id : null,
-                    project_id: vm.project ? vm.project.id : null,
-                    recipients: gather_recipients()
+                    project_id: vm.project ? vm.project.id : null
                 }
             );
+
+            if (comment.recipients.length === 0) {
+                error.push('Wise man say: A comment sent to nobody doesn\'t make a sound.');
+            } else if (comment.body.length === 0) {
+                error.push('Surely you have something you want to say.');
+            }
+
+            if (error.length) {
+                alert(error.join('\n'));
+                return;
+            }
 
             if (draft !== true) {
                 reset();
