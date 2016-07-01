@@ -19,12 +19,11 @@
         };
     }
 
-    Controller.$inject = ['$scope', '$timeout', 'tasksService'];
+    Controller.$inject = ['tasksService'];
 
-    function Controller($scope, $timeout, tasksService) {
+    function Controller(tasksService) {
 
-        var vm                = this,
-            task_save_timeout = null;
+        var vm = this;
 
         vm.loading          = false;
         vm.today            = new Date();
@@ -42,6 +41,7 @@
 
         function init() {
             vm.task = angular.copy(vm._task);
+
             load_remote_data();
         }
 
