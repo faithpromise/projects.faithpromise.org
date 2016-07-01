@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\TaskChanged;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,6 +14,7 @@ class TasksController extends Controller {
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
@@ -23,8 +25,12 @@ class TasksController extends Controller {
             $query->whereProjectId($request->input('project_id'));
         }
 
+        $tasks = $query->get()->sortBy(function($task) {
+           return (new Carbon($task->estimated_start_date))->timestamp;
+        })->values();
+
         return [
-            'data' => $query->get()
+            'data' => $tasks
         ];
     }
 
