@@ -36,7 +36,7 @@ class Attachment extends Model {
     }
 
     public function getHasThumbAttribute() {
-        return in_array($this->extension, ['png', 'jpg', 'jpeg', 'gif']);
+        return in_array(strtolower($this->extension), ['png', 'jpg', 'jpeg', 'gif']);
     }
 
     public function getPathAttribute() {
