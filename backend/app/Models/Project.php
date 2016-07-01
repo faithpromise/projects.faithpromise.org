@@ -136,7 +136,7 @@ class Project extends Model {
         $est = $this->timeline_tasks()->max('timeline_date');
 
         if (is_null($est)) {
-            return null;
+            return Carbon::today();
         }
 
         $est = new Carbon($est);
