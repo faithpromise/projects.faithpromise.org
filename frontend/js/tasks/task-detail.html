@@ -33,7 +33,7 @@
       <span class="Form-label">Due date <span class="link" ng-click="vm.set_due_at(null)" ng-show="vm.task.due_at">clear</span></span>
       <span class="Form-control" pikaday="vm.pikaday_due_at" default-date="{{ vm.task.due_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_due_at(date)" tabindex="1">
         {{ vm.task.due_at ? 'Due on ' : '' }}
-        {{ vm.task.due_at ? (vm.task.due_at | amDateFormat: 'ddd, MMM D') : 'Set a due date' }}
+        {{ vm.task.due_at ? (vm.task.due_at | amDateFormat: 'ddd, MMM D') : 'Override due date' }}
       </span>
     </div>
 
