@@ -31,8 +31,6 @@
         vm.on_task_closed      = on_task_closed;
         vm.on_task_updated     = on_task_updated;
         vm.mark_task_completed = mark_task_completed;
-        vm.remove_recipient    = remove_recipient;
-        vm.save_recipients     = save_recipients;
         vm.on_editor_closed    = on_editor_closed;
         vm.open_editor         = open_editor;
 
@@ -66,28 +64,6 @@
             });
         }
 
-        function save_recipients() {
-            var data = gather_recipient_ids();
-            projectsService.save_recipients($routeParams.id, data);
-        }
-
-        function remove_recipient(user) {
-            for (var i = vm.project.recipients.length - 1; i >= 0; i--) {
-                if (vm.project.recipients[i].id == user.id) {
-                    vm.project.recipients.splice(i, 1);
-                }
-            }
-            save_recipients();
-        }
-
-        function gather_recipient_ids() {
-            var results = [];
-            for (var i = 0; i < vm.project.recipients.length; i++) {
-                results.push(vm.project.recipients[i].id);
-            }
-            return results;
-        }
-
         function save_project_notes() {
             var data                = { id: vm.project.id, notes: vm.project.notes };
             vm.project_notes_saving = true;
@@ -107,7 +83,8 @@
 
         function show_new_task() {
             vm.selected_task = {
-                project_id: vm.project.id
+                project_id: vm.project.id,
+                agent:      vm.project.agent
             };
         }
 
@@ -147,6 +124,8 @@
 
         function on_editor_closed() {
             vm.is_editing = false;
+            // Task dates could be changed if due date was changed
+            fetchTasks();
         }
 
         $scope.$watch('vm.project.notes', auto_save_project_notes);
