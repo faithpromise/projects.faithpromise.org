@@ -38,6 +38,10 @@ class Project extends Model {
         return $this->hasMany(Task::class)->whereNull('completed_at');
     }
 
+    public function assignees() {
+        return $this->hasManyThrough(Agent::class, Task::class, 'agent_id', 'bar', 'jack');
+    }
+
     public function timeline_tasks() {
         return $this->hasMany(TimelineTask::class);
     }
