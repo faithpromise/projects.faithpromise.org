@@ -55,9 +55,7 @@ class CommentsController extends Controller {
         $data = $request->input('data');
         $comment = Comment::create($data);
 
-        if (array_key_exists('recipients', $data) && !empty($data['recipients'])) {
-            $comment->recipients()->attach($data['recipients']);
-        }
+        $this->update_recipients($comment, $data);
 
         Event::fire(new CommentCreated($comment));
 
@@ -89,9 +87,7 @@ class CommentsController extends Controller {
         $comment = Comment::find($id);
         $comment->update($data);
 
-        if (array_key_exists('recipients', $data) && !empty($data['recipients'])) {
-            $comment->recipients()->sync($data['recipients']);
-        }
+        $this->update_recipients($comment, $data);
 
         Event::fire(new CommentCreated($comment));
 
@@ -144,4 +140,12 @@ class CommentsController extends Controller {
         Event::fire(new CommentCreated($comment));
 
     }
+
+    private function update_recipients(Comment $comment, $data) {
+        if (array_key_exists('recipients', $data)) {
+            $recipients = array_pluck($data['recipients'], 'id');
+            $comment->recipients()->sync($recipients);
+        }
+    }
+
 }
