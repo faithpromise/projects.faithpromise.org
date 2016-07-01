@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class TimelineBuilder {
 
-    public static function createTimeline(Agent $agent) {
+    public static function createTimeline($agent) {
 
         if (is_numeric($agent)) {
             $agent = Agent::find($agent);
@@ -18,7 +18,15 @@ class TimelineBuilder {
         TimelineTask::where('agent_id', '=', $agent->id)->delete();
         TimelineDay::where('agent_id', '=', $agent->id)->delete();
 
-        self::buildTimeline($agent, $agent->tasks, Carbon::today(), 0, []);
+        $tasks = $agent->tasks()->get()->sortBy(function ($task) {
+
+            // TODO: Need to make sure this sorting works
+            return $task->calculated_due_at;
+
+            // Reset order
+        })->values();
+
+        self::buildTimeline($agent, $tasks, Carbon::today(), 0, []);
 
     }
 
@@ -46,6 +54,7 @@ class TimelineBuilder {
 
                 // Can we use this task?
                 if (is_null($_task->start_at) OR $_task->start_at->lte($day)) {
+
                     $task = $tasks->splice($key, 1)->first();
                     reset($tasks);
                     break;
@@ -63,10 +72,11 @@ class TimelineBuilder {
                 $timeline_task->task_id = $task->id;
                 $timeline_task->timeline_date = $timeline_day->day;
                 $timeline_task->name = $task->name;
-                $timeline_task->comment = $task->comment;
+                $timeline_task->notes = $task->notes;
                 $timeline_task->duration = $task->duration;
                 $timeline_task->start_at = $task->start_at;
-                $timeline_task->due_at = $task->due_at;
+                $timeline_task->due_at = $task->calculated_due_at;
+                $timeline_task->sort = $task->sort;
                 $timeline_task->completed_at = $task->completed_at;
                 $timeline_task->is_start = $task->is_start;
                 $timeline_task->is_end = true;
