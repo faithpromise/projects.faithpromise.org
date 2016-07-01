@@ -29,7 +29,8 @@
 
         function init() {
 
-            vm.project = vm.project || {};
+            vm.project            = vm.project || {};
+            vm.project.recipients = vm.project.recipients || [];
 
             modal_instance = $uibModal.open({
                 templateUrl:      '/build/js/projects/project-editor.html',
