@@ -17,6 +17,8 @@
                 selected:      '=?',
                 limitToAgents: '@?',
                 onChange:      '&?',
+                onFocus:       '&?',
+                onBlur:        '&?',
                 detached:      '@?'
             },
             scope:            {}
@@ -31,10 +33,11 @@
             cache    = {},
             searcher = vm.limitToAgents ? agentsService : usersService;
 
+        vm.on_focus             = on_focus;
         vm.autocomplete_options = {
             on_error:         console.log,
             debounce_suggest: 300,
-            on_detach:        fix_value,
+            on_detach:        on_detach,
             suggest:          suggest_users,
             on_select:        select_user
         };
@@ -45,6 +48,11 @@
             vm.placeholder = vm.placeholder || 'search for a user...';
             vm.tabIndex    = vm.tabIndex || 1;
             vm.inputClass  = vm.inputClass || 'Form-control';
+        }
+
+        function on_detach() {
+            fix_value();
+            on_blur();
         }
 
         function fix_value() {
@@ -133,6 +141,15 @@
                 fix_value();
             }
         });
+
+        function on_focus() {
+            console.log('focussing');
+            vm.onFocus ? vm.onFocus() : null;
+        }
+
+        function on_blur() {
+            vm.onBlur ? vm.onBlur() : null;
+        }
     }
 
 })(angular.module('app'), angular);

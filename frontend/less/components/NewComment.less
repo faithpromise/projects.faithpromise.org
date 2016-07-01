@@ -77,52 +77,11 @@
 }
 
 .NewComment-recipientsWrap {
-  display:     flex;
-  align-items: center;
-
-  .UserPicker-input {
-    border:    none;
-    padding:   7px;
-    font-size: 13px;
-
-    &:focus {
-      outline: none !important;
-    }
-  }
+  padding-left: 7px;
 }
 
-.NewComment-addRecipients {
-  flex-grow:    1;
-  min-width:    200px;
-  padding-left: 3px;
-}
-
-.NewComment-recipients {
-  margin-bottom: 0;
-  list-style:    none;
-  text-align:    right;
-  color:         #929292;
-  user-select:   none;
-  cursor:        default;
-}
-
-.NewComment-recipient {
-  display:       inline-block;
-  margin:        0 0 0 7px;
-  padding:       1px 7px;
-  border-radius: 4px;
-  font-size:     12px;
-  white-space:   nowrap;
-  background:    #cde1f4;
-  color:         #222;
-  cursor:        pointer;
-  &:hover {
-    text-decoration: line-through;
-  }
-}
-
-.NewComment-recipientInput {
-  border: 0;
+.NewComment-recipientsWrap .MultiUserPicker {
+  border: none !important;
 }
 
 .NewComment-submit {
@@ -133,7 +92,7 @@
   &:focus,
   &:hover {
     background-color: darken(#fff, 4%);
-    outline: none !important;
+    outline:          none !important;
   }
 
 }

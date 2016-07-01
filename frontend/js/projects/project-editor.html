@@ -33,6 +33,11 @@
   </div>
 
   <div class="Form-group">
+    <span class="Form-label">Default Recipients</span>
+    <user-multi-picker selected="vm.project.recipients" placeholder="add recipients..."></user-multi-picker>
+  </div>
+
+  <div class="Form-group">
     <label class="Form-checkbox">
       <input type="checkbox" tabindex="1" ng-model="vm.project.is_purchase" ng-true-value="1" ng-false-value="0"> Requires a purchase
     </label>

@@ -1,0 +1,18 @@
+<div class="MultiUserPicker" ng-class="{ 'has-focus': vm.is_focused }">
+  <ul class="MultiUserPicker-users" ng-if="vm.selected.length">
+    <li class="MultiUserPicker-user" ng-repeat="user in vm.selected" ng-click="vm.remove_user(user)">{{ user.abbreviation }}</li>
+  </ul>
+  <div class="MultiUserPicker-inputWrap">
+    <user-picker
+            selected="vm.dummy_user"
+            input-class="MultiUserPicker-input"
+            placeholder="{{ vm.placeholder }}"
+            tab-index="{{ vm.tabIndex }}"
+            limit-to-agents="{{ vm.limitToAgents }}"
+            on-change="vm.onChange(user)"
+            on-focus="vm.is_focused = true"
+            on-blur="vm.is_focused = false"
+            detached="true">
+    </user-picker>
+  </div>
+</div>

@@ -26,12 +26,10 @@
         vm.tasks_loading       = false;
         vm.task_saving         = false;
         // vm.route_action        = pike.bind($scope, 'project', on_route_change);
-        vm.new_task            = {};
+        vm.show_new_task       = show_new_task;
         vm.open_task           = open_task;
         vm.on_task_closed      = on_task_closed;
         vm.on_task_updated     = on_task_updated;
-        vm.on_task_submitted   = on_task_submitted;
-        vm.on_task_added       = on_task_added;
         vm.mark_task_completed = mark_task_completed;
         vm.remove_recipient    = remove_recipient;
         vm.save_recipients     = save_recipients;
@@ -107,12 +105,10 @@
             }
         }
 
-        function on_task_submitted() {
-            vm.tasks_loading = true;
-        }
-
-        function on_task_added() {
-            load_remote_data();
+        function show_new_task() {
+            vm.selected_task = {
+                project_id: vm.project.id
+            };
         }
 
         function open_task(task) {
@@ -120,6 +116,7 @@
         }
 
         function on_task_updated() {
+            vm.selected_task = null;
             load_remote_data();
         }
 

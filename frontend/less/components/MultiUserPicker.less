@@ -1,0 +1,53 @@
+.MultiUserPicker {
+  &:extend(.Form-control);
+  display:       flex;
+  flex-wrap:     wrap;
+  align-items:   center;
+  padding-left:  6px;
+  padding-right: 6px;
+
+  &.has-focus {
+    border-color: #66afe9;
+  }
+}
+
+.MultiUserPicker-inputWrap {
+  flex-grow:    1;
+  min-width:    200px;
+  padding-left: 3px;
+}
+
+.MultiUserPicker-input {
+  border:    none;
+  height:    26px; // To match height of user tags
+  padding:   0 7px;
+  font-size: 13px;
+
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.MultiUserPicker-users {
+  margin-left:   -7px;
+  margin-bottom: 0;
+  list-style:    none;
+  color:         #929292;
+  user-select:   none;
+  cursor:        default;
+}
+
+.MultiUserPicker-user {
+  display:       inline-block;
+  margin:        0 0 0 7px;
+  padding:       1px 7px;
+  border-radius: 4px;
+  font-size:     12px;
+  white-space:   nowrap;
+  background:    #cde1f4;
+  color:         #222;
+  cursor:        pointer;
+  &:hover {
+    text-decoration: line-through;
+  }
+}

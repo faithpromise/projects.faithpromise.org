@@ -41,7 +41,8 @@ class ProjectsController extends Controller {
 
     private function update_recipients($project, $data) {
         if (array_key_exists('recipients', $data)) {
-            $project->recipients()->sync($data['recipients']);
+            $recipients = array_pluck($data['recipients'], 'id');
+            $project->recipients()->sync($recipients);
         }
     }
 

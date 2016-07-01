@@ -43,13 +43,12 @@
 
       <!--Tasks-->
 
-      <!--<div class="Sidebar-section Sidebar-container">-->
-        <!--<new-task ng-if="vm.project.id" project="vm.project" on-submit="vm.on_task_submitted()" on-success="vm.on_task_added()"></new-task>-->
-      <!--</div>-->
-
       <div class="Sidebar-section Sidebar-container">
 
-        <h2 class="Sidebar-heading">Tasks <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.tasks_loading || vm.task_saving"></h2>
+        <div class="Sidebar-header">
+          <h2 class="Sidebar-heading">Tasks <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.tasks_loading || vm.task_saving"></h2>
+          <span class="Sidebar-headerAction" ng-click="vm.show_new_task()">add task</span>
+        </div>
 
         <table class="TaskTable">
           <tfoot>

@@ -26,10 +26,8 @@
             default_sender,
             deferred_new_comment;
         vm.comment           = { user_id: $auth.getPayload().sub };
-        vm.remove_recipient  = remove_recipient;
         vm.save_comment      = save_comment;
         vm.upload            = upload;
-        vm.add_recipient     = add_recipient;
         vm.remove_attachment = remove_attachment;
 
         init();
@@ -52,29 +50,6 @@
             vm.recipients        = vm.default_recipients ? angular.copy(vm.default_recipients) : angular.copy(vm.project.recipients);
             vm.sender            = default_sender;
             vm.attachments       = null;
-        }
-
-        function add_recipient(user) {
-            if (!has_recipient(user)) {
-                vm.recipients.push(user);
-            }
-        }
-
-        function has_recipient(user) {
-            for (var i = 0; i < vm.recipients.length; i++) {
-                if (vm.recipients[i].id == user.id) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function remove_recipient(user) {
-            for (var i = vm.recipients.length - 1; i >= 0; i--) {
-                if (vm.recipients[i].id == user.id) {
-                    vm.recipients.splice(i, 1);
-                }
-            }
         }
 
         function gather_recipients() {

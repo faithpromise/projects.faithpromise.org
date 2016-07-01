@@ -62,14 +62,16 @@
 
     function ProjectModalController($scope, $location, $uibModalInstance, orig_project, projectsService) {
 
-        var vm        = this;
-        vm.project    = angular.copy(orig_project);
-        vm.today      = new Date();
-        vm.requester  = vm.project.requester ? vm.project.requester : { name: 'Bradley' };
-        vm.is_saving  = false;
-        vm.set_due_at = set_due_at;
-        vm.save       = save;
-        vm.close      = close;
+        var vm              = this;
+        vm.project          = angular.copy(orig_project);
+        vm.today            = new Date();
+        vm.requester        = vm.project.requester ? vm.project.requester : { name: 'Bradley' };
+        vm.is_saving        = false;
+        vm.add_recipient    = add_recipient;
+        vm.remove_recipient = remove_recipient;
+        vm.set_due_at       = set_due_at;
+        vm.save             = save;
+        vm.close            = close;
 
         vm.pikaday_due_at = function (pikaday) {
             pikaday.setMaxDate(new Date());
@@ -78,6 +80,39 @@
         function set_due_at(value) {
             console.log('setting due date');
             vm.project.due_at = value ? moment(value).format('YYYY-MM-DD') : null;
+        }
+
+        function add_recipient(user) {
+            if (!has_recipient(user)) {
+                vm.project.recipients.push(user);
+            }
+        }
+
+        function has_recipient(user) {
+            for (var i = 0; i < vm.project.recipients.length; i++) {
+                if (vm.project.recipients[i].id == user.id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function remove_recipient(user) {
+            for (var i = vm.project.recipients.length - 1; i >= 0; i--) {
+                if (vm.project.recipients[i].id == user.id) {
+                    vm.project.recipients.splice(i, 1);
+                }
+            }
+        }
+
+        function gather_recipients() {
+            var results = [];
+
+            for (var i = 0; i < vm.project.recipients.length; i++) {
+                results.push(vm.project.recipients[i].id);
+            }
+
+            return results;
         }
 
         function save() {
