@@ -4,27 +4,12 @@
     <div class="NewComment-avatarWrap">
       <img class="NewComment-avatar" ng-src="{{ vm.sender.avatar_url }}">
     </div>
-
-
     <div class="NewComment-recipientsWrap">
-      <!--<div class="NewComment-existingRecipients" ng-if="vm.recipients.length">-->
-        <!--<ul class="NewComment-recipients">-->
-          <!--<li class="NewComment-recipient" ng-repeat="recipient in vm.recipients" ng-click="vm.remove_recipient(recipient)">{{ recipient.abbreviation }}</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-      <!--<div class="NewComment-addRecipients">-->
-        <!--<user-picker input-class="NewComment-recipientInput Form-control" placeholder="add recipients..." selected="vm.dummy_recipient" on-change="vm.add_recipient(user)" detached="true"></user-picker>-->
-      <!--</div>-->
-      <user-multi-picker selected="vm.recipients" placeholder="add recipients..."></user-multi-picker>
-    </div>
-
-
-    <div class="NewComment-meta">
-      <!-- TODO: Switch between comment and proof? -->
+      <user-multi-picker selected="vm.comment.recipients" placeholder="add recipients..."></user-multi-picker>
     </div>
     <div class="NewComment-actions">
       <i class="NewComment-actionIcon icon-attach" ngf-select="vm.upload($files)" ng-model="vm.files" ngf-multiple="true"></i>
-      <button class="Button Button--sm Button--primary NewComment-submit" tabindex="2" type="button" ng-click="vm.save_comment()" ng-disabled="vm.uploading">{{ vm.uploading ? 'Uploading...' : 'Send' }}</button>
+      <button class="Button Button--sm Button--primary NewComment-submit" tabindex="2" type="button" ng-click="vm.save()" ng-disabled="vm.uploading">{{ vm.uploading ? 'Uploading...' : 'Send' }}</button>
     </div>
   </div>
 
