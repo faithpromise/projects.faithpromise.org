@@ -99,10 +99,10 @@
             if (comment.recipients.length === 0) {
                 error.push('Wise man say: A comment sent to nobody doesn\'t make a sound.');
             } else if (comment.body.length === 0) {
-                error.push('Surely you have something you want to say.');
+                error.push('Surely you have something to say.');
             }
 
-            if (error.length) {
+            if (error.length && !draft) {
                 alert(error.join('\n'));
                 return;
             }
