@@ -29,7 +29,7 @@
   </div>
 
   <div class="NewComment-body" ng-class="{ 'has-focus': vm.body_has_focus }">
-    <textarea class="NewComment-textarea" tabindex="1" ng-model="vm.comment.body" ng-focus="vm.body_has_focus = true" ng-blur="vm.body_has_focus = false" msd-elastic></textarea>
+    <textarea class="NewComment-textarea" tabindex="1" ng-model="vm.comment.body" ng-focus="vm.body_has_focus = true" ng-blur="vm.body_has_focus = false" on-cmd-enter="vm.save()" msd-elastic></textarea>
   </div>
 
   <div class="Comment-attachments Comment-attachments--new" ng-if="vm.attachments.length">
