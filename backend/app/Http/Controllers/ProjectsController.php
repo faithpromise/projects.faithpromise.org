@@ -39,7 +39,7 @@ class ProjectsController extends Controller {
         $this->update_recipients(Project::findOrFail($id), $request->input('data'));
     }
 
-    private function update_recipients($project, $data) {
+    private function update_recipients(Project $project, $data) {
         if (array_key_exists('recipients', $data)) {
             $recipients = array_pluck($data['recipients'], 'id');
             $project->recipients()->sync($recipients);
