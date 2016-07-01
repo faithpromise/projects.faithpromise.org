@@ -34,6 +34,10 @@ class Project extends Model {
         return $this->hasMany(Task::class);
     }
 
+    public function incomplete_tasks() {
+        return $this->hasMany(Task::class)->whereNull('completed_at');
+    }
+
     public function timeline_tasks() {
         return $this->hasMany(TimelineTask::class);
     }
