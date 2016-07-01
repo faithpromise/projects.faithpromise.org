@@ -24,8 +24,8 @@ class Task extends Model {
         return array_key_exists('is_start', $this->attributes) ? $this->attributes['is_start'] : true;
     }
 
-    public function getCalculatedDueAtAttribute($value) {
-        return $value ? (new Carbon($value)) : ($this->project ? (new Carbon($this->project->due_at)) : null);
+    public function getCalculatedDueAtAttribute() {
+        return $this->due_at ? $this->due_at : ($this->project ? (new Carbon($this->project->due_at)) : null);
     }
 
     public function getEstimatedStartDateAttribute() {
