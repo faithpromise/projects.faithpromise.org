@@ -10,9 +10,9 @@
   </div>
 
   <div class="Form-group">
-    <label ng-click="vm.requester = null">
+    <label>
       <span class="Form-label">Requested by</span>
-      <user-picker selected="vm.project.requester" tab-index="1" placeholder="Search..."></user-picker>
+      <user-picker selected="vm.project.requester" on-change="vm.on_requester_changed(user)" tab-index="1" placeholder="Search..."></user-picker>
     </label>
   </div>
 
@@ -28,7 +28,7 @@
     <label>
       <span class="Form-label">Assign to</span>
       <!--<agent-picker css-class="Form-control" tab-index="1" agent="vm.project.agent"></agent-picker>-->
-      <user-picker css-class="Form-control" tab-index="1" selected="vm.project.agent" limit-to-agents="true"></user-picker>
+      <user-picker css-class="Form-control" tab-index="1" selected="vm.project.agent" on-change="vm.on_agent_changed(user)" limit-to-agents="true"></user-picker>
     </label>
   </div>
 

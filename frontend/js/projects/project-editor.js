@@ -62,16 +62,15 @@
 
     function ProjectModalController($scope, $location, $uibModalInstance, orig_project, projectsService) {
 
-        var vm              = this;
-        vm.project          = angular.copy(orig_project);
-        vm.today            = new Date();
-        vm.requester        = vm.project.requester ? vm.project.requester : { name: 'Bradley' };
-        vm.is_saving        = false;
-        vm.add_recipient    = add_recipient;
-        vm.remove_recipient = remove_recipient;
-        vm.set_due_at       = set_due_at;
-        vm.save             = save;
-        vm.close            = close;
+        var vm                  = this;
+        vm.project              = angular.copy(orig_project);
+        vm.today                = new Date();
+        vm.is_saving            = false;
+        vm.set_due_at           = set_due_at;
+        vm.save                 = save;
+        vm.close                = close;
+        vm.on_agent_changed     = add_recipient;
+        vm.on_requester_changed = add_recipient;
 
         vm.pikaday_due_at = function (pikaday) {
             pikaday.setMaxDate(new Date());
@@ -95,24 +94,6 @@
                 }
             }
             return false;
-        }
-
-        function remove_recipient(user) {
-            for (var i = vm.project.recipients.length - 1; i >= 0; i--) {
-                if (vm.project.recipients[i].id == user.id) {
-                    vm.project.recipients.splice(i, 1);
-                }
-            }
-        }
-
-        function gather_recipients() {
-            var results = [];
-
-            for (var i = 0; i < vm.project.recipients.length; i++) {
-                results.push(vm.project.recipients[i].id);
-            }
-
-            return results;
         }
 
         function save() {
