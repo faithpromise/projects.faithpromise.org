@@ -27,7 +27,7 @@ use App\Helpers\Assets;
 
     <body ng-controller="main as vm">
 
-        <app-nav ng-if="vm.route_action !== 'login'" on-show-new-project="vm.open_new_project()"></app-nav>
+        <app-nav ng-if="vm.is_nav_visible" on-show-new-project="vm.open_new_project()"></app-nav>
 
         <ng-view></ng-view>
 
