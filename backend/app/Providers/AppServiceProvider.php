@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\ProjectChanged;
 use App\Models\Project;
 use App\Services\TimelineBuilder;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
@@ -20,9 +22,12 @@ class AppServiceProvider extends ServiceProvider {
             if (!$project->getIsPurchase()) {
                 $project->setProductionDays(0);
             }
+
         });
 
         Project::saved(function(Project $project) {
+
+            // TODO: Put this in an event listener
 
             $old_due_at = new Carbon($project->getOriginal('due_at'));
             $new_due_at = new Carbon($project->due_at);
@@ -36,6 +41,8 @@ class AppServiceProvider extends ServiceProvider {
                 }
 
             }
+
+            Event::fire(new ProjectChanged($project));
 
         });
 

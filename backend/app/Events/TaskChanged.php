@@ -31,4 +31,5 @@ class TaskChanged extends Event {
     public function broadcastOn() {
         return [];
     }
+
 }
