@@ -52,10 +52,10 @@
 
   <div class="TaskDetail-footer">
     <span class="TaskDetail-showAdvanced link" ng-click="vm.is_advanced_visible = !vm.is_advanced_visible">{{ vm.is_advanced_visible ? 'less settings' : 'more settings' }}</span>
-    <div class="TaskDetail-created">
+    <div class="TaskDetail-created" ng-show="vm.task.created_at">
       Created on {{ vm.task.created_at | amDateFormat: 'ddd MMM D' }}
     </div>
-    <div class="TaskDetail-trash">
+    <div class="TaskDetail-trash" ng-show="vm.task.created_at">
       <i ng-click="vm.close()" class="TaskDetail-footerIcon icon-trash-empty"></i>
     </div>
   </div>
