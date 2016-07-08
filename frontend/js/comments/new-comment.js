@@ -84,8 +84,7 @@
 
         function save(draft) {
 
-            var error = [],
-                comment = angular.extend(
+            var comment = angular.extend(
                 {},
                 vm.comment,
                 {
@@ -96,14 +95,8 @@
                 }
             );
 
-            if (comment.recipients.length === 0) {
-                error.push('Wise man say: A comment sent to nobody doesn\'t make a sound.');
-            } else if (comment.body.length === 0) {
-                error.push('Surely you have something to say.');
-            }
-
-            if (error.length && !draft) {
-                alert(error.join('\n'));
+            if (comment.body.length === 0) {
+                alert('Surely you have something to say.');
                 return;
             }
 

@@ -9,7 +9,7 @@
     </div>
     <div class="NewComment-actions">
       <i class="NewComment-actionIcon icon-attach" ngf-select="vm.upload($files)" ng-model="vm.files" ngf-multiple="true"></i>
-      <button class="Button Button--sm Button--primary NewComment-submit" tabindex="2" type="button" ng-click="vm.save()" ng-disabled="vm.uploading">{{ vm.uploading ? 'Uploading...' : 'Send' }}</button>
+      <button class="Button Button--sm Button--primary NewComment-submit" tabindex="2" type="button" ng-click="vm.save()" ng-disabled="vm.uploading">{{ vm.uploading ? 'Uploading...' : (vm.comment.recipients.length === 0 ? 'Add Comment' : 'Send') }}</button>
     </div>
   </div>
 
