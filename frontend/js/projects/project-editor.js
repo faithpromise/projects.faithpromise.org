@@ -97,7 +97,12 @@
             return false;
         }
 
-        function save() {
+        function save(projectForm) {
+            vm.is_form_submitted = true;
+            if (projectForm.$invalid || !vm.project.due_at || !vm.project.requester || !vm.project.agent) {
+                console.log('projectForm.$invalid', projectForm.$invalid);
+                return false;
+            }
             vm.is_saving = true;
             projectsService.save(vm.project).then(function (result) {
                 if (vm.project.id) {

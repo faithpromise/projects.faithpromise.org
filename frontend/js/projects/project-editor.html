@@ -1,22 +1,22 @@
 <span class="Modal-close" ng-click="vm.close()"><i class="icon-cancel"></i></span>
 
-<form class="ProjectSettings" ng-submit="vm.save()">
+<form class="ProjectSettings" name="projectForm" ng-submit="vm.save(projectForm)" novalidate>
 
-  <div class="Form-group Form-group--title">
+  <div class="Form-group Form-group--title" ng-class="{ 'is-invalid': vm.is_form_submitted && projectForm.name.$invalid }">
     <label>
-      <input class="Form-control Form-control--title" type="text" tabindex="1" placeholder="Project name..." ng-model="vm.project.name" focus-on="true">
+      <input class="Form-control Form-control--title" type="text" name="name" tabindex="1" placeholder="Project name..." ng-model="vm.project.name" focus-on="true" required>
     </label>
     <span class="Form-help" ng-show="vm.project.event">Part of {{ vm.project.event.name }}</span>
   </div>
 
-  <div class="Form-group">
+  <div class="Form-group" ng-class="{ 'is-invalid': vm.is_form_submitted && !vm.project.requester }">
     <label>
       <span class="Form-label">Requested by</span>
-      <user-picker selected="vm.project.requester" on-change="vm.on_requester_changed(user)" tab-index="1" placeholder="Search..."></user-picker>
+      <user-picker selected="vm.project.requester" on-change="vm.on_requester_changed(user)" tab-index="1" placeholder="Search..." required="true"></user-picker>
     </label>
   </div>
 
-  <div class="Form-group">
+  <div class="Form-group" ng-class="{ 'is-invalid': vm.is_form_submitted && !vm.project.due_at }">
     <span class="Form-label">Due date</span>
       <span class="Form-control" pikaday="vm.pikaday_due_at" default-date="{{ vm.project.due_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_due_at(date)" tabindex="1">
         {{ vm.project.due_at ? 'Due on ' : '' }}
@@ -24,7 +24,7 @@
       </span>
   </div>
 
-  <div class="Form-group">
+  <div class="Form-group" ng-class="{ 'is-invalid': vm.is_form_submitted && !vm.project.agent }">
     <label>
       <span class="Form-label">Assign to</span>
       <!--<agent-picker css-class="Form-control" tab-index="1" agent="vm.project.agent"></agent-picker>-->
