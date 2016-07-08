@@ -1,11 +1,11 @@
 (function (module, angular) {
     'use strict';
 
-    module.directive('taskDetail', directive);
+    module.directive('taskEditor', directive);
 
     function directive() {
         return {
-            templateUrl:      '/build/js/tasks/task-detail.html',
+            templateUrl:      '/build/js/tasks/task-editor.html',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',

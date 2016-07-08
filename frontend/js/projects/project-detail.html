@@ -24,7 +24,7 @@
   <div class="Project-body">
 
     <div class="Project-sidebar" ng-if="vm.selected_task">
-      <task-detail task="vm.selected_task" on-close="vm.on_task_closed()" on-update="vm.on_task_updated()"></task-detail>
+      <task-editor task="vm.selected_task" on-close="vm.on_task_closed()" on-update="vm.on_task_updated()"></task-editor>
     </div>
 
     <div class="Project-sidebar" ng-hide="vm.selected_task">
