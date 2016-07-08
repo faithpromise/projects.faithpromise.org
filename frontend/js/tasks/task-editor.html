@@ -3,6 +3,7 @@
   <div class="TaskDetail-header">
     <span class="TaskDetail-check"><i ng-class="{ 'icon-check-1': vm.task.completed_at, 'icon-check-empty-1': !vm.task.completed_at }" ng-click="vm.toggle_completed()"></i></span>
     <input class="TaskDetail-name" type="text" placeholder="Task name..." ng-model="vm.task.name" focus-on="true">
+    <span class="TaskDetail-cancel" ng-click="vm.close()">cancel</span>
     <button class="Button Button--sm Button--primary TaskDetail-submit" type="submit">Save Task</button>
   </div>
 
@@ -29,7 +30,7 @@
       </label>
     </div>
 
-    <div class="Form-group">
+    <div class="Form-group" ng-show="vm.is_advanced_visible">
       <span class="Form-label">Due date <span class="link" ng-click="vm.set_due_at(null)" ng-show="vm.task.due_at">clear</span></span>
       <span class="Form-control" pikaday="vm.pikaday_due_at" default-date="{{ vm.task.due_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_due_at(date)" tabindex="1">
         {{ vm.task.due_at ? 'Due on ' : '' }}
@@ -37,7 +38,7 @@
       </span>
     </div>
 
-    <div class="Form-group">
+    <div class="Form-group" ng-show="vm.is_advanced_visible">
       <label>
         <span class="Form-label">Start at <span class="link" ng-click="vm.set_start_at(null)" ng-show="vm.task.start_at">clear</span></span>
         <span class="Form-control" pikaday="vm.pikaday_start_at" default-date="{{ vm.task.start_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_start_at(date)" tabindex="1">
@@ -50,9 +51,7 @@
   </div>
 
   <div class="TaskDetail-footer">
-    <div class="TaskDetail-close">
-      <span ng-click="vm.close()"><i class="TaskDetail-footerIcon icon-cancel"></i> (esc)</span>
-    </div>
+    <span class="TaskDetail-showAdvanced link" ng-click="vm.is_advanced_visible = !vm.is_advanced_visible">{{ vm.is_advanced_visible ? 'less settings' : 'more settings' }}</span>
     <div class="TaskDetail-created">
       Created on {{ vm.task.created_at | amDateFormat: 'ddd MMM D' }}
     </div>

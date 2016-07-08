@@ -30,8 +30,10 @@
   cursor:     pointer;
 }
 
-.TaskDetail-submit {
-
+.TaskDetail-cancel {
+  &:extend(.link all);
+  padding-right: 10px;
+  font-size:     13px;
 }
 
 .TaskDetail-section {
@@ -72,28 +74,25 @@
 }
 
 .TaskDetail-body {
-  flex-grow: 1;
-  padding:   20px;
+  padding: 20px 20px 0;
 }
 
 .TaskDetail-footer {
-  display:          flex;
-  align-items:      center;
-  padding:          10px;
-  font-size:        11px;
-  background-color: #fff;
-  border-top:       1px solid #ebebeb;
-  color:            #a3a3a2;
+  display:     flex;
+  align-items: center;
+  padding:     0 20px 10px;
+  font-size:   11px;
+  color:       #a3a3a2;
 }
 
 .TaskDetail-created {
-  width:      60%;
+  width:      40%;
   text-align: center;
 }
 
-.TaskDetail-close,
+.TaskDetail-showAdvanced,
 .TaskDetail-trash {
-  width: 40%;
+  width: 30%;
 }
 
 .TaskDetail-trash {
