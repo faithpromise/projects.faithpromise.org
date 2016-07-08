@@ -20,7 +20,6 @@ class TimelineBuilder {
 
         $tasks = $agent->tasks()->get()->sortBy(function ($task) {
 
-            // TODO: Need to make sure this sorting works
             return $task->calculated_due_at->timestamp . ' ' . sprintf('%08d', $task->project_id) . ' ' . sprintf('%08d', $task->sort);
 
             // Reset order
