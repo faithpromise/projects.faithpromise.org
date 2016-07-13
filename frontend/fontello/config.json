@@ -80,7 +80,7 @@
     },
     {
       "uid": "dd6c6b221a1088ff8a9b9cd32d0b3dd5",
-      "css": "check-1",
+      "css": "check",
       "code": 59404,
       "src": "fontawesome"
     },
@@ -131,6 +131,12 @@
       "css": "attach",
       "code": 59412,
       "src": "entypo"
+    },
+    {
+      "uid": "221947bea81f49a11b863c686a7bd235",
+      "css": "search",
+      "code": 59414,
+      "src": "websymbols"
     }
   ]
 }
