@@ -20,7 +20,7 @@ class Project extends Model {
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
     public $appends = ['full_name', 'order_by', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status'];
-    public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'status', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at'];
+    public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at'];
     private $send_assignment_notification = true;
     private $create_setup_task = true;
     private $create_estimate_task = true;
@@ -100,7 +100,7 @@ class Project extends Model {
     public function getIsOverdueLikelyAttribute() {
         $est = $this->getEstimatedDeliveryDate();
         $margin = 7;
-
+// TODO: Want to take out margin now that we are padding the estimated completion date?
         return (!is_null($est) AND $est->gte($this->due_at->copy()->subDays($margin)));
     }
 
@@ -230,16 +230,16 @@ class Project extends Model {
     }
 
     private function getEstimatedDeliveryDate() {
-        $est = $this->timeline_tasks()->max('timeline_date');
 
-        if (is_null($est)) {
-            return Carbon::today();
-        }
+        $first_task_start = new Carbon($this->timeline_tasks()->min('timeline_date'));
+        $last_task_start = new Carbon($this->timeline_tasks()->max('timeline_date'));
 
-        $est = new Carbon($est);
-        $add_days = (int)$this->production_days;
+        $total_work_days = max(1, $first_task_start->diffInDays($last_task_start));
+        $total_days = $total_work_days + $this->production_days;
 
-        return $est->addDays($add_days);
+        $padding = intval(ceil($total_days * .35));
+
+        return $last_task_start->addDays($total_days + $padding);
     }
 
 }
