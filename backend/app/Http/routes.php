@@ -13,6 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('zendesk-import', 'MainController@zendeskImport');
 Route::get('api/authenticate', 'AuthenticateController@index');
 Route::post('api/authenticate', 'AuthenticateController@authenticate');
 
