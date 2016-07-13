@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Project
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  */
 class Project extends Model {
+
+    use SoftDeletes;
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
     public $appends = ['full_name', 'order_by', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status'];

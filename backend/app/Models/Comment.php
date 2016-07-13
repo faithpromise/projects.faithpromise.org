@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model {
+
+    use SoftDeletes;
 
     protected $table = 'comments';
     public $fillable = ['event_id', 'project_id', 'user_id', 'type', 'body'];

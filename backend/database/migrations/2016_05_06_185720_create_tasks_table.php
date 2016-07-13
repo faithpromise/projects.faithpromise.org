@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Schema\Blueprint;
@@ -24,6 +25,7 @@ class CreateTasksTable extends Migration {
             $table->integer('sort')->unsigned()->default(999);
             $table->dateTime('completed_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

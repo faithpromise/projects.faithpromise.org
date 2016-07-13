@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration {
             $table->boolean('is_agent')->default(false);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

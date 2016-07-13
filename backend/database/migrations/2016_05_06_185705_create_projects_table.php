@@ -32,6 +32,7 @@ class CreateProjectsTable extends Migration {
             $table->dateTime('closed_at')->nullable();
             $table->dateTime('due_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

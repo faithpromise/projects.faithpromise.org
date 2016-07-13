@@ -20,6 +20,7 @@ class CreateCommentsTable extends Migration {
             $table->text('body');
             $table->dateTime('sent_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

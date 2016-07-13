@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model {
 
     use TaskTrait;
+    use SoftDeletes;
 
     protected $dates = ['start_at', 'due_at', 'created_at', 'updated_at'];
     public $appends = ['full_name', 'estimated_start_date', 'estimated_completion_date', 'calculated_due_at'];
