@@ -26,7 +26,7 @@ class SendProjectAssignmentNotification {
         $old_project = $event->old_project;
 
         // Send notification to new assignee
-        if (!$old_project || $new_project->agent_id !== $old_project->agent_id) {
+        if ($new_project->shouldSendAssignmentNotification() && (!$old_project || $new_project->agent_id !== $old_project->agent_id)) {
 
             $new_agent = $new_project->agent;
 

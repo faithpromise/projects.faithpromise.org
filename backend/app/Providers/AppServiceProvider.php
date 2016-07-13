@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\ProjectChanged;
+use App\Events\ProjectCreated;
 use App\Models\Project;
 use App\Services\TimelineBuilder;
 use Carbon\Carbon;
@@ -42,6 +43,7 @@ class AppServiceProvider extends ServiceProvider {
 
             }
 
+            Event::fire(new ProjectCreated($project));
             Event::fire(new ProjectChanged($project));
 
         });
