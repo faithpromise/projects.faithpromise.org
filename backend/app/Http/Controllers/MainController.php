@@ -43,11 +43,10 @@ class MainController extends Controller {
 
         $data = $api->tickets()->findAll(['per_page' => $per_page, 'page' => $page]);
 
-        // TODO: Remove limit
-
         foreach ($data->tickets as $z_ticket) {
 
-            if (!in_array('backlog', $z_ticket->tags)) {
+            // Only for "Communications" group (we don't want Facilities tickets)
+            if ($z_ticket->group_id === 26779538) {
 
                 $agent_id = $this->getUserId($z_ticket->assignee_id, $api);
                 $requester_id = $this->getUserId($z_ticket->requester_id, $api);
@@ -59,6 +58,9 @@ class MainController extends Controller {
                 $project->setName($z_ticket->subject);
                 $project->setStatus($z_ticket->status);
                 $project->setDueAt($z_ticket->due_at);
+                $project->setIsBacklog(in_array('backlog', $z_ticket->tags));
+                $project->created_at = new Carbon($z_ticket->created_at);
+                $project->disableSetupTask();
                 $project->disableAssignmentNotification();
 
                 $project->save();
@@ -87,14 +89,10 @@ class MainController extends Controller {
                     $comment->setBody($z_comment->body);
                     $comment->setSentAt($z_comment->created_at);
                     $comment->created_at = new Carbon($z_comment->created_at);
-
-                    // TODO: Disable comment notification
-
                     $comment->save();
+                    $comment->recipients()->sync($recipient_ids);
 
-                    // TODO: Set recipients
-                    // TODO: Add attachments
-
+                    // Attachments
                     foreach ($z_comment->attachments as $z_attachment) {
 
                         $attachment = new Attachment();
