@@ -23,8 +23,8 @@ class CreateProjectsTable extends Migration {
             // Purchase
             $table->boolean('is_purchase');
             $table->string('purchase_order', 100);
-            $table->dateTime('estimate_sent_at')->nullable();
-            $table->dateTime('delivered_at')->nullable();
+//            $table->dateTime('estimate_sent_at')->nullable();
+//            $table->dateTime('delivered_at')->nullable();
             $table->integer('production_days')->unsigned()->default(0);
 
             $table->boolean('is_template');
@@ -33,6 +33,7 @@ class CreateProjectsTable extends Migration {
             $table->dateTime('due_at')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**

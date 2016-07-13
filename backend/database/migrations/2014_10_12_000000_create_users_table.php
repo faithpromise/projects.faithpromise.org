@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration {
             $table->tinyInteger('friday_hours')->default(0);
             $table->tinyInteger('saturday_hours')->default(0);
             $table->tinyInteger('sunday_hours')->default(0);
-            $table->boolean('is_agent');
+            $table->boolean('is_agent')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
