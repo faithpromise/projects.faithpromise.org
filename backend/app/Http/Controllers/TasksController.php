@@ -26,7 +26,7 @@ class TasksController extends Controller {
         }
 
         $tasks = $query->get()->sortBy(function($task) {
-           return (new Carbon($task->estimated_start_date))->timestamp;
+           return (new Carbon($task->estimated_start_date))->timestamp . ' ' . sprintf('%08d', $task->sort);
         })->values();
 
         return [
