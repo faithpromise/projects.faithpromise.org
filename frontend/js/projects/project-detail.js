@@ -19,8 +19,7 @@
     function Controller($scope, $timeout, $routeParams, $location, projectsService, tasksService, pike) {
 
         var vm                    = this,
-            project_notes_timeout = null,
-            project_notes_watcher;
+            project_notes_timeout = null;
 
         vm.is_editing          = false;
         vm.tasks_loading       = false;
@@ -111,7 +110,7 @@
         function update_task(task, data) {
             vm.task_saving = true;
             data.id        = task.id;
-            tasksService.update(data).then(function () {
+            tasksService.save(data).then(function () {
                 vm.task_saving = false;
                 angular.extend(task, data);
                 fetchProject();
