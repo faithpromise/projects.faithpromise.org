@@ -30,6 +30,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     Route::post('tasks', 'TasksController@store');
     Route::put('tasks/{id}', 'TasksController@update');
     Route::get('tasks/{id}', 'TasksController@show');
+    Route::delete('tasks/{id}', 'TasksController@destroy');
 
     // Users
     Route::get('users', 'UsersController@index');

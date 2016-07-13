@@ -20,6 +20,10 @@
                 return $http.post('/api/tasks', { 'data': task });
             },
 
+            delete: function (task) {
+                return $http.delete('/api/tasks/' + task.id, { 'data': task });
+            },
+
             byProject: function (project_id) {
                 return $http.get('/api/tasks?project_id=' + project_id);
             }

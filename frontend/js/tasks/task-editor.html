@@ -56,7 +56,7 @@
       Created on {{ vm.task.created_at | amDateFormat: 'ddd MMM D' }}
     </div>
     <div class="TaskDetail-trash" ng-show="vm.task.created_at">
-      <i ng-click="vm.close()" class="TaskDetail-footerIcon icon-trash-empty"></i>
+      <i ng-click="vm.delete_task()" class="TaskDetail-footerIcon icon-trash-empty"></i>
     </div>
   </div>
 

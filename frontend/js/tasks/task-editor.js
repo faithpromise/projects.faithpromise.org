@@ -32,6 +32,7 @@
         vm.set_due_at       = set_due_at;
         vm.set_start_at     = set_start_at;
         vm.save_task        = save_task;
+        vm.delete_task      = delete_task;
 
         init();
 
@@ -74,6 +75,14 @@
             tasksService.save(vm.task).then(function () {
                 vm.onUpdate();
             });
+        }
+
+        function delete_task() {
+            if (confirm('Are you sure you want to delete this task?')) {
+                tasksService.delete(vm.task).then(function () {
+                    vm.onUpdate();
+                });
+            }
         }
 
     }
