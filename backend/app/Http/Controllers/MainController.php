@@ -89,7 +89,10 @@ class MainController extends Controller {
                     $comment->setSentAt($z_comment->created_at);
                     $comment->created_at = new Carbon($z_comment->created_at);
                     $comment->save();
-                    $comment->recipients()->sync($recipient_ids);
+
+                    if ($z_comment->public) {
+                        $comment->recipients()->sync($recipient_ids);
+                    }
 
                     // Attachments
                     foreach ($z_comment->attachments as $z_attachment) {
