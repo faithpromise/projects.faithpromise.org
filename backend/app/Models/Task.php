@@ -72,6 +72,12 @@ class Task extends Model {
         return $this;
     }
 
+    public function setDueAt($param) {
+        $this->{'due_at'} = $param;
+
+        return $this;
+    }
+
     public function fillMore($data) {
 
         $this->fill($data);

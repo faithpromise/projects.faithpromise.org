@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  *
  * @property string full_name;
+ * @property User requester;
  *
  */
 class Project extends Model {
@@ -65,10 +66,10 @@ class Project extends Model {
         $event = $this->event;
 
         if (!$event) {
-            return $this->getOriginal('name');
+            return $this->name;
         }
 
-        return $this->getOriginal('name') . ' for ' . $this->event->name;
+        return $this->name . ' for ' . $this->event->name;
     }
 
     public function getEstimatedDeliveryDateAttribute() {
@@ -137,6 +138,16 @@ class Project extends Model {
 
     public function setDueAt($param) {
         $this->{'due_at'} = new Carbon($param);
+
+        return $this;
+    }
+
+    public function getIsBacklog() {
+        return $this->{'is_backlog'};
+    }
+
+    public function setIsBacklog($param) {
+        $this->{'is_backlog'} = $param;
 
         return $this;
     }
