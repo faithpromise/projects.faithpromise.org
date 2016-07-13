@@ -26,6 +26,10 @@ class AppServiceProvider extends ServiceProvider {
 
         });
 
+        Project::created(function(Project $project) {
+            Event::fire(new ProjectCreated($project));
+        });
+
         Project::saved(function(Project $project) {
 
             // TODO: Put this in an event listener
@@ -43,7 +47,6 @@ class AppServiceProvider extends ServiceProvider {
 
             }
 
-            Event::fire(new ProjectCreated($project));
             Event::fire(new ProjectChanged($project));
 
         });
