@@ -149,12 +149,6 @@ class Project extends Model {
         return $this;
     }
 
-    public function setStatus($param) {
-        $this->{'status'} = $param;
-
-        return $this;
-    }
-
     public function setDueAt($param) {
         $this->{'due_at'} = new Carbon($param);
 

@@ -56,7 +56,6 @@ class MainController extends Controller {
                 $project->setRequesterId($requester_id);
                 $project->setAgentId($agent_id);
                 $project->setName($z_ticket->subject);
-                $project->setStatus($z_ticket->status);
                 $project->setDueAt($z_ticket->due_at);
                 $project->setIsBacklog(in_array('backlog', $z_ticket->tags));
                 $project->created_at = new Carbon($z_ticket->created_at);
