@@ -109,18 +109,45 @@ class Project extends Model {
         return $this;
     }
 
+    public function getAgentId() {
+        return $this->agent_id;
+    }
+
     public function setAgentId($param) {
         $this->{'agent_id'} = $param;
 
         return $this;
     }
 
+    public function getName() {
+        return $this->{'name'};
+    }
+
+    public function setName($param) {
+        $this->{'name'} = $param;
+
+        return $this;
+    }
+
+    public function setStatus($param) {
+        $this->{'status'} = $param;
+
+        return $this;
+    }
+
+    public function setDueAt($param) {
+        $this->{'due_at'} = new Carbon($param);
+
+        return $this;
+    }
+
     public function getIsPurchase() {
-        return $this->is_purchase;
+        return $this->{'is_purchase'};
     }
 
     public function setProductionDays($param) {
-        return $this->production_days = $param;
+        return $this->{'production_days'} = $param;
+    }
 
     public function shouldCreateSetupTask() {
         return $this->create_setup_task;

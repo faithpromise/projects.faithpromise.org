@@ -54,6 +54,24 @@ class Task extends Model {
         return $this;
     }
 
+    public function setName($param) {
+        $this->{'name'} = $param;
+
+        return $this;
+    }
+
+    public function setDuration($param) {
+        $this->{'duration'} = $param;
+
+        return $this;
+    }
+
+    public function setSort($param) {
+        $this->{'sort'} = $param;
+
+        return $this;
+    }
+
     public function fillMore($data) {
 
         $this->fill($data);
