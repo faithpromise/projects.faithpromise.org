@@ -18,18 +18,19 @@ class CreateProjectsTable extends Migration {
             $table->integer('agent_id')->unsigned();
             $table->string('name', 200);
             $table->text('notes');
-            $table->string('status', 50);
 
             // Purchase
-            $table->boolean('is_purchase');
+            $table->boolean('is_purchase')->default(false);
             $table->string('purchase_order', 100);
-//            $table->dateTime('estimate_sent_at')->nullable();
-//            $table->dateTime('delivered_at')->nullable();
             $table->integer('production_days')->unsigned()->default(0);
 
-            $table->boolean('is_template');
-            $table->boolean('is_notable');
+            // Status
+            $table->string('status', 50); // TODO: Do we need a manual status?
+            $table->boolean('is_template')->default(false);
+            $table->boolean('is_backlog')->default(false);
             $table->dateTime('approved_at')->nullable();
+            $table->dateTime('ordered_at')->nullable();
+            $table->dateTime('closed_at')->nullable();
             $table->dateTime('due_at')->nullable();
             $table->timestamps();
         });
