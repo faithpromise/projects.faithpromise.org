@@ -35,15 +35,14 @@ class AttachmentsController extends Controller {
      */
     public function store(Request $request) {
 
-        $data = $request->input();
-
         foreach ($request->file('file') as $file) {
 
             $path_info = pathinfo($file->getClientOriginalName());
 
-            $data['name'] = (str_slug($path_info['filename']) . '.' . $path_info['extension']);
-
-            $attachment = Attachment::create($data);
+            $attachment = new Attachment();
+            $attachment->setCommentId($request->input('comment_id'));
+            $attachment->setName(str_slug($path_info['filename']) . '.' . $path_info['extension']);
+            $attachment->save();
 
             $file->move(storage_path('attachments'), $attachment->file_name);
         }
@@ -94,6 +93,7 @@ class AttachmentsController extends Controller {
             return $img->response('jpg');
         }
 
+        // TODO: What to return?
     }
 
     public function download($id) {
