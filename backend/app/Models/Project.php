@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model {
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
-    public $appends = ['full_name', 'order_by', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely'];
+    public $appends = ['full_name', 'order_by', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status'];
     public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'status', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at'];
     private $send_assignment_notification = true;
     private $create_setup_task = true;
@@ -60,6 +60,22 @@ class Project extends Model {
 
     public function recipients() {
         return $this->belongsToMany(User::class, 'project_recipients', 'project_id', 'user_id');
+    }
+
+    public function getStatusAttribute() {
+        if ($this->closed_at) {
+            return 'closed';
+        }
+        if ($this->ordered_at) {
+            return 'ordered';
+        }
+        if ($this->approved_at) {
+            return 'approved';
+        }
+        if ($this->is_backlog) {
+            return 'backlogged';
+        }
+        return 'open';
     }
 
     public function getFullNameAttribute() {

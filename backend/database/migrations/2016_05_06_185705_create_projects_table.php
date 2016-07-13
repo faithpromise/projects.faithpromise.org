@@ -25,7 +25,6 @@ class CreateProjectsTable extends Migration {
             $table->integer('production_days')->unsigned()->default(0);
 
             // Status
-            $table->string('status', 50); // TODO: Do we need a manual status?
             $table->boolean('is_template')->default(false);
             $table->boolean('is_backlog')->default(false);
             $table->dateTime('approved_at')->nullable();

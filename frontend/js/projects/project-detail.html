@@ -8,7 +8,7 @@
       <span class="Project-title"><a href="/people/{{ vm.project.requester.id }}">{{ vm.project.requester.name }}</a> / <span ng-if="vm.project.event"><a href="/events/{{ vm.project.event.id }}">{{ vm.project.event.name }}</a> / </span>{{ vm.project.name }}</span>
     </div>
     <div class="Project-statusColumn">
-      <span class="Project-status">Waiting on Feedback</span>
+      <span class="Project-status">{{ vm.project.status }}</span>
     </div>
     <div class="Project-datesColumn">
       <span class="Project-due">Due on {{ vm.project.due_at | amDateFormat: 'MMMM D' }}</span>
