@@ -1,7 +1,7 @@
 <form class="TaskDetail" on-escape="vm.close()" ng-submit="vm.save_task()">
 
   <div class="TaskDetail-header">
-    <span class="TaskDetail-check"><i ng-class="{ 'icon-check-1': vm.task.completed_at, 'icon-check-empty-1': !vm.task.completed_at }" ng-click="vm.toggle_completed()"></i></span>
+    <span class="TaskDetail-check"><i ng-class="{ 'icon-check': vm.task.completed_at, 'icon-check-empty-1': !vm.task.completed_at }" ng-click="vm.toggle_completed()"></i></span>
     <input class="TaskDetail-name" type="text" placeholder="Task name..." ng-model="vm.task.name" focus-on="true">
     <span class="TaskDetail-cancel" ng-click="vm.close()">cancel</span>
     <button class="Button Button--sm Button--primary TaskDetail-submit" type="submit">Save Task</button>
