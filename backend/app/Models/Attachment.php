@@ -43,6 +43,18 @@ class Attachment extends Model {
         return storage_path('attachments/' . $this->file_name);
     }
 
+    public function setCommentId($param) {
+        $this->{'comment_id'} = $param;
+
+        return $this;
+    }
+
+    public function setName($param) {
+        $this->{'name'} = $param;
+
+        return $this;
+    }
+
 //    public function getMimeTypeAttribute() {
 //
 //        $ext = $this->extension;
