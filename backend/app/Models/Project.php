@@ -19,7 +19,7 @@ class Project extends Model {
     public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'status', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at'];
     private $send_assignment_notification = true;
     private $create_setup_task = true;
-    private $create_close_task = true;
+    private $create_estimate_task = true;
 
     public function event() {
         return $this->belongsTo(Event::class);
@@ -159,21 +159,20 @@ class Project extends Model {
         return $this;
     }
 
-    public function shouldCreateCloseTask() {
-        return $this->create_close_task;
+    public function shouldCreateEstimateTask() {
+        return $this->create_estimate_task;
     }
 
-    public function disableCloseTask() {
-        $this->create_close_task = false;
+    public function disableEstimateTask() {
+        $this->create_estimate_task = false;
 
         return $this;
     }
 
     public function disableDefaultTasks() {
         $this->disableSetupTask();
-        $this->disableCloseTask();
+        $this->disableEstimateTask();
 
-        return $this;
     }
 
     public function shouldSendAssignmentNotification() {
