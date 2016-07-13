@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model {
@@ -83,7 +84,7 @@ class Comment extends Model {
     }
 
     public function setSentAt($param) {
-        $this->{'sent_at'} = $param;
+        $this->{'sent_at'} = new Carbon($param);
         return $this;
     }
 
