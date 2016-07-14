@@ -20,6 +20,7 @@ Route::post('api/authenticate', 'AuthenticateController@authenticate');
 Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
 
     // Projects
+    Route::get('projects/', 'ProjectsController@index');
     Route::get('projects/{id}', 'ProjectsController@show');
     Route::post('projects', 'ProjectsController@store');
     Route::put('projects/{id}', 'ProjectsController@update');

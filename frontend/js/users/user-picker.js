@@ -96,7 +96,7 @@
             function highlight(str, term) {
                 var highlight_regex = new RegExp('^(' + term + ')', 'gi');
                 return str.replace(highlight_regex,
-                    '<span class="UserPicker-highlight">$1</span>');
+                    '<span class="AutoSuggest-highlight">$1</span>');
             }
 
             return $q.when(matching_users).then(
@@ -111,13 +111,13 @@
                                 obj:   data[i],
                                 value: data[i].name,
                                 label: $sce.trustAsHtml(
-                                    '<div class="UserPicker-item">' +
-                                    '<div class="UserPicker-image">' +
-                                    '<img class="UserPicker-avatar" src="' + data[i].avatar_url + '">' +
+                                    '<div class="AutoSuggest-item">' +
+                                    '<div class="AutoSuggest-image">' +
+                                    '<img class="AutoSuggest-avatar" src="' + data[i].avatar_url + '">' +
                                     '</div>' +
-                                    '<div class="UserPicker-content">' +
-                                    '<span class="UserPicker-name">' + highlight(data[i].first_name, term) + ' ' + highlight(data[i].last_name, term) + '</span>' +
-                                    '<span class="UserPicker-email">' + data[i].email + '</span>' +
+                                    '<div class="AutoSuggest-content">' +
+                                    '<span class="AutoSuggest-name">' + highlight(data[i].first_name, term) + ' ' + highlight(data[i].last_name, term) + '</span>' +
+                                    '<span class="AutoSuggest-meta">' + data[i].email + '</span>' +
                                     '</div>' +
                                     '</div>'
                                 )

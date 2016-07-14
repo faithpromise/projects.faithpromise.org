@@ -9,6 +9,20 @@ use App\Http\Requests;
 
 class ProjectsController extends Controller {
 
+    public function index(Request $request) {
+
+        $query = Project::with('requester');
+        $name = $request->input('name');
+
+        if ($name) {
+            $query->where('name', 'like', $name . '%');
+        }
+
+        return [
+            'data' => $query->get()
+        ];
+    }
+
     public function show($id) {
 
         return [

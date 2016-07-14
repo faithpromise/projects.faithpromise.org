@@ -13,9 +13,9 @@ body {
   align-items:      center;
   height:           @Nav-height;
   width:            100%;
-  background-color: #47a6ff;
-  background-color: #78a300; // Zendesk
-  background-color: #3f7e7a; // Wunderlist
+  //background-color: #47a6ff;
+  //background-color: #78a300; // Zendesk
+  //background-color: #3f7e7a; // Wunderlist
   background-color: #2a6c88; // Wunderlist
   //background-color: tomato; // Project overdue
 }
@@ -35,4 +35,19 @@ body {
 
 .Nav-button--icon {
   font-size: 24px;
+}
+
+.Nav-search {
+  max-width:        200px;
+  padding:          8px 10px;
+  border:           1px solid #175671;
+  border-radius:    5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size:        13px;
+  color:            #fff;
+
+  &:focus {
+    outline: none !important;
+  }
+
 }

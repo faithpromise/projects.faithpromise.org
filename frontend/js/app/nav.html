@@ -1,16 +1,9 @@
-
 <div class="Nav">
-  <a class="Nav-button" href="/">Timeline</a>
-  <div class="Nav-dropdown">
-    <a class="Nav-button" href="/people">People</a>
-  </div>
-  <div class="Nav-dropdown">
-    <a class="Nav-button" href="/events">Events</a>
-  </div>
-  <div class="Nav-dropdown">
-    <a class="Nav-button" href="/projects">Projects</a>
-  </div>
+  <a class="Nav-button" href="/">Home</a>
   <div class="Nav-actions">
+    <div class="AutoSuggest" mass-autocomplete>
+      <input class="Nav-search" type="text" ng-model="vm.search_value" mass-autocomplete-item="vm.autocomplete_options">
+    </div>
     <span class="Nav-button Nav-button--icon" ng-click="vm.logout()"><i class="icon-logout"></i></span>
     <div class="Nav-dropdown">
       <span class="Nav-button Nav-button--icon" ng-click="vm.show_new_project()"><i class="icon-plus-circled"></i></span>

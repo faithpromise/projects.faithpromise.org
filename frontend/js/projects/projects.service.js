@@ -17,6 +17,11 @@
                 return $http.get('/api/projects/' + id);
             },
 
+            search: function (params) {
+                console.log('searching');
+                return $http.get('/api/projects', params);
+            },
+
             save: function (project) {
                 if (project.id) {
                     return $http.put('/api/projects/' + project.id, { 'data': project });

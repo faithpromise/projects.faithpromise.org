@@ -14,9 +14,9 @@
         };
     }
 
-    Controller.$inject = ['timelineService'];
+    Controller.$inject = ['timelineService', 'projectsService'];
 
-    function Controller(timelineService) {
+    function Controller(timelineService, projectsService) {
 
         var vm = this;
         vm.get_duration = get_duration;
@@ -27,17 +27,6 @@
             timelineService.all().then(function(result) {
                 vm.agents = result.data.data;
             });
-
-            vm.days = create_days();
-        }
-
-        function create_days() {
-            var dates = [],
-                today = moment().startOf('day');
-            for (var i = 0; i < 30; i++) {
-                dates.push(today.clone().add(i, 'days'));
-            }
-            return dates;
         }
 
         function get_duration(min) {
