@@ -19,7 +19,7 @@
 
             search: function (params) {
                 console.log('searching');
-                return $http.get('/api/projects', params);
+                return $http.get('/api/projects', { params: params });
             },
 
             save: function (project) {

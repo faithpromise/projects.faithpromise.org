@@ -21,20 +21,26 @@
     function Controller($auth, $location, $q, $sce, usersService, projectsService) {
 
         var vm                  = this,
-            cache               = {
-                projects: {},
-                users:    {}
-            };
+            cache;
         vm.logout               = logout;
         vm.show_new_project     = show_new_project;
         vm.search_value         = '';
         vm.autocomplete_options = {
             on_error:         console.log,
             debounce_suggest: 300,
-            // on_detach:        on_detach,
+            on_detach:        clear_cache,
             suggest:          suggest,
             on_select:        search_go
         };
+
+        clear_cache();
+
+        function clear_cache() {
+            cache = {
+                projects: {},
+                users:    {}
+            };
+        }
 
         function search_go(item) {
             vm.search_value = undefined;
@@ -51,7 +57,6 @@
         }
 
         function suggest(term) {
-            console.log('search yo');
 
             var term_lower   = term.toLowerCase(),
                 first_letter = term_lower[0],
@@ -59,6 +64,10 @@
                 user_matches,
                 deferred_projects,
                 deferred_users;
+
+            if (term.length < 3) {
+                return [];
+            }
 
             // Search users
             if (first_letter in cache.users) {
@@ -82,7 +91,7 @@
             } else {
                 deferred_projects = $q.defer();
 
-                projectsService.search(first_letter).then(function (result) {
+                projectsService.search({name: first_letter}).then(function (result) {
                     cache.projects[first_letter] = result;
                     deferred_projects.resolve(result);
                 }, function (err) {
@@ -97,7 +106,7 @@
             }
 
             function highlight(str, term) {
-                var highlight_regex = new RegExp('^(' + term + ')', 'gi');
+                var highlight_regex = new RegExp('\\b(' + term + ')', 'gi');
                 return str.replace(highlight_regex,
                     '<span class="AutoSuggest-highlight">$1</span>');
             }
@@ -136,19 +145,20 @@
                     // Projects
                     for (i = 0; i < projects.length; i++) {
                         projects[i].type = 'projects';
-                        if (starts_with(projects[i].name, term_lower)) {
-                            results.push({
-                                obj:   projects[i],
-                                value: projects[i].name,
-                                label: $sce.trustAsHtml(
-                                    '<div class="AutoSuggest-item">' +
-                                    '<div class="AutoSuggest-content">' +
-                                    '<span class="AutoSuggest-name">' + highlight(projects[i].name, term) + '</span>' +
-                                    '<span class="AutoSuggest-meta">' + projects[i].requester.abbreviation + '</span>' +
-                                    '</div>' +
-                                    '</div>'
-                                )
-                            });
+                        var re = new RegExp('\\b(' + term_lower + ').*', 'i');
+                        if (re.test(projects[i].name)) {
+                        results.push({
+                            obj:   projects[i],
+                            value: projects[i].name,
+                            label: $sce.trustAsHtml(
+                                '<div class="AutoSuggest-item">' +
+                                '<div class="AutoSuggest-content">' +
+                                '<span class="AutoSuggest-name">' + highlight(projects[i].name, term) + '</span>' +
+                                '<span class="AutoSuggest-meta">' + projects[i].requester.abbreviation + '</span>' +
+                                '</div>' +
+                                '</div>'
+                            )
+                        });
                         }
                     }
 

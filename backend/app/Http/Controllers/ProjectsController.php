@@ -15,7 +15,7 @@ class ProjectsController extends Controller {
         $name = $request->input('name');
 
         if ($name) {
-            $query->where('name', 'like', $name . '%');
+            $query->where('name', 'like', '%' . $name . '%');
         }
 
         return [
