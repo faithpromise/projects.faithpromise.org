@@ -59,6 +59,7 @@ class MainController extends Controller {
                 $project->setDueAt($z_ticket->due_at);
                 $project->setIsBacklog(in_array('backlog', $z_ticket->tags));
                 $project->created_at = new Carbon($z_ticket->created_at);
+                $project->closed_at = $z_ticket->status === 'closed' ? (new Carbon($z_ticket->updated_at)) : null;
                 $project->disableSetupTask();
                 $project->disableAssignmentNotification();
 
