@@ -39,7 +39,7 @@ class SendComment {
 
             foreach ($comment->recipients as $recipient) {
                 if ($recipient->id !== $comment->sender->id) {
-                    $m->to('dev@faithpromise.org', $recipient->name); // TODO: Set back to recipient's email
+                    $m->to($recipient->email, $recipient->name);
                 }
             }
 
