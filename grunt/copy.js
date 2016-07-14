@@ -57,6 +57,13 @@ module.exports = function (grunt) {
             dest:   '_release/public/build',
             cwd:    'public/build',
             src:    '**/*'
+        },
+
+        release_uib: {
+            expand: true,
+            dest:   '_release/public/uib',
+            cwd:    'public/uib',
+            src:    '**/*'
         }
 
     });
