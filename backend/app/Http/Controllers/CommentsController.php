@@ -139,7 +139,9 @@ class CommentsController extends Controller {
         $comment->setSentAt($date_sent);
         $comment->save();
 
-        $comment->recipients()->attach($parent_comment->recipients);
+        // Add original sender
+        $recipients = $parent_comment->recipients->push($sender);
+        $comment->syncRecipients($recipients);
 
         if (is_array($files) && count($files)) {
 
@@ -171,7 +173,7 @@ class CommentsController extends Controller {
     private function update_recipients(Comment $comment, $data) {
         if (array_key_exists('recipients', $data)) {
             $recipients = array_pluck($data['recipients'], 'id');
-            $comment->recipients()->sync($recipients);
+            $comment->syncRecipients($recipients);
         }
     }
 
