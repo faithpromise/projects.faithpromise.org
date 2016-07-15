@@ -94,7 +94,7 @@ class MainController extends Controller {
                     $comment->save();
 
                     if ($z_comment->public) {
-                        $comment->recipients()->sync($recipient_ids);
+                        $comment->syncRecipients($recipient_ids);
                     }
 
                     // Attachments
