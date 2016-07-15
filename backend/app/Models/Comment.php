@@ -87,7 +87,7 @@ class Comment extends Model {
     }
 
     public function setSentAt($param) {
-        $this->sent_at = $this->sent_at ? (new Carbon($param)) : null;
+        $this->sent_at = $param ? (new Carbon($param)) : null;
         return $this;
     }
 
