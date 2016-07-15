@@ -43,6 +43,8 @@ class MainController extends Controller {
 
         $data = $api->tickets()->findAll(['per_page' => $per_page, 'page' => $page]);
 
+        $total_pages = (int)ceil($data->count / 10);
+
         foreach ($data->tickets as $z_ticket) {
 
             // Only for "Communications" group (we don't want Facilities tickets)
@@ -116,7 +118,7 @@ class MainController extends Controller {
         }
 
         if (($next_page * $per_page) < $data->count) {
-            return '<a href="?page=' . $next_page . '">Import page ' . $next_page . '</a>';
+            return '<a href="?page=' . $next_page . '">Import page ' . $next_page . ' of ' . $total_pages . '</a>';
         } else {
             return 'done';
         }
