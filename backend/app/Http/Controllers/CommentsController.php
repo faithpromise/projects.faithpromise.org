@@ -79,6 +79,7 @@ class CommentsController extends Controller {
 
     /**
      * Update the specified resource in storage.
+     * Needed because we save "drafts" on the frontend
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
@@ -108,33 +109,33 @@ class CommentsController extends Controller {
 
     public function inbound(Request $request) {
 
-        $email = $request->all();
+        $email_data = $request->all();
 
-        $parent_comment_id = (int)str_replace(['comment_', '@mailgun.faithpromise.org'], '', $email['recipient']);
-        $sender_email = strtolower($email['sender']);
-        $sender_name = trim(str_ireplace('<' . $sender_email . '>', '', $email['from']), ' ');
-        $body = $email['stripped-text'];
-        $date_sent = Carbon::parse($email['Date']);
-        $files = json_decode($email['attachments']);
+        $parent_comment_id = (int)str_replace(['comment_', '@mailgun.faithpromise.org'], '', $email_data['recipient']);
+        $sender_email = strtolower($email_data['sender']);
+        $sender_name = trim(str_ireplace('<' . $sender_email . '>', '', $email_data['from']), ' ');
+        $body = $email_data['stripped-text'];
+        $date_sent = Carbon::parse($email_data['Date']);
+        $files = json_decode($email_data['attachments']);
 
         /** @var Comment $parent_comment */
         $parent_comment = Comment::find($parent_comment_id);
 
-        $user = User::where('email', '=', $sender_email)->first();
+        $sender = User::where('email', '=', $sender_email)->first();
 
-        if (!$user) {
-            $user = new User();
-            $user->setFirstName($sender_name[0]);
-            $user->setLastName(count($sender_name) > 1 ? implode(' ', array_slice($sender_name, 1)) : null);
-            $user->setEmail($sender_email);
-            $user->save();
+        if (!$sender) {
+            $sender = new User();
+            $sender->setFirstName($sender_name[0]);
+            $sender->setLastName(count($sender_name) > 1 ? implode(' ', array_slice($sender_name, 1)) : null);
+            $sender->setEmail($sender_email);
+            $sender->save();
         }
 
         $comment = new Comment();
         $comment->setType('comment');
         $comment->setEventId($parent_comment->getEventId());
         $comment->setProjectId($parent_comment->getProjectId());
-        $comment->setUserId($user->getId());
+        $comment->setUserId($sender->getId());
         $comment->setBody($body);
         $comment->setSentAt($date_sent);
         $comment->save();
