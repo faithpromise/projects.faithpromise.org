@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Events\CommentCreated;
+use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Project;
 use App\Models\User;
 use Carbon\Carbon;
+use Http\Adapter\Guzzle6\Client as GuzzleClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 
 use App\Http\Requests;
+use Mailgun\Mailgun;
 
 class CommentsController extends Controller {
     /**
@@ -112,6 +115,7 @@ class CommentsController extends Controller {
         $sender_name = trim(str_ireplace('<' . $sender_email . '>', '', $email['from']), ' ');
         $body = $email['stripped-text'];
         $date_sent = Carbon::parse($email['Date']);
+        $files = $email['attachments'];
 
         /** @var Comment $parent_comment */
         $parent_comment = Comment::find($parent_comment_id);
@@ -136,6 +140,28 @@ class CommentsController extends Controller {
         $comment->save();
 
         $comment->recipients()->attach($parent_comment->recipients);
+
+        if (is_array($files) && count($files)) {
+
+            $client = new GuzzleClient();
+            $mailgun = new Mailgun(config('mail.mailgun_api_key'), $client);
+
+            // Save attachments
+            foreach ($files as $file) {
+
+                $attachment = new Attachment();
+                $attachment->setCommentId($comment->id);
+                $attachment->setName($file->name);
+                $attachment->save();
+
+                // Remove "https://api.mailgun.net/v2" from the URL. Can't see a way around this.
+                $file_url = strstr($file->url, '/domains/mailgun');
+                $file_contents = $mailgun->get($file_url);
+
+                file_put_contents(storage_path('attachments'), $file_contents->http_response_body);
+
+            }
+        }
 
         Event::fire(new CommentCreated($comment));
 
