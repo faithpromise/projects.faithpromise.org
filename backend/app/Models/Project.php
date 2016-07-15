@@ -150,7 +150,7 @@ class Project extends Model {
     }
 
     public function setDueAt($param) {
-        $this->{'due_at'} = new Carbon($param);
+        $this->due_at = $this->due_at ? (new Carbon($param)) : null;
 
         return $this;
     }
