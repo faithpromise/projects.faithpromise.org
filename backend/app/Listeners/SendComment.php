@@ -26,21 +26,25 @@ class SendComment {
         // Send email when comment is created
 
         $comment = $event->comment;
+        $sender = $comment->sender;
 
-        if ($comment->type === 'draft' OR $comment->recipients->count() === 0) {
+        // Remove sender from recipients
+        $recipients = $comment->recipients->reject(function($recipient) use ($sender) {
+            return $recipient->id = $sender->id;
+        });
+
+        if ($comment->type === 'draft' OR $recipients->count() === 0) {
             return;
         }
 
-        Mail::send(['text' => 'emails.comment'], ['comment' => $comment], function ($m) use ($comment) {
+        Mail::send(['text' => 'emails.comment'], ['comment' => $comment], function ($m) use ($comment, $recipients) {
 
             $m->subject($comment->project ? $comment->project->full_name : $comment->event->name);
             $m->from($comment->sender->email, $comment->sender->name);
             $m->replyTo('comment_' . $comment->id . '@mailgun.faithpromise.org', $comment->sender->name);
 
-            foreach ($comment->recipients as $recipient) {
-                if ($recipient->id !== $comment->sender->id) {
-                    $m->to($recipient->email, $recipient->name);
-                }
+            foreach ($recipients as $recipient) {
+                $m->to($recipient->email, $recipient->name);
             }
 
             foreach ($comment->attachments as $attachment) {
