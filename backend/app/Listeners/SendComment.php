@@ -30,7 +30,7 @@ class SendComment {
 
         // Remove sender from recipients
         $recipients = $comment->recipients->reject(function($recipient) use ($sender) {
-            return $recipient->id = $sender->id;
+            return $recipient->id === $sender->id;
         });
 
         if ($comment->type === 'draft' OR $recipients->count() === 0) {
