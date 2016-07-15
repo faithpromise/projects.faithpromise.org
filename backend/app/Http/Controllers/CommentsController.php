@@ -154,11 +154,12 @@ class CommentsController extends Controller {
                 $attachment->setName($file->name);
                 $attachment->save();
 
-                // Remove "https://api.mailgun.net/v2" from the URL. Can't see a way around this.
-                $file_url = strstr($file->url, '/domains/mailgun');
+                // Remove "https://api.mailgun.net/v2/" from the URL. Can't see a way around this.
+                $file_url = strstr($file->url, 'domains/mailgun');
                 $file_contents = $mailgun->get($file_url);
+                $file_path = storage_path('attachments') . '/' . $attachment->file_name;
 
-                file_put_contents(storage_path('attachments'), $file_contents->http_response_body);
+                file_put_contents($file_path, $file_contents->http_response_body);
 
             }
         }
