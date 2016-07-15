@@ -61,6 +61,6 @@ Route::get('api/attachments/{id}/file.{ext}', 'AttachmentsController@download');
 Route::get('api/attachments/{id}/thumb.{ext}', 'AttachmentsController@thumb');
 
 // Process inbound email
-Route::any('postmark-inbound', 'CommentsController@inbound');
+Route::any('comment-inbound', 'CommentsController@inbound');
 
 Route::get('{path?}', ['uses' => 'MainController@index'])->where('path', '.+');
