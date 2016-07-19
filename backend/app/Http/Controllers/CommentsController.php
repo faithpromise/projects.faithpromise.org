@@ -116,7 +116,7 @@ class CommentsController extends Controller {
         $sender_name = trim(str_ireplace('<' . $sender_email . '>', '', $email_data['from']), ' ');
         $body = $email_data['stripped-text'];
         $date_sent = Carbon::parse($email_data['Date']);
-        $files = json_decode($email_data['attachments']);
+        $files = array_key_exists('attachments', $email_data) ? json_decode($email_data['attachments']) : [];
 
         /** @var Comment $parent_comment */
         $parent_comment = Comment::find($parent_comment_id);
