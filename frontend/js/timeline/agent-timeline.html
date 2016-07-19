@@ -18,7 +18,6 @@
 <div class="Timeline-day" ng-repeat="day in vm.timeline_days">
   <div class="Timeline-dayHeader">
     <div class="Timeline-dayHeading">{{ day.day | amDateFormat: 'ddd MMM D' }}</div>
-    <div class="Timeline-dayCapacity">{{ day.capacity | amDurationFormat : 'minute' }}</div>
   </div>
   <div class="Timeline-task" ng-repeat="task in day.timeline_tasks">
     <div class="Timeline-taskCheck">
