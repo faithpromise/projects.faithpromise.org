@@ -11,7 +11,7 @@
   </div>
 
   <div class="Comment-body" ng-class="{ 'is-internal': vm.comment.recipients.length === 0 }">
-    <div class="Comment-pre">{{ vm.comment.body }}</div>
+    <div ng-bind-html="vm.comment.html_body"></div>
     <div class="Comment-attachments" ng-if="vm.comment.attachments.length">
       <a class="Comment-attachment" href="{{ attachment.download_url }}" target="_blank" ng-repeat="attachment in vm.comment.attachments">
         <img class="Comment-attachmentThumb" ng-src="{{ attachment.thumb_url }}">

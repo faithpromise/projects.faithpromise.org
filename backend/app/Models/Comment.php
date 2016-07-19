@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use s9e\TextFormatter\Bundles\Forum as TextFormatter;
 
 class Comment extends Model {
 
@@ -13,6 +14,7 @@ class Comment extends Model {
 
     protected $table = 'comments';
     public $fillable = ['event_id', 'project_id', 'user_id', 'type', 'body'];
+    public $appends = ['html_body'];
 
     public function event() {
         return $this->belongsTo(Event::class);
@@ -36,6 +38,11 @@ class Comment extends Model {
 
     public function attachments() {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function getHtmlBodyAttribute() {
+        $xml = TextFormatter::parse($this->getBody());
+        return TextFormatter::render($xml);
     }
 
     /**

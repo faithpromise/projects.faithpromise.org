@@ -16,16 +16,16 @@
         };
     }
 
-    Controller.$inject = [];
+    Controller.$inject = ['$sce'];
 
-    function Controller() {
+    function Controller($sce) {
 
         var vm = this;
 
         init();
 
         function init() {
-
+            vm.comment.html_body = $sce.trustAsHtml(vm.comment.html_body);
         }
 
     }

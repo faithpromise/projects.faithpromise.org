@@ -13,7 +13,8 @@
         "guzzlehttp/guzzle": "~6.0",
         "zendesk/zendesk_api_client_php": "dev-master",
         "mailgun/mailgun-php": "~2.0",
-        "php-http/guzzle6-adapter": "^1.0"
+        "php-http/guzzle6-adapter": "^1.0",
+        "s9e/text-formatter": "^0.5.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
