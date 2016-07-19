@@ -1,16 +1,18 @@
 (function (module, moment) {
     'use strict';
 
-    module.directive('timeline', directive);
+    module.directive('agentTimeline', directive);
 
     function directive() {
         return {
-            templateUrl:      '/build/js/tasks/timeline.html',
-            restrict:         'E',
+            templateUrl:      '/build/js/timeline/agent-timeline.html',
+            restrict:         'A',
             controller:       Controller,
             controllerAs:     'vm',
-            bindToController: true,
-            scope:            {}
+            bindToController: {
+                agent: '='
+            },
+            scope:            true
         };
     }
 
@@ -18,14 +20,18 @@
 
     function Controller(timelineService, projectsService) {
 
-        var vm = this;
+        var vm          = this;
         vm.get_duration = get_duration;
 
         init();
 
         function init() {
-            timelineService.all().then(function(result) {
-                vm.agents = result.data.data;
+            timelineService.byAgent(vm.agent.id).then(function (result) {
+                vm.timeline_days = result.data.data;
+            });
+
+            projectsService.getPending(vm.agent.id).then(function (result) {
+                vm.projects = result.data.data;
             });
         }
 

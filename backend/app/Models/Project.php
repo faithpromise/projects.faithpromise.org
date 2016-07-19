@@ -65,6 +65,14 @@ class Project extends Model {
         return $this->belongsToMany(User::class, 'project_recipients', 'project_id', 'user_id');
     }
 
+    public function scopePending($query) {
+        $query->where('is_backlog', '=', false)
+            ->whereNull('closed_at')
+            ->whereDoesntHave('tasks', function($tasks_query) {
+            $tasks_query->whereNull('completed_at');
+        });
+    }
+
     public function getStatusAttribute() {
         if ($this->closed_at) {
             return 'closed';

@@ -9,8 +9,8 @@
 
         return {
 
-            all: function() {
-                return $http.get('/api/timeline');
+            byAgent: function(agent_id) {
+                return $http.get('/api/timeline?agent_id=' + agent_id);
             }
 
         };

@@ -17,6 +17,10 @@
                 return $http.get('/api/projects/' + id);
             },
 
+            getPending: function(agent_id) {
+                return $http.get('/api/projects?type=pending&agent_id=' + agent_id);
+            },
+
             search: function (params) {
                 console.log('searching');
                 return $http.get('/api/projects', { params: params });

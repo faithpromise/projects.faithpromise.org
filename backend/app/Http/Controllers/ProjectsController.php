@@ -13,9 +13,19 @@ class ProjectsController extends Controller {
 
         $query = Project::with('requester');
         $name = $request->input('name');
+        $type = $request->input('type');
+        $agent_id = $request->input('agent_id');
 
         if ($name) {
             $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($type === 'pending') {
+            $query->pending();
+        }
+
+        if ($agent_id) {
+            $query->where('agent_id', '=', $agent_id);
         }
 
         return [
