@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration {
             $table->integer('requester_id')->unsigned();
             $table->integer('agent_id')->unsigned();
             $table->string('name', 200);
-            $table->text('notes');
+            $table->text('notes')->nullable();;
 
             // Purchase
             $table->boolean('is_purchase')->default(false);
