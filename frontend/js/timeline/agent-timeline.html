@@ -6,12 +6,14 @@
   </div>
 </div>
 
-<div class="Timeline-day" ng-if="vm.projects.length">
+<div ng-if="vm.projects.length">
   <div class="Timeline-dayHeader">
     Pending Projects
   </div>
-  <div class="Timeline-project" ng-repeat="project in vm.projects">
-    <a href="/projects/{{ project.id }}">{{ project.full_name }}</a> / {{ project.status }}
+  <div class="Timeline-projects">
+    <div class="Timeline-project" ng-repeat="project in vm.projects">
+      <a href="/projects/{{ project.id }}">{{ project.full_name }}</a> / {{ project.status }}
+    </div>
   </div>
 </div>
 
