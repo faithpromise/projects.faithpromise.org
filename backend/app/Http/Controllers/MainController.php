@@ -33,8 +33,7 @@ class MainController extends Controller {
         $username = 'bradr@faithpromise.org';
         $token = 'WarsVQ3YbelNnVUbakvETnVgHZSKIkWeW21QntH8';
 
-        // TODO: Timeout worked. Try increasing per page?
-        $per_page = 10;
+        $per_page = 50;
         $page = $request->input('page', 1);
         $next_page = $page + 1;
 
@@ -67,7 +66,7 @@ class MainController extends Controller {
 
                 $project->save();
 
-                $recipient_ids = [$requester_id];
+                $recipient_ids = [$requester_id,$agent_id];
                 foreach ($z_ticket->collaborator_ids as $z_collaborator_id) {
                     $recipient_id = $this->getUserId($z_collaborator_id, $api);
                     if ($recipient_id) {
@@ -146,10 +145,10 @@ class MainController extends Controller {
         $user = User::whereEmail($z_user->email)->first();
 
         if (!$user) {
-            list($first_name, $last_name) = explode(' ', $z_user->name);
+            $name = explode(' ', $z_user->name);
             $user = User::create([
-                'first_name' => $first_name,
-                'last_name'  => $last_name,
+                'first_name' => count($name) > 0 ? $name[0] : '',
+                'last_name'  => count($name) > 1 ? $name[1] : '',
                 'email'      => $z_user->email
             ]);
         }
