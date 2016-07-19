@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\TaskChanged;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class SendTaskAssignmentNotification {
@@ -25,18 +27,25 @@ class SendTaskAssignmentNotification {
         $new_task = $event->new_task;
         $old_task = $event->old_task;
 
-        // Send notification to new assignee
-        if (!$old_task || $new_task->agent_id !== $old_task->agent_id) {
+        /** @var User $current_user */
+        $current_user = Auth::user();
 
-            $new_agent = $new_task->agent;
+        $current_user_is_task_owner = $current_user->getId() === $new_task->agent_id;
+        $agent_did_not_change = $old_task && ($new_task->agent_id === $old_task->agent_id);
 
-            Mail::send(['text' => 'emails.task_assigned'], ['task' => $new_task, 'agent' => $new_agent], function ($m) use ($new_task, $new_agent) {
-                $m->subject('Task Assigned to You: ' . $new_task->full_name);
-                $m->from('projects@faithpromise.org', 'Faith Promise Church');
-                $m->to($new_agent->email, $new_agent->name);
-            });
-
+        // Don't send if...
+        if ($current_user_is_task_owner || $agent_did_not_change) {
+            return;
         }
+
+        // Send notification to new assignee
+        $new_agent = $new_task->agent;
+
+        Mail::send(['text' => 'emails.task_assigned'], ['task' => $new_task, 'agent' => $new_agent], function ($m) use ($new_task, $new_agent) {
+            $m->subject('Task Assigned to You: ' . $new_task->full_name);
+            $m->from('projects@faithpromise.org', 'Faith Promise Church');
+            $m->to($new_agent->email, $new_agent->name);
+        });
 
     }
 
