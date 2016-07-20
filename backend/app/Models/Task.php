@@ -12,7 +12,7 @@ class Task extends Model {
     use SoftDeletes;
 
     protected $dates = ['start_at', 'due_at', 'created_at', 'updated_at'];
-    public $appends = ['full_name', 'estimated_start_date', 'estimated_completion_date', 'calculated_due_at'];
+    public $appends = ['full_name', 'estimated_start_date', 'estimated_completion_date', 'calculated_due_at', 'deletable'];
     public $casts = [
         'due_at' => 'date'
     ];
@@ -36,6 +36,10 @@ class Task extends Model {
 
     public function getEstimatedCompletionDateAttribute() {
         return $this->timeline_tasks()->max('timeline_date');
+    }
+
+    public function getDeletableAttribute() {
+        return is_null($this->type);
     }
 
     public function setEventId($param) {
