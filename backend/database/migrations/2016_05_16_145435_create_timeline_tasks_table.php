@@ -20,6 +20,7 @@ class CreateTimelineTasksTable extends Migration {
             $table->integer('task_id')->unsigned();
             $table->bigInteger('timeline_day_id')->unsigned();
             $table->date('timeline_date');
+            $table->string('type', 30)->nullable();
             $table->string('name', 100);
             $table->text('notes')->nullable();
             $table->integer('duration')->unsigned();

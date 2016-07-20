@@ -71,6 +71,7 @@ class TimelineBuilder {
                 $timeline_task->task_id = $task->id;
                 $timeline_task->timeline_date = $timeline_day->day;
                 $timeline_task->name = $task->name;
+                $timeline_task->type = $task->type;
                 $timeline_task->notes = $task->notes;
                 $timeline_task->duration = $task->duration;
                 $timeline_task->start_at = $task->start_at;
