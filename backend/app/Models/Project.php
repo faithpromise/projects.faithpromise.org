@@ -19,8 +19,8 @@ class Project extends Model {
     use SoftDeletes;
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
-    public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status'];
-    public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at'];
+    public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status', 'thumb_url'];
+    public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at', 'closed_at'];
     private $send_assignment_notification = true;
     private $create_setup_task = true;
     private $create_estimate_task = true;
@@ -117,6 +117,33 @@ class Project extends Model {
         $est = $this->getEstimatedDeliveryDate();
 
         return (!is_null($est) AND $est->gte($this->due_at));
+    }
+
+    public function getThumbUrlAttribute() {
+        if ($this->has_thumb) {
+            $timestamp = filemtime($this->getThumbPath());
+            return '/api/projects/' . $this->id . '/thumb.' . $this->getThumbExtension() . '?v=' . $timestamp;
+        }
+        return $this->requester->avatar_url;
+    }
+
+    public function getHasThumbAttribute() {
+        return !empty($this->thumb_file_name);
+    }
+
+    public function getThumbExtension() {
+        $path_info = pathinfo($this->thumb_file_name);
+        return $path_info['extension'];
+    }
+
+    public function getThumbPath() {
+        return storage_path('project-thumbs/' . $this->id . '-' . $this->thumb_file_name);
+    }
+
+    public function setThumbFileName($param) {
+        $this->thumb_file_name = $param;
+
+        return $this;
     }
 
     public function setEventId($param) {

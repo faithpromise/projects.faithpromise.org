@@ -1,9 +1,11 @@
-
 <project-editor ng-if="vm.is_editing" project="vm.project" on-close="vm.on_editor_closed()"></project-editor>
 
 <div class="Project" ng-if="vm.project">
 
   <div class="Project-header">
+    <div class="Project-thumbColumn" ng-if="vm.project.thumb_url">
+      <img class="Project-thumb" ng-src="{{ vm.project.thumb_url }}" ngf-select="vm.upload($files)" ngf-pattern=".jpg,.png" ngf-select="vm.upload($files)">
+    </div>
     <div class="Project-titleColumn">
       <span class="Project-title"><a href="/people/{{ vm.project.requester.id }}">{{ vm.project.requester.name }}</a> / <span ng-if="vm.project.event"><a href="/events/{{ vm.project.event.id }}">{{ vm.project.event.name }}</a> / </span>{{ vm.project.name }}</span>
     </div>
@@ -33,7 +35,8 @@
 
       <div class="Sidebar-section Sidebar-container Project-notesSection">
 
-        <h2 class="Sidebar-heading">Notes <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.project_notes_saving"></h2>
+        <h2 class="Sidebar-heading">Notes
+          <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.project_notes_saving"></h2>
 
         <p class="Project-eventNotes">{{ vm.project.event.notes }}</p>
         <!--<span class="link nowrap" ng-click="vm.is_editing_notes = true" ng-hide="vm.project.notes || vm.is_editing_notes">add notes</span>-->
@@ -41,26 +44,31 @@
         <textarea class="Project-textarea" ng-model="vm.project.notes" ng-show="vm.is_editing_notes" focus-on="vm.is_editing_notes" ng-blur="vm.is_editing_notes = false" msd-elastic></textarea>
       </div>
 
+      <!--Close Project-->
+
+      <div class="Sidebar-section Sidebar-container" ng-hide="vm.incompleteTasks.length || vm.project.closed_at">
+        <span class="link" ngf-select="vm.upload($files)" ngf-pattern=".jpg,.png" ngf-select="vm.upload($files)">Attach mockup</span>
+        <button class="Button Button--sm Button--primary" ng-click="vm.close_project()" ng-disabled="vm.uploading_thumb || vm.closing_project">{{ vm.uploading_thumb ? 'Uploading...' : (vm.closing_project ? 'Closing...' : 'Close Project') }}</button>
+      </div>
+
+      <div class="Sidebar-section Sidebar-container" ng-show="vm.project.closed_at">
+        <button class="Button Button--sm Button--primary" ng-click="vm.reopen_project()">Reopen Project</button>
+      </div>
+
       <!--Tasks-->
 
       <div class="Sidebar-section Sidebar-container">
 
         <div class="Sidebar-header">
-          <h2 class="Sidebar-heading">Tasks <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.tasks_loading || vm.task_saving"></h2>
+          <h2 class="Sidebar-heading">Tasks
+            <img class="Loading--mini" src="/build/images/loading-white-bg.gif" ng-show="vm.tasks_loading || vm.task_saving">
+          </h2>
           <span class="Sidebar-headerAction" ng-click="vm.show_new_task()">add task</span>
         </div>
 
         <table class="TaskTable">
-          <tfoot>
-            <tr>
-              <td colspan="5" class="TaskTable-completedToggle">
-                <span class="link" ng-click="vm.show_completed_tasks = true" ng-hide="vm.show_completed_tasks">show completed tasks</span>
-                <span class="link" ng-click="vm.show_completed_tasks = false" ng-show="vm.show_completed_tasks">hide completed tasks</span>
-              </td>
-            </tr>
-          </tfoot>
           <tbody>
-            <tr class="TaskTable-row" ng-repeat="task in vm.tasks" ng-click="vm.open_task(task)" ng-hide="task.completed_at">
+            <tr class="TaskTable-row" ng-repeat="task in vm.incompleteTasks = (vm.tasks | filter:vm.incompleteTasksFilter)" ng-click="vm.open_task(task)">
               <td class="TaskTable-cell" ng-click="vm.mark_task_completed(task, $event)">
                 <input type="checkbox" ng-model="task.foobar_required_for_ng_change">
               </td>
@@ -70,8 +78,8 @@
               <td class="TaskTable-cell">{{ task.duration | amDurationFormat : 'minute' }}</td>
             </tr>
           </tbody>
-          <tbody ng-if="vm.show_completed_tasks">
-            <tr class="TaskTable-row TaskTable-row--completed" ng-repeat="task in vm.tasks" ng-click="vm.open_task(task)" ng-show="task.completed_at">
+          <tbody>
+            <tr class="TaskTable-row TaskTable-row--completed" ng-repeat="task in vm.completedTasks = (vm.tasks | filter:vm.completedTasksFilter)" ng-click="vm.open_task(task)">
               <td class="TaskTable-cell" ng-click="vm.mark_task_completed(task)">
                 <input type="checkbox" checked="checked" disabled>
               </td>

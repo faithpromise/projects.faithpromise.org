@@ -14,24 +14,29 @@
         };
     }
 
-    Controller.$inject = ['$scope', '$timeout', '$routeParams', '$location', 'projectsService', 'tasksService', 'pike'];
+    Controller.$inject = ['$scope', '$timeout', '$routeParams', 'projectsService', 'tasksService', 'Upload'];
 
-    function Controller($scope, $timeout, $routeParams, $location, projectsService, tasksService, pike) {
+    function Controller($scope, $timeout, $routeParams, projectsService, tasksService, Upload) {
 
         var vm                    = this,
             project_notes_timeout = null;
 
-        vm.is_editing          = false;
-        vm.tasks_loading       = false;
-        vm.task_saving         = false;
+        vm.is_editing            = false;
+        vm.tasks_loading         = false;
+        vm.task_saving           = false;
         // vm.route_action        = pike.bind($scope, 'project', on_route_change);
-        vm.show_new_task       = show_new_task;
-        vm.open_task           = open_task;
-        vm.on_task_closed      = on_task_closed;
-        vm.on_task_updated     = on_task_updated;
-        vm.mark_task_completed = mark_task_completed;
-        vm.on_editor_closed    = on_editor_closed;
-        vm.open_editor         = open_editor;
+        vm.show_new_task         = show_new_task;
+        vm.open_task             = open_task;
+        vm.on_task_closed        = on_task_closed;
+        vm.on_task_updated       = on_task_updated;
+        vm.mark_task_completed   = mark_task_completed;
+        vm.on_editor_closed      = on_editor_closed;
+        vm.open_editor           = open_editor;
+        vm.incompleteTasksFilter = incompleteTasksFilter;
+        vm.completedTasksFilter  = completedTasksFilter;
+        vm.upload                = upload;
+        vm.close_project         = close_project;
+        vm.reopen_project        = reopen_project;
 
         init();
 
@@ -52,6 +57,9 @@
                 } else {
                     vm.project = result.data.data;
                 }
+
+                vm.uploading_thumb = false;
+                vm.closing_project = false;
             });
         }
 
@@ -125,6 +133,49 @@
             vm.is_editing = false;
             // Task dates could be changed if due date was changed
             fetchTasks();
+        }
+
+        function incompleteTasksFilter(task) {
+            return task.completed_at === null;
+        }
+
+        function completedTasksFilter(task) {
+            return task.completed_at !== null;
+        }
+
+        function upload(files) {
+
+            if (files.length === 0) {
+                return;
+            }
+
+            vm.uploading_thumb = true;
+
+            Upload.upload({
+                url:  '/api/projects/' + vm.project.id + '/thumb',
+                data: {
+                    file: files
+                }
+            }).then(
+                fetchProject
+            );
+
+        }
+
+        function close_project() {
+            vm.closing_project = true;
+            projectsService.save({
+                id:        vm.project.id,
+                closed_at: moment().format('YYYY-MM-DD HH:mm:ss')
+            }).then(fetchProject);
+        }
+
+        function reopen_project() {
+            vm.closing_project = true;
+            projectsService.save({
+                id:        vm.project.id,
+                closed_at: null
+            }).then(fetchProject);
         }
 
         $scope.$watch('vm.project.notes', auto_save_project_notes);

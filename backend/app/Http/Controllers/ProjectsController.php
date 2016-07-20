@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Intervention\Image\Facades\Image;
 
 class ProjectsController extends Controller {
 
@@ -53,6 +53,37 @@ class ProjectsController extends Controller {
         $project = Project::find($id);
         $project->fillMore($request->input('data'))->save();
         $this->update_recipients($project, $request->input('data'));
+
+        return ['data' => $project];
+    }
+
+    public function uploadThumb($id, Request $request) {
+
+        /** @var Project $project */
+        $project = Project::find($id);
+        $file = $request->file('file')[0];
+
+        $path_info = pathinfo($file->getClientOriginalName());
+        $project->setThumbFileName(str_slug($path_info['filename']) . '.' . $path_info['extension']);
+        $project->save();
+
+        $file->move(storage_path('project-thumbs'), $project->getThumbPath());
+
+    }
+
+    public function thumb($id) {
+
+        /** @var Project $project */
+        $project = Project::find($id);
+
+        if ($project->has_thumb) {
+
+            $img = Image::make($project->getThumbPath())->fit(200, 200);
+
+            return $img->response($project->getThumbExtension());
+        }
+
+        // TODO: What to return?
     }
 
     private function update_recipients(Project $project, $data) {

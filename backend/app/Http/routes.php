@@ -24,6 +24,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     Route::get('projects/{id}', 'ProjectsController@show');
     Route::post('projects', 'ProjectsController@store');
     Route::put('projects/{id}', 'ProjectsController@update');
+    Route::post('projects/{id}/thumb', 'ProjectsController@uploadThumb');
 
     // Tasks
     Route::get('tasks', 'TasksController@index');
@@ -58,6 +59,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
 // Attachments
 Route::get('api/attachments/{id}/file.{ext}', 'AttachmentsController@download');
 Route::get('api/attachments/{id}/thumb.{ext}', 'AttachmentsController@thumb');
+Route::get('api/projects/{id}/thumb.{ext}', 'ProjectsController@thumb');
 
 // Process inbound email
 Route::any('comment-inbound', 'CommentsController@inbound');
