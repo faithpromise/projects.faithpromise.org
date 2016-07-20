@@ -24,7 +24,6 @@ Route::group(['prefix' => 'api', 'middleware' => 'jwt.auth'], function () {
     Route::get('projects/{id}', 'ProjectsController@show');
     Route::post('projects', 'ProjectsController@store');
     Route::put('projects/{id}', 'ProjectsController@update');
-    Route::put('projects/{id}/recipients', 'ProjectsController@updateRecipients');
 
     // Tasks
     Route::get('tasks', 'TasksController@index');

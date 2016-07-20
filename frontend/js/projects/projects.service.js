@@ -32,10 +32,6 @@
                 } else {
                     return $http.post('/api/projects', { 'data': project });
                 }
-            },
-
-            save_recipients: function (id, data) {
-                return $http.put('/api/projects/' + id + '/recipients', { data: data });
             }
 
         };
