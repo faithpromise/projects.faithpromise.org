@@ -37,19 +37,7 @@ class AutoCreateProjectSetupTask {
             $task->setDuration(30);
             $task->setSort(1);
             $task->save();
-        }
 
-        if ($project->shouldCreateEstimateTask() && $project->getIsPurchase()) {
-            $task = new Task();
-            $task->setProjectId($project->id);
-            $task->setAgentId($project->getAgentId());
-            $task->setName('Send ' . $project->requester->getFirstName() . ' an estimate');
-            $task->setDueAt(Carbon::today()->addWeekdays(3)->endOfDay());
-            $task->setDuration(30);
-            $task->save();
-        }
-
-        if (isset($task)) {
             TimelineBuilder::createTimeline($project->getAgentId());
         }
 

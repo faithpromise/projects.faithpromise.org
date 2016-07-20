@@ -11,7 +11,7 @@ class Task extends Model {
     use TaskTrait;
     use SoftDeletes;
 
-    protected $dates = ['start_at', 'due_at', 'created_at', 'updated_at'];
+    protected $dates = ['start_at', 'due_at', 'completed_at', 'created_at', 'updated_at'];
     public $appends = ['full_name', 'estimated_start_date', 'estimated_completion_date', 'calculated_due_at', 'deletable'];
     public $casts = [
         'due_at' => 'date'
@@ -66,6 +66,10 @@ class Task extends Model {
         return $this;
     }
 
+    public function getType() {
+        return $this->type;
+    }
+
     public function setType($param) {
         $this->{'type'} = $param;
 
@@ -85,7 +89,21 @@ class Task extends Model {
     }
 
     public function setDueAt($param) {
-        $this->{'due_at'} = $param;
+        $this->due_at = $param ? (new Carbon($param)) : null;
+
+        return $this;
+    }
+
+    public function getCompletedAt() {
+        return $this->completed_at;
+    }
+
+    public function isCompleted() {
+        return !is_null($this->completed_at);
+    }
+
+    public function setCompletedAt($param) {
+        $this->completed_at = $param ? (new Carbon($param)) : null;
 
         return $this;
     }

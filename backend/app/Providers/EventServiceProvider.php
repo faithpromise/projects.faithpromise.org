@@ -3,14 +3,15 @@
 namespace App\Providers;
 
 use App\Listeners\AutoCreateProjectSetupTask;
-use App\Listeners\AutoCreatePurchaseTask;
+use App\Listeners\AutoCreatePurchaseTasks;
 use App\Listeners\RebuildTimelinesWhenProjectChanges;
 use App\Listeners\RebuildTimelineWhenProjectDeleted;
 use App\Listeners\RebuildTimelineWhenTaskDeleted;
 use App\Listeners\SendComment;
 use App\Listeners\SendProjectAssignmentNotification;
-use App\Listeners\SendTaskAssignmentNotification;
 use App\Listeners\RebuildTimelineWhenTaskReassigned;
+use App\Listeners\UpdateProjectEstimateSent;
+use App\Listeners\UpdateProjectOrdered;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -26,7 +27,7 @@ class EventServiceProvider extends ServiceProvider {
         ],
         'App\Events\ProjectSaved' => [
             SendProjectAssignmentNotification::class,
-            AutoCreatePurchaseTask::class,
+            AutoCreatePurchaseTasks::class,
             RebuildTimelinesWhenProjectChanges::class
         ],
         'App\Events\ProjectDeleted' => [
@@ -34,7 +35,8 @@ class EventServiceProvider extends ServiceProvider {
         ],
         'App\Events\TaskSaved'    => [
             RebuildTimelineWhenTaskReassigned::class,
-            SendTaskAssignmentNotification::class
+            UpdateProjectOrdered::class,
+            UpdateProjectEstimateSent::class
         ],
         'App\Events\TaskDeleted'    => [
             RebuildTimelineWhenTaskDeleted::class

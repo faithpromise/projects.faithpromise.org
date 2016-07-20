@@ -104,7 +104,7 @@
 
             event.stopPropagation();
 
-            update_task(task, { completed_at: moment().format() });
+            update_task(task, { completed_at: moment().format('YYYY-MM-DD HH:mm:ss') });
         }
 
         function update_task(task, data) {

@@ -24,6 +24,7 @@ class Project extends Model {
     private $send_assignment_notification = true;
     private $create_setup_task = true;
     private $create_estimate_task = true;
+    private $rebuild_owners_timeline = false;
 
     public function event() {
         return $this->belongsTo(Event::class);
@@ -156,6 +157,18 @@ class Project extends Model {
         return $this;
     }
 
+    public function setOrderedAt($param) {
+        $this->ordered_at = $param ? (new Carbon($param)) : null;
+
+        return $this;
+    }
+
+    public function setEstimateSentAt($param) {
+        $this->estimate_sent_at = $param ? (new Carbon($param)) : null;
+
+        return $this;
+    }
+
     public function getIsBacklog() {
         return $this->{'is_backlog'};
     }
@@ -208,6 +221,14 @@ class Project extends Model {
         $this->send_assignment_notification = false;
 
         return $this;
+    }
+
+    public function shouldRebuildOwnersTimeline($value = null) {
+        if (!is_null($value)) {
+            $this->rebuild_owners_timeline = $value;
+            return $this;
+        }
+        return $this->rebuild_owners_timeline;
     }
 
     public function fillMore($data) {

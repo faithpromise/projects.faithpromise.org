@@ -27,6 +27,7 @@ class CreateProjectsTable extends Migration {
             // Status
             $table->boolean('is_template')->default(false);
             $table->boolean('is_backlog')->default(false);
+            $table->dateTime('estimate_sent_at')->nullable();
             $table->dateTime('approved_at')->nullable();
             $table->dateTime('ordered_at')->nullable();
             $table->dateTime('closed_at')->nullable();

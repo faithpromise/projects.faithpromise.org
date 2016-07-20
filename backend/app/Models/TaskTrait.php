@@ -31,10 +31,10 @@ trait TaskTrait {
     public function getFullNameAttribute() {
 
         if ($this->event_id) {
-            return $this->getOriginal('name') . ' [' . $this->event->name . ']';
+            return $this->name . ' [' . $this->event->name . ']';
         }
 
-        return $this->getOriginal('name') . ' [' . $this->project->full_name . ']';
+        return $this->name . ' [' . $this->project->full_name . ']';
     }
 
 }

@@ -40,7 +40,7 @@ class SendTaskAssignmentNotification {
 
         // Send notification to new assignee
         $new_agent = $new_task->agent;
-
+        
         Mail::send(['text' => 'emails.task_assigned'], ['task' => $new_task, 'agent' => $new_agent], function ($m) use ($new_task, $new_agent) {
             $m->subject('Task Assigned to You: ' . $new_task->full_name);
             $m->from('projects@faithpromise.org', 'Faith Promise Church');
