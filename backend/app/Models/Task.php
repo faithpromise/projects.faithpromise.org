@@ -66,6 +66,12 @@ class Task extends Model {
         return $this;
     }
 
+    public function setType($param) {
+        $this->{'type'} = $param;
+
+        return $this;
+    }
+
     public function setDuration($param) {
         $this->{'duration'} = $param;
 
