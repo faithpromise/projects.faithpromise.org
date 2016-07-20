@@ -9,8 +9,7 @@ class ProjectDeleted extends Event {
 
     use SerializesModels;
 
-    public $new_project;
-    public $old_project;
+    public $project;
 
     /**
      * Create a new event instance.
