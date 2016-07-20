@@ -31,6 +31,7 @@
         vm.toggle_completed = toggle_completed;
         vm.set_due_at       = set_due_at;
         vm.set_start_at     = set_start_at;
+        vm.set_completed_at = set_completed_at;
         vm.save_task        = save_task;
         vm.delete_task      = delete_task;
 

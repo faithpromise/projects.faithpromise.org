@@ -48,6 +48,15 @@
       </label>
     </div>
 
+    <div class="Form-group" ng-show="vm.is_advanced_visible">
+      <label>
+        <span class="Form-label">Completed at</span>
+        <span class="Form-control" pikaday="vm.pikaday_completed_at" default-date="{{ vm.task.completed_at | amDateFormat }}" max-date="{{ vm.today | amDateFormat }}" on-select="vm.set_completed_at(date)" tabindex="1">
+          {{ vm.task.completed_at ? (vm.task.completed_at | amDateFormat: 'ddd, MMM D') : 'Override completed date' }}
+        </span>
+      </label>
+    </div>
+
   </div>
 
   <div class="TaskDetail-footer">
