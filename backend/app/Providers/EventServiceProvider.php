@@ -2,6 +2,15 @@
 
 namespace App\Providers;
 
+use App\Listeners\AutoCreateProjectSetupTask;
+use App\Listeners\AutoCreatePurchaseTask;
+use App\Listeners\RebuildTimelinesWhenProjectChanges;
+use App\Listeners\RebuildTimelineWhenProjectDeleted;
+use App\Listeners\RebuildTimelineWhenTaskDeleted;
+use App\Listeners\SendComment;
+use App\Listeners\SendProjectAssignmentNotification;
+use App\Listeners\SendTaskAssignmentNotification;
+use App\Listeners\RebuildTimelineWhenTaskReassigned;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,17 +22,25 @@ class EventServiceProvider extends ServiceProvider {
      */
     protected $listen = [
         'App\Events\ProjectCreated' => [
-            'App\Listeners\CreateDefaultProjectTasks'
+            AutoCreateProjectSetupTask::class
         ],
-        'App\Events\ProjectChanged' => [
-            'App\Listeners\SendProjectAssignmentNotification'
+        'App\Events\ProjectSaved' => [
+            SendProjectAssignmentNotification::class,
+            AutoCreatePurchaseTask::class,
+            RebuildTimelinesWhenProjectChanges::class
         ],
-        'App\Events\TaskChanged'    => [
-            'App\Listeners\UpdateTimelineWhenTaskReassigned',
-            'App\Listeners\SendTaskAssignmentNotification'
+        'App\Events\ProjectDeleted' => [
+            RebuildTimelineWhenProjectDeleted::class
+        ],
+        'App\Events\TaskSaved'    => [
+            RebuildTimelineWhenTaskReassigned::class,
+            SendTaskAssignmentNotification::class
+        ],
+        'App\Events\TaskDeleted'    => [
+            RebuildTimelineWhenTaskDeleted::class
         ],
         'App\Events\CommentCreated' => [
-            'App\Listeners\SendComment'
+            SendComment::class
         ]
     ];
 

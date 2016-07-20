@@ -60,8 +60,6 @@ class CommentsController extends Controller {
 
         $this->update_recipients($comment, $data);
 
-        Event::fire(new CommentCreated($comment));
-
         return [
             'data' => $comment
         ];
@@ -92,8 +90,6 @@ class CommentsController extends Controller {
         $comment->update($data);
 
         $this->update_recipients($comment, $data);
-
-        Event::fire(new CommentCreated($comment));
 
     }
 
@@ -140,10 +136,7 @@ class CommentsController extends Controller {
         $comment->setSentAt($date_sent);
         $comment->save();
 
-        // Add original sender
-        $recipients = $parent_comment->recipients->push($sender);
-        $comment->syncRecipients($recipients);
-
+        // Add attachments
         if (is_array($files) && count($files)) {
 
             $client = new GuzzleClient();
@@ -167,7 +160,10 @@ class CommentsController extends Controller {
             }
         }
 
-        Event::fire(new CommentCreated($comment));
+        // Sync recipients last because "CommentCreated" event is fired within syncRecipients
+        // Add original sender
+        $recipients = $parent_comment->recipients->push($sender);
+        $comment->syncRecipients($recipients);
 
     }
 

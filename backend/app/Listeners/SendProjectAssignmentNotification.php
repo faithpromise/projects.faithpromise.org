@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\ProjectChanged;
+use App\Events\ProjectSaved;
 use Illuminate\Support\Facades\Mail;
 
 class SendProjectAssignmentNotification {
@@ -17,10 +17,10 @@ class SendProjectAssignmentNotification {
     /**
      * Handle the event.
      *
-     * @param  ProjectChanged $event
+     * @param  ProjectSaved $event
      * @return void
      */
-    public function handle(ProjectChanged $event) {
+    public function handle(ProjectSaved $event) {
 
         $new_project = $event->new_project;
         $old_project = $event->old_project;

@@ -42,25 +42,17 @@ class ProjectsController extends Controller {
     }
 
     public function store(Request $request) {
-
         $project = new Project();
         $project->fillMore($request->input('data'))->save();
-
         $this->update_recipients($project, $request->input('data'));
 
         return ['data' => $project];
     }
 
     public function update($id, Request $request) {
-
-        $project = Project::findOrFail($id);
+        $project = Project::find($id);
         $project->fillMore($request->input('data'))->save();
-
         $this->update_recipients($project, $request->input('data'));
-    }
-
-    public function updateRecipients($id, Request $request) {
-        $this->update_recipients(Project::findOrFail($id), $request->input('data'));
     }
 
     private function update_recipients(Project $project, $data) {

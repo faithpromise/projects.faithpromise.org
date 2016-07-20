@@ -8,7 +8,7 @@ use App\Models\Task;
 use App\Services\TimelineBuilder;
 use Carbon\Carbon;
 
-class CreateDefaultProjectTasks {
+class AutoCreateProjectSetupTask {
     /**
      * Create the event listener.
      *

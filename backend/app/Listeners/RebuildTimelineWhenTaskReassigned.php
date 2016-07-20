@@ -2,10 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskChanged;
+use App\Events\TaskSaved;
 use App\Services\TimelineBuilder;
 
-class UpdateTimelineWhenTaskReassigned {
+class RebuildTimelineWhenTaskReassigned {
     /**
      * Create the event listener.
      *
@@ -17,10 +17,10 @@ class UpdateTimelineWhenTaskReassigned {
     /**
      * Handle the event.
      *
-     * @param  TaskChanged $event
+     * @param  TaskSaved $event
      * @return void
      */
-    public function handle(TaskChanged $event) {
+    public function handle(TaskSaved $event) {
 
         $new_task = $event->new_task;
         $old_task = $event->old_task;

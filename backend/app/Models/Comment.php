@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Events\CommentCreated;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Event as LaravelEvent;
 use s9e\TextFormatter\Bundles\Forum as TextFormatter;
 
 class Comment extends Model {
@@ -117,6 +119,8 @@ class Comment extends Model {
         });
 
         $this->recipients()->sync($recipient_ids);
+
+        LaravelEvent::fire(new CommentCreated($this));
 
     }
 

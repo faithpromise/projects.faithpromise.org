@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TaskChanged;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\Event;
 
 class TasksController extends Controller {
     /**
@@ -41,11 +39,8 @@ class TasksController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-
         $task = new Task();
         $task->fillMore($request->input('data'))->save();
-
-        Event::fire(new TaskChanged($task));
     }
 
     /**
@@ -68,10 +63,8 @@ class TasksController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $old_task = Task::find($id);
         $new_task = Task::find($id);
         $new_task->fillMore($request->input('data'))->save();
-        Event::fire(new TaskChanged($new_task, $old_task));
     }
 
     /**
@@ -83,6 +76,5 @@ class TasksController extends Controller {
     public function destroy($id) {
         $task = Task::find($id);
         $task->delete();
-        Event::fire(new TaskChanged($task));
     }
 }

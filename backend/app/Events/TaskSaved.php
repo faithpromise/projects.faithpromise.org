@@ -5,7 +5,7 @@ namespace App\Events;
 use App\Models\Task;
 use Illuminate\Queue\SerializesModels;
 
-class TaskChanged extends Event {
+class TaskSaved extends Event {
 
     use SerializesModels;
 
