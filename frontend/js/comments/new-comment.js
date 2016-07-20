@@ -84,30 +84,31 @@
 
         function save(draft) {
 
-            var comment = angular.extend(
-                {},
-                vm.comment,
-                {
-                    type:       draft === true ? 'draft' : 'comment',
-                    user_id:    vm.sender.id,
-                    event_id:   vm.event ? vm.event.id : null,
-                    project_id: vm.project ? vm.project.id : null
-                }
-            );
+            var is_published = (draft !== true),
+                comment      = angular.extend(
+                    {},
+                    vm.comment,
+                    {
+                        type:       draft === true ? 'draft' : 'comment',
+                        user_id:    vm.sender.id,
+                        event_id:   vm.event ? vm.event.id : null,
+                        project_id: vm.project ? vm.project.id : null
+                    }
+                );
 
-            if (comment.body.length === 0) {
+            if (is_published && comment.body.length === 0) {
                 alert('Surely you have something to say.');
                 return;
             }
 
-            if (draft !== true) {
+            if (is_published) {
                 reset();
                 PubSub.publish('comment.creating', comment);
             }
 
             return commentsService.save(comment).then(function (result) {
                 // vm.onSuccess();
-                if (draft !== true) {
+                if (is_published) {
                     PubSub.publish('comment.created', comment);
                 }
                 return result;
