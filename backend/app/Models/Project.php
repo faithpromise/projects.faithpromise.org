@@ -121,8 +121,8 @@ class Project extends Model {
 
     public function getThumbUrlAttribute() {
         if ($this->has_thumb) {
-            $timestamp = filemtime($this->getThumbPath());
-            return '/api/projects/' . $this->id . '/thumb.' . $this->getThumbExtension() . '?v=' . $timestamp;
+            $path_info = pathinfo($this->thumb_file_name);
+            return '/api/projects/' . $this->id . '/thumb.' . $path_info['extension'] . '?v=' . $path_info['filename'];
         }
         return $this->requester->avatar_url;
     }
@@ -137,7 +137,7 @@ class Project extends Model {
     }
 
     public function getThumbPath() {
-        return storage_path('project-thumbs/' . $this->id . '-' . $this->thumb_file_name);
+        return storage_path('project-thumbs/' . $this->id . '.' . $this->getThumbExtension());
     }
 
     public function setThumbFileName($param) {

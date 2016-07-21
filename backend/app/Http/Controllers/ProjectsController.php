@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Intervention\Image\Facades\Image;
@@ -62,9 +63,10 @@ class ProjectsController extends Controller {
         /** @var Project $project */
         $project = Project::find($id);
         $file = $request->file('file')[0];
+        $timestamp = Carbon::now()->timestamp;
 
         $path_info = pathinfo($file->getClientOriginalName());
-        $project->setThumbFileName(str_slug($path_info['filename']) . '.' . $path_info['extension']);
+        $project->setThumbFileName($timestamp . '.' . $path_info['extension']);
         $project->save();
 
         $file->move(storage_path('project-thumbs'), $project->getThumbPath());
