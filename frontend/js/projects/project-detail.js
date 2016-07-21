@@ -163,11 +163,16 @@
         }
 
         function close_project() {
-            vm.closing_project = true;
-            projectsService.save({
-                id:        vm.project.id,
-                closed_at: moment().format('YYYY-MM-DD HH:mm:ss')
-            }).then(fetchProject);
+
+            if (vm.project.has_thumb || confirm('Are you sure you want to close the project without uploading a mockup?')) {
+
+                vm.closing_project = true;
+                projectsService.save({
+                    id:        vm.project.id,
+                    closed_at: moment().format('YYYY-MM-DD HH:mm:ss')
+                }).then(fetchProject);
+
+            }
         }
 
         function reopen_project() {
