@@ -31,6 +31,17 @@
 
     <div class="Project-sidebar" ng-hide="vm.selected_task">
 
+      <!--Close Project-->
+
+      <div class="Sidebar-section Sidebar-container" ng-hide="vm.incompleteTasks.length || vm.project.closed_at">
+        <span class="link" ngf-select="vm.upload($files)" ngf-pattern=".jpg,.png" ngf-select="vm.upload($files)">Attach mockup</span>
+        <button class="Button Button--sm Button--primary" ng-click="vm.close_project()" ng-disabled="vm.uploading_thumb || vm.closing_project">{{ vm.uploading_thumb ? 'Uploading...' : (vm.closing_project ? 'Closing...' : 'Close Project') }}</button>
+      </div>
+
+      <div class="Sidebar-section Sidebar-container" ng-show="vm.project.closed_at">
+        <button class="Button Button--sm Button--primary" ng-click="vm.reopen_project()">Reopen Project</button>
+      </div>
+
       <!--Notes-->
 
       <div class="Sidebar-section Sidebar-container Project-notesSection">
@@ -42,17 +53,6 @@
         <!--<span class="link nowrap" ng-click="vm.is_editing_notes = true" ng-hide="vm.project.notes || vm.is_editing_notes">add notes</span>-->
         <p class="Project-notes" ng-hide="vm.is_editing_notes" ng-click="vm.is_editing_notes = true" title="Click to add notes">{{ vm.project.notes || 'Add your project notes...' }}</p>
         <textarea class="Project-textarea" ng-model="vm.project.notes" ng-show="vm.is_editing_notes" focus-on="vm.is_editing_notes" ng-blur="vm.is_editing_notes = false" msd-elastic></textarea>
-      </div>
-
-      <!--Close Project-->
-
-      <div class="Sidebar-section Sidebar-container" ng-hide="vm.incompleteTasks.length || vm.project.closed_at">
-        <span class="link" ngf-select="vm.upload($files)" ngf-pattern=".jpg,.png" ngf-select="vm.upload($files)">Attach mockup</span>
-        <button class="Button Button--sm Button--primary" ng-click="vm.close_project()" ng-disabled="vm.uploading_thumb || vm.closing_project">{{ vm.uploading_thumb ? 'Uploading...' : (vm.closing_project ? 'Closing...' : 'Close Project') }}</button>
-      </div>
-
-      <div class="Sidebar-section Sidebar-container" ng-show="vm.project.closed_at">
-        <button class="Button Button--sm Button--primary" ng-click="vm.reopen_project()">Reopen Project</button>
       </div>
 
       <!--Tasks-->
