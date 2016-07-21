@@ -57,7 +57,7 @@ class MainController extends Controller {
                 $project->setRequesterId($requester_id);
                 $project->setAgentId($agent_id);
                 $project->setName($z_ticket->subject);
-                $project->setDueAt($z_ticket->due_at ? $z_ticket->due_at : Carbon::today()->addYear(10));
+                $project->setDueAt($z_ticket->due_at ? $z_ticket->due_at : Carbon::today()->addYears(1));
                 $project->setIsBacklog(in_array('backlog', $z_ticket->tags));
                 $project->created_at = new Carbon($z_ticket->created_at);
                 $project->closed_at = $z_ticket->status === 'closed' ? (new Carbon($z_ticket->updated_at)) : null;
