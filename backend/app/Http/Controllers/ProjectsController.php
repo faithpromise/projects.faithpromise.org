@@ -74,18 +74,11 @@ class ProjectsController extends Controller {
     }
 
     public function thumb($id) {
-
         /** @var Project $project */
         $project = Project::find($id);
+        $img = Image::make($project->getThumbPath())->fit(200, 200);
 
-        if ($project->has_thumb) {
-
-            $img = Image::make($project->getThumbPath())->fit(200, 200);
-
-            return $img->response($project->getThumbExtension());
-        }
-
-        // TODO: What to return?
+        return $img->response($project->getThumbExtension());
     }
 
     private function update_recipients(Project $project, $data) {
