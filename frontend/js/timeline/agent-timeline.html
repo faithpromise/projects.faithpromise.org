@@ -22,8 +22,8 @@
     <div class="Timeline-dayHeading">{{ day.day | amDateFormat: 'ddd MMM D' }}</div>
   </div>
   <div class="Timeline-task" ng-repeat="task in day.timeline_tasks">
-    <div class="Timeline-taskCheck">
-      <i class="icon-check-empty Timeline-taskIcon"></i>
+    <div class="Timeline-thumb">
+      <img class="Timeline-taskThumb" ng-src="{{ task.project.thumb_url }}">
     </div>
     <div class="Timeline-taskInfo">
       <!-- TODO: Jump to task - link the task. Need to link to either event or project task -->
