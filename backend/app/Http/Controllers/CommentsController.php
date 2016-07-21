@@ -161,7 +161,7 @@ class CommentsController extends Controller {
 
         // Sync recipients last because "CommentCreated" event is fired within syncRecipients
         // Add original sender
-        $recipients = $parent_comment->recipients->push($sender);
+        $recipients = $parent_comment->recipients->push($parent_comment->sender);
         $comment->syncRecipients($recipients);
 
     }
