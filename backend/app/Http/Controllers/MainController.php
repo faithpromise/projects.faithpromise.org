@@ -33,7 +33,7 @@ class MainController extends Controller {
         $username = 'bradr@faithpromise.org';
         $token = 'WarsVQ3YbelNnVUbakvETnVgHZSKIkWeW21QntH8';
 
-        $per_page = 50;
+        $per_page = 20;
         $page = $request->input('page', 1);
         $next_page = $page + 1;
 
