@@ -133,7 +133,6 @@ class CommentsController extends Controller {
         $comment->setProjectId($parent_comment->getProjectId());
         $comment->setUserId($sender->getId());
         $comment->setBody($body);
-        $comment->setSentAt($date_sent);
         $comment->save();
 
         // Add attachments
