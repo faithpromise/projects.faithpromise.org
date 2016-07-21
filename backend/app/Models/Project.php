@@ -19,7 +19,7 @@ class Project extends Model {
     use SoftDeletes;
 
     protected $dates = ['due_at', 'created_at', 'updated_at'];
-    public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status', 'thumb_url'];
+    public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status', 'has_thumb', 'thumb_url'];
     public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at', 'closed_at'];
     private $send_assignment_notification = true;
     private $create_setup_task = true;
@@ -69,9 +69,9 @@ class Project extends Model {
     public function scopePending($query) {
         $query->where('is_backlog', '=', false)
             ->whereNull('closed_at')
-            ->whereDoesntHave('tasks', function($tasks_query) {
-            $tasks_query->whereNull('completed_at');
-        });
+            ->whereDoesntHave('tasks', function ($tasks_query) {
+                $tasks_query->whereNull('completed_at');
+            });
     }
 
     public function getStatusAttribute() {
@@ -87,6 +87,7 @@ class Project extends Model {
         if ($this->is_backlog) {
             return 'backlogged';
         }
+
         return 'open';
     }
 
@@ -109,6 +110,7 @@ class Project extends Model {
     public function getIsOverdueLikelyAttribute() {
         $est = $this->getEstimatedDeliveryDate();
         $margin = 7;
+
 // TODO: Want to take out margin now that we are padding the estimated completion date?
         return (!is_null($est) AND $est->gte($this->due_at->copy()->subDays($margin)));
     }
@@ -120,24 +122,43 @@ class Project extends Model {
     }
 
     public function getThumbUrlAttribute() {
-        if ($this->has_thumb) {
-            $path_info = pathinfo($this->thumb_file_name);
-            return '/api/projects/' . $this->id . '/thumb.' . $path_info['extension'] . '?v=' . $path_info['filename'];
-        }
-        return $this->requester->avatar_url;
+        return '/api/projects/' . $this->id . '/thumb.' . $this->getThumbExtension() . '?v=' . $this->getThumbFilename();
     }
 
     public function getHasThumbAttribute() {
         return !empty($this->thumb_file_name);
     }
 
+    public function getThumbFilename() {
+        if ($this->has_thumb) {
+            $path_info = pathinfo($this->thumb_file_name);
+
+            return $path_info['filename'];
+        }
+
+        return 'default';
+    }
+
     public function getThumbExtension() {
-        $path_info = pathinfo($this->thumb_file_name);
-        return $path_info['extension'];
+        if ($this->has_thumb) {
+            $path_info = pathinfo($this->thumb_file_name);
+
+            return $path_info['extension'];
+        }
+
+        return 'jpg';
     }
 
     public function getThumbPath() {
-        return storage_path('project-thumbs/' . $this->id . '.' . $this->getThumbExtension());
+
+        if ($this->has_thumb) {
+            $path_info = pathinfo($this->thumb_file_name);
+
+            return storage_path('project-thumbs/' . $this->id . '.' . $path_info['extension']);
+        }
+
+        // Can't use `public_path` because it points to `backend` directory in development
+        return dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'default-square.jpg';
     }
 
     public function setThumbFileName($param) {
@@ -253,8 +274,10 @@ class Project extends Model {
     public function shouldRebuildOwnersTimeline($value = null) {
         if (!is_null($value)) {
             $this->rebuild_owners_timeline = $value;
+
             return $this;
         }
+
         return $this->rebuild_owners_timeline;
     }
 
