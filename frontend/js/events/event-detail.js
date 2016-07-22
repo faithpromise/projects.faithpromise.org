@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl:      '/build/js/events/event-detail.html',
+            templateUrl:      '/build/js/events/event-detail.html?v=1',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',

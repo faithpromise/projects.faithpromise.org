@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl:      '/build/js/tasks/task-editor.html',
+            templateUrl:      '/build/js/tasks/task-editor.html?v=1',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',

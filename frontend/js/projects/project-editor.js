@@ -33,7 +33,7 @@
             vm.project.recipients = vm.project.recipients || [];
 
             modal_instance = $uibModal.open({
-                templateUrl:      '/build/js/projects/project-editor.html',
+                templateUrl:      '/build/js/projects/project-editor.html?v=1',
                 controller:       ProjectModalController,
                 controllerAs:     'vm',
                 bindToController: true,

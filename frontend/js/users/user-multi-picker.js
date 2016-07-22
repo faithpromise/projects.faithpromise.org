@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl:      '/build/js/users/user-multi-picker.html',
+            templateUrl:      '/build/js/users/user-multi-picker.html?v=1',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',

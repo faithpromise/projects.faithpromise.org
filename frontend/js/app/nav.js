@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl:      '/build/js/app/nav.html',
+            templateUrl:      '/build/js/app/nav.html?v=1',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',

@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl:      '/build/js/timeline/agent-timeline.html',
+            templateUrl:      '/build/js/timeline/agent-timeline.html?v=1',
             restrict:         'A',
             controller:       Controller,
             controllerAs:     'vm',
