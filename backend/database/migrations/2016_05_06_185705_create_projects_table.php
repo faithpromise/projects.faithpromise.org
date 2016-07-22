@@ -35,6 +35,7 @@ class CreateProjectsTable extends Migration {
             $table->dateTime('due_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('zendesk_ticket_id')->nullable();
         });
 
     }

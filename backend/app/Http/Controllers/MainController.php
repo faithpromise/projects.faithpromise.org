@@ -33,7 +33,7 @@ class MainController extends Controller {
         $username = 'bradr@faithpromise.org';
         $token = 'WarsVQ3YbelNnVUbakvETnVgHZSKIkWeW21QntH8';
 
-        $per_page = 20;
+        $per_page = $request->input('perpage', 30);
         $page = $request->input('page', 1);
         $next_page = $page + 1;
 
@@ -42,7 +42,7 @@ class MainController extends Controller {
 
         $data = $api->tickets()->findAll(['per_page' => $per_page, 'page' => $page]);
 
-        $total_pages = (int)ceil($data->count / 10);
+        $total_pages = (int)ceil($data->count / $per_page);
 
         foreach ($data->tickets as $z_ticket) {
 
@@ -52,8 +52,9 @@ class MainController extends Controller {
                 $agent_id = $this->getUserId($z_ticket->assignee_id, $api);
                 $requester_id = $this->getUserId($z_ticket->requester_id, $api);
 
-                $project = new Project();
+                $project = Project::firstOrNew(['zendesk_ticket_id' => $z_ticket->id]);
 
+                $project->zendesk_ticket_id = $z_ticket->id;
                 $project->setRequesterId($requester_id);
                 $project->setAgentId($agent_id);
                 $project->setName($z_ticket->subject);
@@ -66,7 +67,7 @@ class MainController extends Controller {
 
                 $project->save();
 
-                $recipient_ids = [$requester_id,$agent_id];
+                $recipient_ids = [$requester_id, $agent_id];
                 foreach ($z_ticket->collaborator_ids as $z_collaborator_id) {
                     $recipient_id = $this->getUserId($z_collaborator_id, $api);
                     if ($recipient_id) {
@@ -83,7 +84,8 @@ class MainController extends Controller {
 
                     $sender_id = $this->getUserId($z_comment->author_id, $api);
 
-                    $comment = new Comment();
+                    $comment = Comment::firstOrNew(['zendesk_comment_id' => $z_comment->id]);
+                    $comment->zendesk_comment_id = $z_comment->id;
                     $comment->project_id = $project->id;
                     $comment->setType('comment');
                     $comment->setUserId($sender_id);
@@ -99,25 +101,21 @@ class MainController extends Controller {
                     // Attachments
                     foreach ($z_comment->attachments as $z_attachment) {
 
-                        $attachment = new Attachment();
-                        $attachment->comment_id = $comment->id;
-                        $attachment->name = $z_attachment->file_name;
-                        $attachment->save();
+                        if (!str_contains($z_attachment->file_name, ['image001','image002'])) {
 
-                        $path = storage_path('attachments/' . $attachment->file_name);
-
-                        file_put_contents($path, file_get_contents($z_attachment->content_url));
-
+                            $attachment = Attachment::firstOrCreate(['comment_id' => $comment->id, 'name' => $z_attachment->file_name]);
+                            $path = storage_path('attachments/' . $attachment->file_name);
+                            if (!file_exists($path)) {
+                                file_put_contents($path, file_get_contents($z_attachment->content_url));
+                            }
+                        }
                     }
-
                 }
-
             }
-
         }
 
         if (($next_page * $per_page) < $data->count) {
-            return '<a href="?page=' . $next_page . '">Import page ' . $next_page . ' of ' . $total_pages . '</a>';
+            return '<a href="?page=' . $next_page . '&perpage=' . $per_page . '">Import page ' . $next_page . ' of ' . $total_pages . '</a> (' . $data->count . ' total tickets)';
         } else {
             return 'done';
         }

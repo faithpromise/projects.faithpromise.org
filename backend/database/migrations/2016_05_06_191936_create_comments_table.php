@@ -21,6 +21,7 @@ class CreateCommentsTable extends Migration {
             $table->dateTime('sent_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->bigInteger('zendesk_comment_id')->nullable();
         });
     }
 
