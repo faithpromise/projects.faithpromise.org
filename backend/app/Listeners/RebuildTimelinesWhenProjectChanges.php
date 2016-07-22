@@ -36,7 +36,7 @@ class RebuildTimelinesWhenProjectChanges {
         // Due date changed - get all agents that have tasks in this project and update their timeline
         if ($due_date_changed) {
             // + because we want unique agent ids. array_merge will keep duplicates.
-            $affected_agent_ids = $affected_agent_ids + $new_project->incomplete_tasks->pluck('agent_id');
+            $affected_agent_ids = $affected_agent_ids + $new_project->incomplete_tasks->pluck('agent_id')->toArray();
         }
 
         foreach ($affected_agent_ids as $agent_id) {
