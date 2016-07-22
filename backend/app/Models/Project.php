@@ -18,7 +18,7 @@ class Project extends Model {
 
     use SoftDeletes;
 
-    protected $dates = ['due_at', 'created_at', 'updated_at'];
+    protected $dates = ['due_at', 'created_at', 'updated_at', 'ordered_at'];
     public $appends = ['full_name', 'estimated_delivery_date', 'is_overdue', 'is_overdue_likely', 'status', 'has_thumb', 'thumb_url'];
     public $fillable = ['event_id', 'requester_id', 'agent_id', 'name', 'notes', 'is_purchase', 'purchase_order', 'estimate_sent_at', 'delivered_at', 'production_days', 'is_template', 'is_notable', 'approved_at', 'due_at', 'closed_at'];
     private $send_assignment_notification = true;
