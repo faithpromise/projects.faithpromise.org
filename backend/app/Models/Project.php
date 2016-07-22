@@ -75,20 +75,54 @@ class Project extends Model {
     }
 
     public function getStatusAttribute() {
+
         if ($this->closed_at) {
-            return 'closed';
+            return [
+                'name'       => 'Closed',
+                'short_name' => 'Closed',
+                'color'      => '#adadad',
+                'text_color' => '#fff'
+            ];
         }
         if ($this->ordered_at) {
-            return 'ordered';
+            return [
+                'name'       => 'Ordered (ETA ' . $this->ordered_at->addDays($this->production_days)->format('n/j') . ')',
+                'short_name' => 'ordered',
+                'color'      => '#129af8',
+                'text_color' => '#fff'
+            ];
+        }
+        if ($this->on_hold_until && $this->on_hold_until->isFuture()) {
+            return [
+                'name'       => 'On Hold Until ' . $this->on_hold_until->diffForHumans(),
+                'short_name' => 'On Hold',
+                'color'      => '#f8d512',
+                'text_color' => '#fff'
+            ];
         }
         if ($this->approved_at) {
-            return 'approved';
+            return [
+                'name'       => 'Approved',
+                'short_name' => 'Approved',
+                'color'      => '#22f812',
+                'text_color' => '#fff'
+            ];
         }
         if ($this->is_backlog) {
-            return 'backlogged';
+            return [
+                'name'       => 'Backlogged',
+                'short_name' => 'Backlogged',
+                'color'      => '#adadad',
+                'text_color' => '#fff'
+            ];
         }
+        return [
+            'name'       => 'Idle',
+            'short_name' => 'Idle',
+            'color'      => '#f85e12',
+            'text_color' => '#fff'
+        ];
 
-        return 'open';
     }
 
     public function getFullNameAttribute() {

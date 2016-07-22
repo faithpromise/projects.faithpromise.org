@@ -11,9 +11,14 @@
     Pending Projects
   </div>
   <div class="Timeline-projects">
-    <div class="Timeline-project" ng-repeat="project in vm.projects">
-      <a href="/projects/{{ project.id }}">{{ project.full_name }}</a> / {{ project.status }}
-    </div>
+    <table class="ProjectList">
+      <tr class="ProjectList-project clickable" ng-repeat="project in vm.projects" ng-click="vm.jump_to_project(project)">
+        <td><span class="ProjectList-projectName" href="/projects/{{ project.id }}">{{ project.full_name }}</span></td>
+        <td>
+          <span class="Project-statusDot" ng-style="{ 'background-color': project.status.color }"></span> {{ project.status.name }}
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 

@@ -16,12 +16,12 @@
         };
     }
 
-    Controller.$inject = ['timelineService', 'projectsService'];
+    Controller.$inject = ['$location', 'timelineService', 'projectsService'];
 
-    function Controller(timelineService, projectsService) {
+    function Controller($location, timelineService, projectsService) {
 
-        var vm          = this;
-        vm.get_duration = get_duration;
+        var vm             = this;
+        vm.jump_to_project = jump_to_project;
 
         init();
 
@@ -35,9 +35,8 @@
             });
         }
 
-        function get_duration(min) {
-            var duration = moment.duration(min, 'minutes');
-            return duration.humanize();
+        function jump_to_project(project) {
+            $location.url('/projects/' + project.id);
         }
 
     }

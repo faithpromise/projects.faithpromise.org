@@ -196,7 +196,39 @@ a,
   padding: 1em 0;
 }
 
-.Timeline-project {
+.ProjectList {
+
+  color: #444;
+  user-select: none;
+
+  td {
+    padding: 5px 1em;
+  }
+
+  tr:hover {
+    background-color: #e5f3fa;
+  }
+
+}
+
+.ProjectList-project {
   margin:    .3em 1em;
   font-size: 13px;
+}
+
+.ProjectList-projectName {
+  display:       block;
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+}
+
+.Project-statusDot {
+  display:          inline-block;
+  width:            9px;
+  height:           9px;
+  border-radius:    9px;
+  background-color: #ccc;
+  font-size:        0;
+  vertical-align:   middle;
 }
