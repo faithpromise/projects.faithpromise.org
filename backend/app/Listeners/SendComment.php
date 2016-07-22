@@ -38,11 +38,13 @@ class SendComment {
             return $recipient->id === $sender->id;
         });
 
+        $subject = $comment->project ? $comment->project->full_name : $comment->event->name;
+
         foreach ($recipients as $recipient) {
 
-            Mail::send(['text' => 'emails.comment'], ['comment' => $comment], function ($m) use ($comment, $recipient) {
+            Mail::send(['emails.comment-html', 'emails.comment'], ['comment' => $comment, 'subject' => $subject], function ($m) use ($comment, $subject, $recipient) {
 
-                $m->subject($comment->project ? $comment->project->full_name : $comment->event->name);
+                $m->subject($subject);
                 $m->to($recipient->email, $recipient->name);
                 $m->from($comment->sender->email, $comment->sender->name);
                 $m->replyTo('comment_' . $comment->id . '@mailgun.faithpromise.org', $comment->sender->name);
