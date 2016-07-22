@@ -16,6 +16,7 @@ class ProjectsController extends Controller {
         $name = $request->input('name');
         $type = $request->input('type');
         $agent_id = $request->input('agent_id');
+        $order_by = $request->input('order_by', 'status');
 
         if ($name) {
             $query->where('name', 'like', '%' . $name . '%');
@@ -29,8 +30,14 @@ class ProjectsController extends Controller {
             $query->where('agent_id', '=', $agent_id);
         }
 
+        if ($order_by === 'status') {
+            $query->orderBy('ordered_at', 'asc')->orderBy('approved_at', 'desc')->orderBy('is_backlog', 'desc');
+        }
+
+        $data = $query->get();
+
         return [
-            'data' => $query->get()
+            'data' => $data
         ];
     }
 
