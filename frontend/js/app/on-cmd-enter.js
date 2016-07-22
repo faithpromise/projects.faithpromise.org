@@ -5,9 +5,9 @@
 
     module.directive('onCmdEnter', Directive);
 
-    Directive.$inject = ['$document'];
+    Directive.$inject = ['$document', '$timeout'];
 
-    function Directive($document) {
+    function Directive($document, $timeout) {
         return {
             restrict: 'A',
             link:     function (scope, element, attrs) {
@@ -18,9 +18,12 @@
 
                         if (event.which === 13 && event.metaKey) {
 
-                            scope.$apply(function () {
-                                scope.$eval(attrs.onCmdEnter);
-                            });
+                            // https://docs.angularjs.org/error/$rootScope/inprog?p0=$apply
+                            $timeout(function() {
+                                scope.$apply(function () {
+                                    scope.$eval(attrs.onCmdEnter);
+                                });
+                            }, 0);
 
                             event.preventDefault();
                         }

@@ -22,9 +22,12 @@
                         escaped = true;
 
                         if (event.which === 27) {
-                            scope.$apply(function () {
-                                scope.$eval(attrs.onEscape);
-                            });
+                            // https://docs.angularjs.org/error/$rootScope/inprog?p0=$apply
+                            $timeout(function() {
+                                scope.$apply(function () {
+                                    scope.$eval(attrs.onEscape);
+                                });
+                            }, 0);
                             event.preventDefault();
                         }
 
