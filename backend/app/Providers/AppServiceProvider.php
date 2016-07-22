@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider {
             if (!$project->getIsPurchase()) {
                 $project->setProductionDays(0);
             }
+
+            // TODO: If put on hold, take off backlog and vice versa
         });
 
         Project::created(function(Project $project) {
