@@ -14,7 +14,7 @@
     <table class="ProjectList">
       <tr class="ProjectList-project clickable" ng-repeat="project in vm.projects" ng-click="vm.jump_to_project(project)">
         <td><span class="ProjectList-projectName" href="/projects/{{ project.id }}">{{ project.full_name }}</span></td>
-        <td>
+        <td class="ProjectList-status">
           <span class="Project-statusDot" ng-style="{ 'background-color': project.status.color }"></span> {{ project.status.name }}
         </td>
       </tr>
