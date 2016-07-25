@@ -133,7 +133,6 @@
                     }
                 }).then(
                     function (resp) {
-                        console.log('fetch em');
                         fetch_attachments();
                     },
                     function (err) {},

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attachment;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -35,13 +36,21 @@ class AttachmentsController extends Controller {
      */
     public function store(Request $request) {
 
+        /** @var \Symfony\Component\HttpFoundation\File\File $file */
         foreach ($request->file('file') as $file) {
 
+            $comment = Comment::find($request->input('comment_id'));
+
+            $screenshot_index = $comment->attachments()->where('name', 'like', 'screenshot%')->count() + 1;
+            $screenshot_name = $screenshot_index > 1 ? 'screenshot-' . $screenshot_index : 'screenshot';
+
             $path_info = pathinfo($file->getClientOriginalName());
+            $filename = $path_info['filename'] === 'blob' ? $screenshot_name : $path_info['filename'];
+            $extension = $file->guessExtension() ?: 'unknown';
 
             $attachment = new Attachment();
-            $attachment->setCommentId($request->input('comment_id'));
-            $attachment->setName(str_slug($path_info['filename']) . '.' . $path_info['extension']);
+            $attachment->setCommentId($comment->id);
+            $attachment->setName(str_slug($filename) . '.' . $extension);
             $attachment->save();
 
             $file->move(storage_path('attachments'), $attachment->file_name);
