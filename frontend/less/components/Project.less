@@ -41,21 +41,18 @@
 }
 
 .Project-sidebar,
-.Project-tasksColumn,
 .Project-commentsColumn {
   //overflow-y: auto;
 }
 
-.Project-sidebar,
-.Project-tasksColumn {
-  width:            35%;
+.Project-sidebar {
+  max-width:        700px;
   background-color: #fcfcfc;
   border-right:     1px solid @grid-border-color;
 }
 
 .Project-commentsColumn {
-  //flex-grow:    1;
-  width: 65%;
+  flex-grow: 1;
 }
 
 .Project-comments {
