@@ -24,15 +24,17 @@ class Attachment extends Model {
     }
 
     public function getThumbUrlAttribute() {
+        // Using url() for links in emails
         if ($this->has_thumb) {
-            return '/api/attachments/' . $this->id . '/thumb.' . $this->extension;
+            return url('/api/attachments/' . $this->id . '/thumb.' . $this->extension);
         }
 
-        return '/build/images/document.png';
+        return url('/build/images/document.png');
     }
 
     public function getDownloadUrlAttribute() {
-        return '/api/attachments/' . $this->id . '/file.' . $this->extension;
+        // Using url() for links in emails
+        return url('/api/attachments/' . $this->id . '/file.' . $this->extension);
     }
 
     public function getHasThumbAttribute() {

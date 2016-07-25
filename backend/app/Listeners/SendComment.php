@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\CommentCreated;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 
 class SendComment {
@@ -49,11 +48,6 @@ class SendComment {
                 $m->from($comment->sender->email, $comment->sender->name);
                 $m->replyTo('comment_' . $comment->id . '@mailgun.faithpromise.org', $comment->sender->name);
 
-                foreach ($comment->attachments as $attachment) {
-                    $mime_type = File::mimeType($attachment->path);
-                    $m->attach($attachment->path, ['as' => $attachment->name, 'mime' => $mime_type]);
-                }
-
             });
 
         }
@@ -62,4 +56,5 @@ class SendComment {
         $comment->save();
 
     }
+
 }
