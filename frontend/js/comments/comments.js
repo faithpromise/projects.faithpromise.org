@@ -5,7 +5,7 @@
 
     function directive() {
         return {
-            templateUrl:      '/build/js/comments/comments.html?v=1',
+            templateUrl:      '/build/js/comments/comments.html?v=2',
             restrict:         'E',
             controller:       Controller,
             controllerAs:     'vm',
