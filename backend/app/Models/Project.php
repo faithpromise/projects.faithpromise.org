@@ -145,7 +145,6 @@ class Project extends Model {
         $est = $this->getEstimatedDeliveryDate();
         $margin = 7;
 
-// TODO: Want to take out margin now that we are padding the estimated completion date?
         return (!is_null($est) AND $est->gte($this->due_at->copy()->subDays($margin)));
     }
 
@@ -337,15 +336,18 @@ class Project extends Model {
 
     private function getEstimatedDeliveryDate() {
 
-        $first_task_start = new Carbon($this->timeline_tasks()->min('timeline_date'));
-        $last_task_start = new Carbon($this->timeline_tasks()->max('timeline_date'));
+        $production_days = (int)$this->production_days;
 
-        $total_work_days = max(1, $first_task_start->diffInDays($last_task_start));
-        $total_days = $total_work_days + $this->production_days;
+        if ($this->getIsPurchase() && $last_task = $this->timeline_tasks()->where('type', '=', 'purchase')->first()) {
+            $last_task_end = $last_task->timeline_date;
+        }
 
-        $padding = intval(ceil($total_days * .35));
+        if (!isset($last_task_end)) {
+            $last_task_end = new Carbon($this->timeline_tasks()->max('timeline_date'));
+        }
 
-        return $last_task_start->addDays($total_days + $padding);
+        return $last_task_end->addDays($production_days);
+
     }
 
 }
