@@ -36,13 +36,24 @@ class Agent extends User {
     }
 
     public function appointments() {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class, 'user_id');
     }
 
     public function getCapacity(Carbon $day) {
         $column = $this->dow_columns[$day->dayOfWeek];
+        $capacity_in_minutes = $this->$column * 60;
 
-        return $this->$column * 60;
+        // Get total number of minutes in appointments for this day
+        $appointment_minutes = 0;
+        $appointments = $this->appointments()->whereDate('starts_at', '=', $day)->get();
+
+        foreach ($appointments as $appointment) {
+            $appointment_minutes += $appointment->starts_at->diffInMinutes($appointment->ends_at);
+        }
+
+        $capacity = max(0, ($capacity_in_minutes - $appointment_minutes));
+
+        return $capacity;
     }
 
     public function getWorkloadAttribute() {
