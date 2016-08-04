@@ -9,10 +9,12 @@ use App\Models\Project;
 use App\Models\User;
 use Carbon\Carbon;
 use Http\Adapter\Guzzle6\Client as GuzzleClient;
+use GuzzleHttp\Psr7\Request as GuzzleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Log;
 use Mailgun\Mailgun;
 
 class CommentsController extends Controller {
@@ -144,17 +146,26 @@ class CommentsController extends Controller {
             // Save attachments
             foreach ($files as $file) {
 
+                $path_info = pathinfo($file->name);
+
                 $attachment = new Attachment();
                 $attachment->setCommentId($comment->id);
-                $attachment->setName($file->name);
+                $attachment->setName(str_slug($path_info['filename']) . '.' . $path_info['extension']);
                 $attachment->save();
 
-                // Remove "https://api.mailgun.net/v2/" from the URL. Can't see a way around this.
-                $file_url = strstr($file->url, 'domains/mailgun');
-                $file_contents = $mailgun->get($file_url);
-                $file_path = storage_path('attachments') . '/' . $attachment->file_name;
+                // Can't simply use $mailgun->get($file->url) because it appends the API host domain to the endpoint using generateEndpoint()
 
-                file_put_contents($file_path, $file_contents->http_response_body);
+                $client = new GuzzleClient();
+
+                $headers['User-Agent'] = 'faithpromise/1.0';
+                $headers['Authorization'] = 'Basic '.base64_encode(sprintf('%s:%s', 'api', config('mail.mailgun_api_key')));
+
+                $request = new GuzzleRequest('GET', $file->url, $headers, null);
+                $response = $client->sendRequest($request);
+                $file_contents = (string) $response->getBody();
+
+                $file_path = storage_path('attachments') . '/' . $attachment->file_name;
+                file_put_contents($file_path, $file_contents);
 
             }
         }
