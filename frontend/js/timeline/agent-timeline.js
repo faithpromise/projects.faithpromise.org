@@ -30,7 +30,7 @@
                 vm.timeline_days = result.data.data;
             });
 
-            projectsService.getPending(vm.agent.id).then(function (result) {
+            projectsService.getActive(vm.agent.id).then(function (result) {
                 vm.projects = result.data.data;
             });
         }

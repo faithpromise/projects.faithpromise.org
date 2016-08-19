@@ -26,15 +26,21 @@ class ProjectsController extends Controller {
             $query->pending();
         }
 
+        if ($type === 'active') {
+            $query->active();
+        }
+
         if ($agent_id) {
             $query->where('agent_id', '=', $agent_id);
         }
 
-        if ($order_by === 'status') {
-            $query->orderBy('ordered_at', 'asc')->orderBy('approved_at', 'desc')->orderBy('is_backlog', 'desc');
-        }
-
         $data = $query->get();
+
+        if ($order_by === 'status') {
+            $data = $data->sortBy(function($item) {
+                return $item->status['sort'];
+            })->values();
+        }
 
         return [
             'data' => $data
