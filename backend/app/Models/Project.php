@@ -131,7 +131,7 @@ class Project extends Model {
             return [
                 'name'       => 'Active',
                 'short_name' => 'Active',
-                'color'      => '#12f828',
+                'color'      => '#ccc',
                 'text_color' => '#fff',
                 'sort'       => 3
             ];
