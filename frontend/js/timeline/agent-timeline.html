@@ -13,7 +13,13 @@
   <div class="Timeline-projects">
     <table class="ProjectList">
       <tr class="ProjectList-project clickable" ng-repeat="project in vm.projects" ng-click="vm.jump_to_project(project)">
-        <td><span class="ProjectList-projectName" href="/projects/{{ project.id }}">{{ project.full_name }}</span></td>
+        <td>
+          <span class="ProjectList-projectName" href="/projects/{{ project.id }}" title="Due {{ project.due_at | amDateFormat: 'ddd MMM D' }} / Est. Completion {{ project.estimated_delivery_date | amDateFormat: 'ddd MMM D' }}">
+            <i class="icon-exclamation warning--low" ng-show="!project.is_overdue && project.is_overdue_likely"></i>
+            <i class="icon-exclamation warning" ng-show="project.is_overdue"></i>
+            {{ project.full_name }}
+          </span>
+        </td>
         <td class="ProjectList-status">
           <span class="Project-statusDot" ng-style="{ 'background-color': project.status.color }"></span> {{ project.status.name }}
         </td>
