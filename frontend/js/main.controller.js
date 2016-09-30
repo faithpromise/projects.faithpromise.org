@@ -20,7 +20,6 @@
         }
 
         function check_nav_visibility() {
-            console.log('checking nav state', $location.path());
             vm.is_nav_visible = $location.path() !== '/login';
         }
 
