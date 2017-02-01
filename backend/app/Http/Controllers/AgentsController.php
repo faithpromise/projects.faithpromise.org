@@ -6,6 +6,7 @@ use App\Models\Agent;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 
 class AgentsController extends Controller {
     /**
@@ -21,6 +22,12 @@ class AgentsController extends Controller {
 
         if ($name) {
             $agents->where('first_name', 'like', $name . '%')->orWhere('last_name', 'like', $name . '%');
+        }
+
+        $user = Auth::user();
+
+        if($user->email !== 'bradr@faithpromise.org' AND $user->email !== 'kyleg@faithpromise.org') {
+            $agents->whereIn('email', ['bradr@faithpromise.org', 'kyleg@faithpromise.org', $user->email]);
         }
 
         return [
