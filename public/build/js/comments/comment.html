@@ -1,0 +1,23 @@
+<div class="Comment">
+
+  <div class="Comment-header">
+    <div class="Comment-avatarWrap">
+      <img class="Comment-avatar" ng-src="{{ vm.comment.sender.avatar_url }}">
+    </div>
+    <div class="Comment-meta">
+      <h4 class="Comment-sender">{{ vm.comment.sender.name }}</h4>
+      <span class="Comment-date">{{ vm.comment.created_at | amUtc | amTimeAgo }}</span><span class="Comment-recipients" ng-show="vm.comment.recipients.length">to <span class="Comment-recipient" ng-repeat="recipient in vm.comment.recipients">{{ recipient.abbreviation }}</span></span>
+    </div>
+  </div>
+
+  <div class="Comment-body" ng-class="{ 'is-internal': vm.comment.recipients.length === 0 }">
+    <div ng-bind-html="vm.comment.html_body"></div>
+    <div class="Comment-attachments" ng-if="vm.comment.attachments.length">
+      <a class="Comment-attachment" href="{{ attachment.download_url }}" target="_blank" ng-repeat="attachment in vm.comment.attachments">
+        <img class="Comment-attachmentThumb" ng-src="{{ attachment.thumb_url }}">
+        <span class="Comment-attachmentName">{{ attachment.name }}</span>
+      </a>
+    </div>
+  </div>
+
+</div>

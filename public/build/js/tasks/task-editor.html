@@ -1,0 +1,75 @@
+<form class="TaskDetail" on-escape="vm.close()" ng-submit="vm.save_task()">
+
+  <div class="TaskDetail-header">
+    <span class="TaskDetail-check"><i ng-class="{ 'icon-check': vm.task.completed_at, 'icon-check-empty-1': !vm.task.completed_at }" ng-click="vm.toggle_completed()"></i></span>
+    <input class="TaskDetail-name" type="text" placeholder="Task name..." ng-model="vm.task.name" focus-on="true">
+    <span class="TaskDetail-cancel" ng-click="vm.close()">cancel</span>
+    <button class="Button Button--sm Button--primary TaskDetail-submit" type="submit">Save Task</button>
+  </div>
+
+  <div class="TaskDetail-body">
+
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Assign to</span>
+        <user-picker css-class="Form-control" tab-index="1" selected="vm.task.agent" limit-to-agents="true"></user-picker>
+      </label>
+    </div>
+
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Duration</span>
+        <task-duration-picker task="vm.task" on-change="vm.on_duration_changed()"></task-duration-picker>
+      </label>
+    </div>
+
+    <div class="Form-group">
+      <label>
+        <span class="Form-label">Notes</span>
+        <textarea class="Form-control" ng-model="vm.task.notes" placeholder="Add notes" msd-elastic></textarea>
+      </label>
+    </div>
+
+    <div class="Form-group" ng-show="vm.is_advanced_visible">
+      <span class="Form-label">Due date <span class="link" ng-click="vm.set_due_at(null)" ng-show="vm.task.due_at">clear</span></span>
+      <span class="Form-control" pikaday="vm.pikaday_due_at" default-date="{{ vm.task.due_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_due_at(date)" tabindex="1">
+        {{ vm.task.due_at ? 'Due on ' : '' }}
+        {{ vm.task.due_at ? (vm.task.due_at | amDateFormat: 'ddd, MMM D') : 'Override due date' }}
+      </span>
+    </div>
+
+    <div class="Form-group" ng-show="vm.is_advanced_visible">
+      <label>
+        <span class="Form-label">Start at <span class="link" ng-click="vm.set_start_at(null)" ng-show="vm.task.start_at">clear</span></span>
+        <span class="Form-control" pikaday="vm.pikaday_start_at" default-date="{{ vm.task.start_at | amDateFormat }}" min-date="{{ vm.today | amDateFormat }}" on-select="vm.set_start_at(date)" tabindex="1">
+          {{ vm.task.start_at ? 'Start on ' : '' }}
+          {{ vm.task.start_at ? (vm.task.start_at | amDateFormat: 'ddd, MMM D') : 'Override start date' }}
+        </span>
+      </label>
+    </div>
+
+    <div class="Form-group" ng-show="vm.is_advanced_visible">
+      <label>
+        <span class="Form-label">Completed at</span>
+        <span class="Form-control" pikaday="vm.pikaday_completed_at" default-date="{{ vm.task.completed_at | amDateFormat }}" max-date="{{ vm.today | amDateFormat }}" on-select="vm.set_completed_at(date)" tabindex="1">
+          {{ vm.task.completed_at ? (vm.task.completed_at | amDateFormat: 'ddd, MMM D') : 'Override completed date' }}
+        </span>
+      </label>
+    </div>
+
+  </div>
+
+  <div class="TaskDetail-footer">
+    <span class="TaskDetail-showAdvanced link" ng-click="vm.is_advanced_visible = !vm.is_advanced_visible">{{ vm.is_advanced_visible ? 'less settings' : 'more settings' }}</span>
+    <div class="TaskDetail-created" ng-show="vm.task.created_at">
+      Created on {{ vm.task.created_at | amDateFormat: 'ddd MMM D' }}
+    </div>
+    <div class="TaskDetail-trash" ng-show="vm.task.created_at">
+      <i ng-click="vm.delete_task()" class="TaskDetail-footerIcon icon-trash-empty"></i>
+    </div>
+  </div>
+
+  <!---->
+  <!--<p ng-click="vm.delete()">Delete</p>-->
+
+</form>

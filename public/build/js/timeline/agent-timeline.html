@@ -1,0 +1,47 @@
+<div class="Timeline-agentHeader">
+  <img class="Timeline-agentPhoto" ng-src="{{ vm.agent.avatar_url }}">
+  <div class="Timeline-agentInfo">
+    <div class="Timeline-agentName">{{ vm.agent.name }}</div>
+    <div class="Timeline-agentMeta">Current workload: {{ vm.agent.workload }} hours (until {{ vm.agent.available_at | amDateFormat: 'MMM D' }})</div>
+  </div>
+</div>
+
+<div ng-if="vm.projects.length">
+  <div class="Timeline-dayHeader">
+    Active Projects
+  </div>
+  <div class="Timeline-projects">
+    <table class="ProjectList">
+      <tr class="ProjectList-project clickable" ng-repeat="project in vm.projects" ng-click="vm.jump_to_project(project)">
+        <td>
+          <span class="ProjectList-projectName" href="/projects/{{ project.id }}" title="Due {{ project.due_at | amDateFormat: 'ddd MMM D' }} / Est. Completion {{ project.estimated_delivery_date | amDateFormat: 'ddd MMM D' }}">
+            <i class="icon-exclamation warning--low" ng-show="!project.is_overdue && project.is_overdue_likely"></i>
+            <i class="icon-exclamation warning" ng-show="project.is_overdue"></i>
+            {{ project.full_name }}
+          </span>
+        </td>
+        <td class="ProjectList-status">
+          <span class="Project-statusDot" ng-style="{ 'background-color': project.status.color }"></span> {{ project.status.name }}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="Timeline-day" ng-repeat="day in vm.timeline_days">
+  <div class="Timeline-dayHeader">
+    <div class="Timeline-dayHeading">{{ day.day | amDateFormat: 'ddd MMM D' }}</div>
+  </div>
+  <div class="Timeline-task" ng-repeat="task in day.timeline_tasks">
+    <div class="Timeline-thumb">
+      <img class="Timeline-taskThumb" ng-src="{{ task.project.thumb_url }}">
+    </div>
+    <div class="Timeline-taskInfo">
+      <!-- TODO: Jump to task - link the task. Need to link to either event or project task -->
+      <div class="Timeline-taskName">{{ task.name }} {{ task.project || task.event ? ' / ' : '' }}
+        <a href="/projects/{{ task.project.id }}" ng-if="task.project">{{ task.project.full_name }}</a>
+        <a href="/events/{{ task.event.id }}" ng-if="task.event && !task.project">{{ task.event.name }}</a></div>
+      <div class="Timeline-taskMeta">{{ task.duration | amDurationFormat : 'minute' }} &middot; Due in {{ task.due_at | amDifference: null : 'days' }} days</div>
+    </div>
+  </div>
+</div>

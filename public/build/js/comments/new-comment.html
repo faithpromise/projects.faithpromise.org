@@ -1,0 +1,37 @@
+<form class="Comment">
+
+  <div class="NewComment-header">
+    <div class="NewComment-avatarWrap">
+      <img class="NewComment-avatar" ng-src="{{ vm.sender.avatar_url }}">
+    </div>
+    <div class="NewComment-recipientsWrap">
+      <user-multi-picker selected="vm.comment.recipients" placeholder="add recipients..."></user-multi-picker>
+    </div>
+    <div class="NewComment-actions">
+      <i class="NewComment-actionIcon icon-attach" ngf-select="vm.upload($files)" ngf-max-size="20MB" ng-model="vm.files" ngf-multiple="true"></i>
+      <button class="Button Button--sm Button--primary NewComment-submit" tabindex="2" type="button" ng-click="vm.save()" ng-disabled="vm.uploading">{{ vm.uploading ? 'Uploading...' : (vm.comment.recipients.length === 0 ? 'Add Comment' : 'Send') }}</button>
+    </div>
+  </div>
+
+  <div class="NewComment-body" ng-class="{ 'has-focus': vm.body_has_focus }" ngf-drop="vm.upload($files)" ngf-max-size="20MB">
+    <textarea
+            class="NewComment-textarea"
+            tabindex="1"
+            ng-model="vm.comment.body"
+            ng-focus="vm.body_has_focus = true"
+            ng-blur="vm.body_has_focus = false"
+            on-cmd-enter="vm.save()"
+            ngf-drag-over-class="is-dragging-file"
+            msd-elastic>
+    </textarea>
+  </div>
+  <div class="NewComment-instructions">(Drag or paste a file into text area)</div>
+
+  <div class="Comment-attachments Comment-attachments--new" ng-if="vm.attachments.length">
+    <span class="Comment-attachment" ng-repeat="attachment in vm.attachments" ng-click="vm.remove_attachment(attachment)">
+      <img class="Comment-attachmentThumb" ng-src="{{ attachment.thumb_url }}">
+      <span class="Comment-attachmentName">{{ attachment.name }}</span>
+    </span>
+  </div>
+
+</form>
