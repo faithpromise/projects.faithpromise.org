@@ -13,11 +13,11 @@ class CreateUsersTable extends Migration {
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('department_id')->unsigned();
+            $table->integer('department_id')->unsigned()->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->tinyInteger('monday_hours')->default(0);
             $table->tinyInteger('tuesday_hours')->default(0);
             $table->tinyInteger('wednesday_hours')->default(0);
